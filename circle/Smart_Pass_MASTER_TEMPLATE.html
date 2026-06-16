@@ -1,0 +1,1785 @@
+<!--
+  ╔══════════════════════════════════════════════════════════════╗
+  ║  Smart Pass Prototipo v1.0                                   ║
+  ║  Soul Lens Studios · Soul Circle™ 2026                       ║
+  ║  Embajadora: {{NOMBRE_COMPLETO}} · {{PASS_ID}}             ║
+  ║  Powered by Xplorers Startups · Ed Zam                       ║
+  ║                                                              ║
+  ║  ESTADO: Pase con placeholders SVG + CARGA AUTOMATICA de fotos reales              ║
+  ║  FOTOS: subir {{IMG_PREFIX}}-hero/-perfil/-01..09 (.jpg + .webp)          ▼ SLOT       ║
+  ║  DEPLOY: soullensstudios.live/embajador/{{SLUG}}        ║
+  ║                                                              ║
+  ║  a la carpeta del embajador -> aparecen solas (sin editar HTML).      ║
+  ╚══════════════════════════════════════════════════════════════╝
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>{{PAGE_TITLE}}</title>
+<meta name="description" content="¿Tu negocio necesita ser visto por quien importa? {{NOMBRE_COMPLETO}} conecta marcas de Mérida con el estudio audiovisual más completo de Yucatán. Soul Lens Studios · Soul Circle™.">
+<link rel="canonical" href="https://soullensstudios.live/embajador/{{SLUG}}">
+<meta property="og:title" content="{{NOMBRE_COMPLETO}} · Soul Lens Studios — {{META_TITLE_SUFFIX}}">
+<meta property="og:description" content="{{OG_DESC}}">
+<meta property="og:type" content="profile">
+<meta property="og:url" content="https://soullensstudios.live/embajador/{{SLUG}}">
+<meta property="og:image" content="https://soullensstudios.live/embajador/{{SLUG}}/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{NOMBRE_COMPLETO}} · Soul Lens Studios">
+<meta name="twitter:description" content="{{TWITTER_DESC}}">
+<meta name="twitter:image" content="https://soullensstudios.live/embajador/{{SLUG}}/og.jpg">
+<meta name="theme-color" content="#040507">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Person","name":"{{NOMBRE_COMPLETO}}","jobTitle":"{{SCHEMA_JOB_TITLE}}","worksFor":{"@type":"Organization","name":"Soul Lens Studios","url":"https://soullensstudios.live"},"address":{"@type":"PostalAddress","addressLocality":"{{SCHEMA_LOCALITY}}","addressRegion":"{{SCHEMA_REGION}}","addressCountry":"MX"},"url":"https://soullensstudios.live/embajador/{{SLUG}}","telephone":"+{{WA_NUMBER}}"}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+  <link rel="preconnect" href="https://www.youtube-nocookie.com">
+  <link rel="dns-prefetch" href="https://i.ytimg.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ease-out-expo:cubic-bezier(0.16,1,0.3,1);
+  --ease-spring:cubic-bezier(0.34,1.56,0.64,1);
+  --ease-film:cubic-bezier(0.25,0.46,0.45,0.94);
+  --fast:200ms;--mid:420ms;--slow:700ms;
+  --bg:#040507;--panel:#0d1117;--panel2:#141924;--panel3:#1c2438;
+  --border:rgba(255,255,255,0.06);--bmd:rgba(255,255,255,0.11);--bhi:rgba(255,255,255,0.20);
+  --t1:#F5F0E8;--t2:#B8B3AC;--t3:#7A7570;
+  --gold:#C9A84C;--gold-lt:#EDD070;--gdim:rgba(201,168,76,0.12);
+  --blue:#0653ff;--bglow:rgba(6,83,255,0.14);--green:#8FF0B5;
+  --r:14px;--rsm:9px;--rxs:6px;
+  --fs-xs:12px;--fs-sm:13px;--fs-base:15px;--fs-md:17px;--fs-lg:20px;--fs-xl:26px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t1);
+  max-width:430px;margin:0 auto;min-height:100dvh;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;cursor:none;
+}
+@media(hover:none){body{cursor:auto}#cur{display:none}}
+
+#cur{
+  position:fixed;width:10px;height:10px;background:var(--gold);border-radius:50%;
+  pointer-events:none;z-index:9999;transform:translate(-50%,-50%);
+  transition:width var(--fast) var(--ease-spring),height var(--fast) var(--ease-spring),background var(--fast);
+}
+#cur.h{width:38px;height:38px;background:rgba(201,168,76,0.18);border:1px solid var(--gold)}
+
+#spl{
+  position:fixed;inset:0;pointer-events:none;z-index:1;
+  background:radial-gradient(560px circle at var(--mx,50%) var(--my,50%),rgba(6,83,255,0.05),transparent 70%);
+  opacity:0;transition:opacity 1s;
+}
+
+/* ── HERO PREMIUM ── */
+.hero{position:relative;min-height:100dvh;display:flex;flex-direction:column;overflow:hidden}
+/* Rim light animado — oscila entre azul SLS y dorado */
+.hero::before{
+  content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 70% 50% at 72% 8%,rgba(6,83,255,0.13),transparent 62%),
+    radial-gradient(ellipse 45% 38% at 8% 85%,rgba(201,168,76,0.09),transparent 52%),
+    var(--bg);
+  animation:heroAmbient 8s ease-in-out infinite alternate;
+}
+@keyframes heroAmbient{
+  0%{background:
+    radial-gradient(ellipse 70% 50% at 72% 8%,rgba(6,83,255,0.13),transparent 62%),
+    radial-gradient(ellipse 45% 38% at 8% 85%,rgba(201,168,76,0.09),transparent 52%),
+    var(--bg);}
+  50%{background:
+    radial-gradient(ellipse 80% 55% at 78% 5%,rgba(6,83,255,0.17),transparent 65%),
+    radial-gradient(ellipse 55% 42% at 5% 90%,rgba(201,168,76,0.12),transparent 56%),
+    var(--bg);}
+  100%{background:
+    radial-gradient(ellipse 65% 48% at 68% 12%,rgba(6,83,255,0.10),transparent 60%),
+    radial-gradient(ellipse 40% 35% at 12% 80%,rgba(201,168,76,0.07),transparent 50%),
+    var(--bg);}
+}
+/* Línea de luz horizontal — barre de arriba a abajo una vez al cargar */
+.hero::after{
+  content:'';position:absolute;left:0;right:0;height:1px;z-index:2;pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(201,168,76,0.35),rgba(6,83,255,0.2),transparent);
+  animation:scanLine 2.2s var(--ease-out-expo) 0.4s forwards;
+  top:-1px;
+}
+@keyframes scanLine{
+  0%{top:-1px;opacity:0}
+  15%{opacity:1}
+  100%{top:100dvh;opacity:0}
+}
+.hphoto{
+  position:absolute;inset:0;z-index:0;
+  background:#040507;
+  display:flex;align-items:flex-end;justify-content:center;overflow:hidden;
+}
+/* Gradiente sobre la foto — asegura legibilidad del texto */
+.hphoto::after{
+  content:'';position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:
+    linear-gradient(to bottom,rgba(4,5,7,.55) 0%,transparent 30%,transparent 45%,rgba(4,5,7,.75) 72%,var(--bg) 94%),
+    linear-gradient(135deg,rgba(6,83,255,.06) 0%,transparent 50%,rgba(201,168,76,.04) 100%);
+}
+.hsil{position:absolute;bottom:0;right:-8px;width:72%;max-width:290px;height:82%;opacity:0.10;display:flex;align-items:flex-end}
+.htop{
+  position:relative;z-index:10;display:flex;justify-content:space-between;align-items:center;
+  padding:1.4rem 1.5rem;
+  background:linear-gradient(to bottom,rgba(4,5,7,0.45),transparent);
+  backdrop-filter:blur(0px);
+}
+.sls-wm{font-size:var(--fs-xs);font-weight:800;letter-spacing:0.13em;text-transform:uppercase;color:var(--t3)}
+.sls-wm b{color:var(--blue)}
+.sc-pill{
+  display:flex;align-items:center;gap:6px;font-size:var(--fs-xs);font-weight:700;
+  letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);
+  border:1px solid rgba(201,168,76,0.25);padding:6px 13px;border-radius:20px;background:rgba(201,168,76,0.04);
+}
+.sc-d{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pdot 2s ease-in-out infinite}
+@keyframes pdot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.7)}}
+
+.hcont{position:relative;z-index:10;margin-top:auto;padding:0 1.5rem 2.75rem;background:linear-gradient(to top,var(--bg) 58%,transparent)}
+.h-eye{font-size:var(--fs-xs);font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:0.7rem;opacity:0;transform:translateY(14px);animation:hup var(--slow) var(--ease-out-expo) .10s forwards}
+.h-name{font-size:clamp(46px,12vw,60px);font-weight:900;line-height:.95;letter-spacing:-.035em;color:var(--t1);margin-bottom:.8rem;opacity:0;transform:translateY(22px);animation:hup var(--slow) var(--ease-out-expo) .20s forwards}
+.h-name-lt{display:block;font-weight:200;color:rgba(245,240,232,.32);letter-spacing:-.02em}
+.h-tag{font-size:var(--fs-base);line-height:1.65;color:var(--t2);margin-bottom:2rem;max-width:290px;opacity:0;transform:translateY(14px);animation:hup var(--slow) var(--ease-out-expo) .32s forwards}
+.h-tag em{color:var(--t1);font-style:normal;font-weight:600}
+@keyframes hup{to{opacity:1;transform:translateY(0)}}
+
+.cta-s{display:flex;flex-direction:column;gap:11px;opacity:0;transform:translateY(14px);animation:hup var(--slow) var(--ease-out-expo) .46s forwards}
+.btn{
+  display:flex;align-items:center;justify-content:center;gap:11px;
+  font-family:inherit;font-size:var(--fs-base);font-weight:700;letter-spacing:0.01em;
+  border-radius:var(--rsm);border:none;cursor:pointer;text-decoration:none;
+  padding:16px 22px;width:100%;
+  transition:transform var(--fast) var(--ease-spring),box-shadow var(--mid) var(--ease-out-expo),background var(--fast);
+  position:relative;overflow:hidden;
+}
+.btn:active{transform:scale(.97)}
+.btn-wa{background:linear-gradient(135deg,#0653ff,#0847d4,#0653ff);background-size:200% 200%;color:#fff;animation:btnShimmer 3s ease-in-out infinite}
+@keyframes btnShimmer{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.btn-wa:hover{transform:translateY(-2px);box-shadow:0 10px 36px rgba(6,83,255,.38)}
+.btn-wa::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.1),transparent 60%);opacity:0;transition:opacity var(--fast)}
+.btn-wa:hover::before{opacity:1}
+.btn-cal{background:var(--panel);color:var(--t1);border:1px solid var(--bmd)}
+.btn-cal:hover{border-color:var(--gold);background:var(--panel2)}
+.btn-save{background:var(--panel);color:var(--gold);border:1px solid rgba(201,168,76,.35)}
+.btn-save:hover{background:var(--panel2);border-color:var(--gold);box-shadow:0 6px 24px rgba(201,168,76,.18)}
+
+.scroll-hint{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;gap:6px;padding:.75rem;opacity:0;animation:hup var(--slow) var(--ease-out-expo) .85s forwards}
+.scl{width:1px;height:38px;background:linear-gradient(to bottom,rgba(201,168,76,.5),transparent);animation:sdrop 1.9s ease-in-out infinite}
+@keyframes sdrop{
+  0%{transform:scaleY(0);transform-origin:top;opacity:1}
+  50%{transform:scaleY(1);transform-origin:top}
+  51%{transform-origin:bottom}
+  100%{transform:scaleY(0);transform-origin:bottom;opacity:0}
+}
+
+/* ── SECCIONES ── */
+section{padding:2.5rem 1.5rem;position:relative}
+section+section{border-top:1px solid var(--border)}
+.slbl{font-size:var(--fs-xs);font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--t2);margin-bottom:1.5rem}
+
+/* ── REVEAL ── */
+.rev{opacity:0;transform:translateY(26px);transition:opacity var(--slow) var(--ease-out-expo),transform var(--slow) var(--ease-out-expo)}
+.rev.in{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.05s}.d2{transition-delay:.12s}.d3{transition-delay:.20s}.d4{transition-delay:.28s}
+
+/* ── SOBRE EL EMBAJADOR ── */
+.about-sec{background:linear-gradient(135deg,rgba(201,168,76,.025),transparent 70%);border-top:1px solid rgba(201,168,76,.08)!important}
+.about-inner{display:flex;gap:1rem;align-items:flex-start;margin-bottom:1.25rem}
+.about-av{
+  width:62px;height:62px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--blue),#003ec4);
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;font-weight:800;color:#fff;
+  border:2px solid rgba(6,83,255,.3);box-shadow:0 4px 18px rgba(6,83,255,.25);
+  overflow:hidden;
+}
+.about-av img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.about-info{}
+.about-name{font-size:var(--fs-md);font-weight:800;color:var(--t1);line-height:1.2;margin-bottom:3px}
+.about-role{font-size:var(--fs-xs);color:var(--gold);font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px}
+.about-origin{font-size:var(--fs-xs);color:var(--t3);display:flex;align-items:center;gap:5px}
+.about-bio{font-size:var(--fs-sm);color:var(--t2);line-height:1.65;margin-bottom:1.1rem}
+.about-bio strong{color:var(--t1);font-weight:600}
+.mercados-title{font-size:var(--fs-xs);font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);margin-bottom:.65rem}
+.mercados-pills{display:flex;flex-wrap:wrap;gap:6px}
+.mpill{
+  font-size:var(--fs-xs);font-weight:500;color:var(--t2);
+  border:1px solid var(--border);padding:5px 12px;border-radius:20px;background:var(--panel);
+  transition:border-color var(--fast),color var(--fast);
+}
+.mpill:hover{border-color:var(--bmd);color:var(--t1)}
+
+/* ── CARRUSEL GALERÍA ── */
+.gal-sec{padding:2.25rem 0;overflow:hidden;border-top:1px solid var(--border)}
+.gal-lbl{padding:0 1.5rem;margin-bottom:1.25rem;display:flex;justify-content:space-between;align-items:center}
+.gal-counter{font-size:var(--fs-xs);color:var(--t3);font-variant-numeric:tabular-nums}
+
+/* TRACK — ancho total calculado por JS */
+.gal-viewport{
+  width:100%;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+}
+.gal-viewport::-webkit-scrollbar{display:none}
+.gal-track{
+  display:flex;gap:10px;padding:0 1.5rem;
+  width:max-content;
+}
+
+/* dots */
+.gal-dots{display:flex;justify-content:center;gap:5px;padding:1rem 0 0}
+.gdot{
+  width:5px;height:5px;border-radius:50%;background:var(--border);
+  transition:background var(--mid),width var(--mid) var(--ease-spring);
+  cursor:pointer;
+}
+.gdot.a{background:var(--gold);width:18px;border-radius:3px}
+
+.gitem{
+  flex:0 0 196px;height:252px;border-radius:var(--r);overflow:hidden;
+  background:var(--panel2);border:1px solid var(--border);position:relative;
+  scroll-snap-align:start;cursor:pointer;user-select:none;
+  transition:transform var(--mid) var(--ease-spring),box-shadow var(--mid);
+}
+.gitem:hover{transform:scale(1.02) translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,.4)}
+.gitem:active{transform:scale(.98)}
+
+/* gradientes por slot */
+.gitem:nth-child(1) .gimg{background:linear-gradient(155deg,#182844,#0d1828,#1e1008)}
+.gitem:nth-child(2) .gimg{background:linear-gradient(155deg,#0a1a30,#163050,#080d18)}
+.gitem:nth-child(3) .gimg{background:linear-gradient(155deg,#16082a,#220e3c,#08081a)}
+.gitem:nth-child(4) .gimg{background:linear-gradient(155deg,#081e14,#0e2c1a,#040a06)}
+.gitem:nth-child(5) .gimg{background:linear-gradient(155deg,#201408,#2e1a0c,#140804)}
+.gitem:nth-child(6) .gimg{background:linear-gradient(155deg,#0a1428,#14203c,#060810)}
+.gitem:nth-child(7) .gimg{background:linear-gradient(155deg,#200818,#30102a,#100410)}
+.gitem:nth-child(8) .gimg{background:linear-gradient(155deg,#041c14,#082c1a,#020c06)}
+.gitem:nth-child(9) .gimg{background:linear-gradient(155deg,#1c1408,#2a1e0c,#0e0a04)}
+
+.gimg{width:100%;height:72%;display:flex;align-items:center;justify-content:center}
+.gicon{filter:drop-shadow(0 6px 18px rgba(0,0,0,.55));transition:transform var(--mid) var(--ease-spring)}
+.gitem:hover .gicon{transform:scale(1.18) rotate(-6deg)}
+.gcap{padding:.8rem .9rem;border-top:1px solid var(--border)}
+.gcap-t{font-size:var(--fs-sm);font-weight:700;color:var(--t1);margin-bottom:2px}
+.gcap-s{font-size:var(--fs-xs);color:var(--t2)}
+
+/* ── HOBBIES ── */
+.hbb-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.hbb{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--rsm);
+  padding:1.25rem 1.1rem;cursor:default;position:relative;overflow:hidden;
+  transition:border-color var(--mid) var(--ease-out-expo),transform var(--fast) var(--ease-spring),background var(--fast);
+}
+.hbb::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(201,168,76,.07),transparent 60%);opacity:0;transition:opacity var(--fast)}
+.hbb:hover{border-color:rgba(201,168,76,.28);background:var(--panel2);transform:translateY(-2px)}
+.hbb:hover::before{opacity:1}
+.hbbicon{font-size:34px;margin-bottom:10px;display:block;line-height:1;filter:drop-shadow(0 5px 10px rgba(0,0,0,.45));transition:transform var(--mid) var(--ease-spring)}
+.hbb:hover .hbbicon{transform:scale(1.2) rotate(-7deg)}
+.hbb-name{font-size:var(--fs-sm);font-weight:700;color:var(--t1);margin-bottom:4px}
+.hbb-sub{font-size:var(--fs-xs);color:var(--t2);line-height:1.5}
+
+/* ── TOP 3 ── */
+.stars-sec{background:linear-gradient(135deg,rgba(201,168,76,.03),transparent 70%);border-top:1px solid rgba(201,168,76,.1)!important;border-bottom:1px solid rgba(201,168,76,.06)}
+.stars-hdr{display:flex;align-items:center;gap:8px;margin-bottom:1.5rem}
+.stars-lbl{font-size:var(--fs-xs);font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.stcard{
+  background:var(--panel);border:1px solid rgba(201,168,76,.13);
+  border-radius:var(--r);padding:1.5rem;margin-bottom:.75rem;
+  position:relative;overflow:hidden;cursor:pointer;text-decoration:none;display:block;
+  transition:border-color var(--mid) var(--ease-out-expo),transform var(--fast) var(--ease-spring),background var(--fast);
+}
+.stcard::after{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:linear-gradient(to bottom,var(--gold-lt),var(--gold));opacity:.75}
+.stcard:hover{border-color:rgba(201,168,76,.32);background:var(--panel2);transform:translateY(-2px)}
+.stcard:active{transform:scale(.99)}
+.st-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:.85rem}
+.st-num{font-size:var(--fs-xs);font-weight:800;letter-spacing:.1em;color:var(--gold);text-transform:uppercase}
+.st-badge{font-size:var(--fs-xs);font-weight:600;color:var(--gold);background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.2);padding:4px 10px;border-radius:20px;letter-spacing:.04em}
+.st-title{font-size:var(--fs-md);font-weight:800;color:var(--t1);letter-spacing:-.02em;margin-bottom:.55rem;line-height:1.2}
+.st-desc{font-size:var(--fs-sm);color:var(--t2);line-height:1.6}
+.st-arr{position:absolute;bottom:1.5rem;right:1.5rem;font-size:15px;color:var(--t3);transition:transform var(--fast) var(--ease-spring),color var(--fast)}
+.stcard:hover .st-arr{transform:translate(3px,-3px);color:var(--gold)}
+
+/* ── VIDEO ── */
+.vid-wrap{border-radius:var(--r);overflow:hidden;border:1px solid var(--border);background:var(--panel);position:relative;aspect-ratio:16/9}
+.vid-wrap iframe{width:100%;height:100%;border:none;display:block}
+.vid-thumb{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0d1828,#18253c);cursor:pointer;transition:opacity var(--fast)}
+.vid-thumb.gone{opacity:0;pointer-events:none}
+.play3d{width:64px;height:64px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 10px rgba(6,83,255,.12),0 0 0 20px rgba(6,83,255,.06),0 10px 36px rgba(6,83,255,.42);transition:transform var(--fast) var(--ease-spring),box-shadow var(--fast)}
+.play3d:hover{transform:scale(1.12);box-shadow:0 0 0 12px rgba(6,83,255,.16),0 0 0 24px rgba(6,83,255,.08),0 14px 44px rgba(6,83,255,.52)}
+.vid-lbl{font-size:var(--fs-sm);font-weight:600;color:var(--t2);margin-top:.85rem;padding-left:2px}
+.vid-note{font-size:var(--fs-xs);color:var(--t3);margin-top:4px}
+
+/* ── SERVICIOS ── */
+.svc-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.svc{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--rsm);
+  padding:1.1rem;text-decoration:none;display:block;position:relative;overflow:hidden;
+  transition:border-color var(--mid) var(--ease-out-expo),transform var(--fast) var(--ease-spring),background var(--fast);
+}
+.svc:hover{border-color:var(--bhi);background:var(--panel2);transform:translateY(-2px)}
+.svc:active{transform:scale(.98)}
+.sdot{width:5px;height:5px;border-radius:50%;display:inline-block;margin-bottom:10px}
+.csl .sdot{background:#0653ff}.csf .sdot{background:#448aff}.cslb .sdot{background:#00e676}.csc .sdot{background:#ff5252}.csca .sdot{background:#7c4dff}
+.svc-n{font-size:var(--fs-sm);font-weight:700;color:var(--t1);margin-bottom:4px;line-height:1.3}
+.svc-s{font-size:var(--fs-xs);color:var(--t2);line-height:1.45}
+.sarr{position:absolute;top:1rem;right:1rem;font-size:11px;color:var(--t3);opacity:0;transform:translate(-4px,4px);transition:opacity var(--fast),transform var(--fast) var(--ease-spring)}
+.svc:hover .sarr{opacity:1;transform:translate(0,0)}
+
+/* ── PRUEBA SOCIAL ── */
+.casos-sec{background:linear-gradient(135deg,rgba(6,83,255,.03),transparent 70%);border-top:1px solid rgba(6,83,255,.08)!important}
+.caso-card{
+  background:var(--panel);border:1px solid var(--border);border-radius:var(--r);
+  padding:1.3rem 1.4rem;margin-bottom:.75rem;position:relative;overflow:hidden;
+}
+.caso-card::after{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:linear-gradient(to bottom,var(--blue),rgba(6,83,255,.3))}
+.caso-client{font-size:var(--fs-xs);font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:6px}
+.caso-result{font-size:var(--fs-md);font-weight:800;color:var(--t1);line-height:1.2;margin-bottom:6px;letter-spacing:-.01em}
+.caso-desc{font-size:var(--fs-sm);color:var(--t2);line-height:1.55}
+
+/* ── ID CARD ── */
+.idwrap{perspective:800px}
+.idcard{
+  background:var(--panel);border:1px solid var(--bmd);border-radius:var(--r);
+  padding:1.5rem;position:relative;overflow:hidden;
+  transform-style:preserve-3d;transition:transform var(--mid) var(--ease-out-expo);will-change:transform;
+}
+.idcard::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(201,168,76,.04),transparent 50%,rgba(6,83,255,.03));pointer-events:none}
+.id-top{display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem}
+.id-av{
+  width:52px;height:52px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--blue),#003ec4);
+  display:flex;align-items:center;justify-content:center;
+  font-size:17px;font-weight:800;color:#fff;
+  border:2px solid rgba(6,83,255,.32);box-shadow:0 4px 18px rgba(6,83,255,.32);overflow:hidden;
+}
+.id-av img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.id-nm{font-size:var(--fs-base);font-weight:800;color:var(--t1);line-height:1.2;margin-bottom:2px}
+.id-rl{font-size:var(--fs-sm);color:var(--gold);font-weight:500;margin-bottom:2px}
+.id-st{font-size:var(--fs-xs);color:var(--t2)}
+.id-band-row{display:flex;align-items:center;gap:8px;margin-top:8px}
+.id-band{
+  font-size:var(--fs-xs);font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--gold);background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.25);
+  padding:4px 10px;border-radius:20px;
+}
+.id-div{height:1px;background:var(--border);margin:1.1rem 0}
+.id-ft{display:flex;justify-content:space-between;align-items:center}
+.id-code{font-size:var(--fs-xs);color:var(--t2);font-family:monospace;letter-spacing:.07em}
+.qrbox{width:46px;height:46px;background:var(--panel2);border-radius:var(--rxs);border:1px solid var(--border);display:flex;align-items:center;justify-content:center}
+
+/* ── GARANTÍA ── */
+.gbox{background:rgba(6,83,255,.05);border:1px solid rgba(6,83,255,.14);border-radius:var(--r);padding:1.4rem;display:flex;gap:.9rem;align-items:flex-start}
+.gico{font-size:24px;flex-shrink:0;margin-top:1px}
+.gt{font-size:var(--fs-base);font-weight:700;color:var(--t1);margin-bottom:5px}
+.gd{font-size:var(--fs-sm);color:var(--t2);line-height:1.6}
+
+/* ── BOTTOM CTA ── */
+.bcta{padding:2.75rem 1.5rem 4rem;text-align:center;background:linear-gradient(to top,rgba(6,83,255,.04),transparent);border-top:1px solid var(--border)}
+.bc-eye{font-size:var(--fs-xs);font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--t3);margin-bottom:.6rem}
+.bc-h{font-size:var(--fs-xl);font-weight:900;letter-spacing:-.025em;line-height:1.15;color:var(--t1);margin-bottom:.65rem}
+.bc-s{font-size:var(--fs-base);color:var(--t2);line-height:1.65;margin-bottom:2.25rem;max-width:300px;margin-left:auto;margin-right:auto}
+.bcta .cta-s{opacity:1;transform:none;animation:none;max-width:380px;margin:0 auto}
+
+/* ── FOOTER ── */
+footer{padding:1.75rem 1.5rem;border-top:1px solid var(--border);text-align:center;display:flex;flex-direction:column;align-items:center;gap:.5rem}
+.fl{font-size:var(--fs-sm);font-weight:800;color:var(--t3);letter-spacing:.08em;text-transform:uppercase}
+.fl span{color:var(--blue)}
+.fsc{font-size:var(--fs-xs);color:var(--t3)}
+.fdes{font-size:var(--fs-xs);color:var(--t3);margin-top:.5rem;opacity:.6}
+.fdes a{color:var(--blue);text-decoration:none}
+.fdes a:hover{text-decoration:underline}
+.fleg{font-size:var(--fs-xs);color:var(--t3);line-height:1.55;max-width:280px;opacity:.5;margin-top:.25rem}
+
+
+/* Quote block pulsing */
+.about-quote-pulse{
+  animation:quotePulse 3s ease-in-out infinite alternate;
+}
+@keyframes quotePulse{
+  0%{border-left-color:rgba(201,168,76,0.5)}
+  100%{border-left-color:rgba(201,168,76,1)}
+}
+/* ── REDUCED MOTION ── */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .rev,.h-eye,.h-name,.h-tag,.cta-s,.scroll-hint{opacity:1;transform:none}
+  .sc-d,.scl{animation:none}
+  .gal-track{transition:none}
+}
+
+.skip-link{position:absolute;left:-9999px;top:0;z-index:99999;background:#0653ff;color:#fff;padding:10px 18px;border-radius:0 0 10px 0;text-decoration:none;font-weight:700;font-size:14px}
+.skip-link:focus{left:0}
+:focus-visible{outline:2px solid #C9A84C;outline-offset:3px;border-radius:4px}
+
+/* ── Pipeline de fotos: img real sobre placeholder SVG ── */
+.gimg{position:relative}
+.photo-real{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .5s ease;z-index:4}
+.photo-real.loaded{opacity:1}
+.about-av{position:relative;overflow:hidden}
+</style>
+</head>
+<body>
+<a href="#sp-content" class="skip-link">Saltar al contenido</a>
+<noscript><div style="max-width:680px;margin:24px auto;padding:20px;text-align:center;font-family:system-ui,sans-serif;background:#0d0d12;color:#fff;border-radius:12px">Este Smart Pass de <strong>{{NOMBRE_COMPLETO}}</strong> usa contenido interactivo. Activa JavaScript para verlo completo, o escríbele por WhatsApp: <a href="https://wa.me/{{WA_NUMBER}}" style="color:#C9A84C">+{{WA_NUMBER}}</a>.</div></noscript>
+
+<div id="cur" aria-hidden="true"></div>
+<div id="spl" aria-hidden="true"></div>
+
+<!-- ══ HERO ══ -->
+<section id="sp-content" class="hero" aria-label="Presentación de {{NOMBRE_COMPLETO}}">
+  <!-- CANVAS PARTICLES — last-gen premium background -->
+  <canvas id="heroCanvas" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none"></canvas>
+
+  <picture><source srcset="{{IMG_PREFIX}}-hero.webp" type="image/webp"><img class="photo-real" src="{{IMG_PREFIX}}-hero.jpg" width="1080" height="1920" fetchpriority="high" alt="{{NOMBRE_COMPLETO}}" style="z-index:1" onload="this.classList.add('loaded')" onerror="this.closest('picture').remove()"></picture>
+  <div class="hphoto" aria-hidden="true">
+    <svg id="heroPortrait" viewBox="0 0 430 860" xmlns="http://www.w3.org/2000/svg"
+         style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:100%;height:92%;object-fit:cover"
+         preserveAspectRatio="xMidYMax meet">
+      <defs>
+        <!-- Fondo ambiente — noche caribeña con acento SLS -->
+        <radialGradient id="hbg1" cx="65%" cy="18%" r="55%">
+          <stop offset="0%" stop-color="#1e3060"/>
+          <stop offset="60%" stop-color="#0a1530"/>
+          <stop offset="100%" stop-color="#040507"/>
+        </radialGradient>
+        <radialGradient id="hbg2" cx="15%" cy="72%" r="50%">
+          <stop offset="0%" stop-color="#1a0e05"/>
+          <stop offset="100%" stop-color="#040507" stop-opacity="0"/>
+        </radialGradient>
+        <!-- Rimlight dorado — backlight editorial desde derecha -->
+        <radialGradient id="hrim" cx="92%" cy="28%" r="45%">
+          <stop offset="0%" stop-color="#C9A84C" stop-opacity="0.22"/>
+          <stop offset="55%" stop-color="#C9A84C" stop-opacity="0.06"/>
+          <stop offset="100%" stop-color="#C9A84C" stop-opacity="0"/>
+        </radialGradient>
+        <!-- Fill azul SLS — desde izquierda -->
+        <radialGradient id="hfill" cx="8%" cy="45%" r="60%">
+          <stop offset="0%" stop-color="#0653ff" stop-opacity="0.14"/>
+          <stop offset="100%" stop-color="#0653ff" stop-opacity="0"/>
+        </radialGradient>
+        <!-- Piel cálida latinoamericana -->
+        <linearGradient id="hpiel" x1="0" y1="0" x2="0.2" y2="1">
+          <stop offset="0%" stop-color="#d49870"/>
+          <stop offset="40%" stop-color="#b87a50"/>
+          <stop offset="85%" stop-color="#8c5535"/>
+          <stop offset="100%" stop-color="#6a3820"/>
+        </linearGradient>
+        <radialGradient id="hpiel2" cx="38%" cy="25%" r="65%">
+          <stop offset="0%" stop-color="#e8b888" stop-opacity="0.9"/>
+          <stop offset="60%" stop-color="#c08860" stop-opacity="0.6"/>
+          <stop offset="100%" stop-color="#8c5535" stop-opacity="0"/>
+        </radialGradient>
+        <!-- Cabello oscuro con brillo -->
+        <linearGradient id="hhair" x1="0.3" y1="0" x2="0.7" y2="1">
+          <stop offset="0%" stop-color="#2a180a"/>
+          <stop offset="30%" stop-color="#160c04"/>
+          <stop offset="100%" stop-color="#080402"/>
+        </linearGradient>
+        <radialGradient id="hhairshine" cx="62%" cy="12%" r="35%">
+          <stop offset="0%" stop-color="#C9A84C" stop-opacity="0.28"/>
+          <stop offset="100%" stop-color="transparent"/>
+        </radialGradient>
+        <!-- Ropa — negro premium con textura sutil -->
+        <linearGradient id="hropa" x1="0.2" y1="0" x2="0.8" y2="1">
+          <stop offset="0%" stop-color="#1a1e28"/>
+          <stop offset="50%" stop-color="#0e1018"/>
+          <stop offset="100%" stop-color="#060810"/>
+        </linearGradient>
+        <!-- Overlay texto inferior -->
+        <linearGradient id="hover" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#040507" stop-opacity="0"/>
+          <stop offset="52%" stop-color="#040507" stop-opacity="0.55"/>
+          <stop offset="78%" stop-color="#040507" stop-opacity="0.88"/>
+          <stop offset="100%" stop-color="#040507" stop-opacity="1"/>
+        </linearGradient>
+        <!-- Filtros suavizado -->
+        <filter id="hsoft" x="-10%" y="-10%" width="120%" height="120%">
+          <feGaussianBlur stdDeviation="1.2"/>
+        </filter>
+        <filter id="hblur" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="3"/>
+        </filter>
+        <filter id="hgrain">
+          <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+          <feColorMatrix type="saturate" values="0"/>
+          <feBlend in="SourceGraphic" mode="overlay" result="blend"/>
+          <feComposite in="blend" in2="SourceGraphic" operator="in"/>
+        </filter>
+        <clipPath id="hclip"><rect width="430" height="860"/></clipPath>
+      </defs>
+
+      <g clip-path="url(#hclip)">
+        <!-- Fondos -->
+        <rect width="430" height="860" fill="#040507"/>
+        <rect width="430" height="860" fill="url(#hbg1)"/>
+        <rect width="430" height="860" fill="url(#hbg2)"/>
+
+        <!-- Luces ambiente (rimlight y fill) -->
+        <rect width="430" height="860" fill="url(#hrim)"/>
+        <rect width="430" height="860" fill="url(#hfill)"/>
+
+        <!-- ─── CUERPO / SILUETA ─── -->
+        <!-- Torso y hombros — ropa negra premium -->
+        <path d="M80 700 Q70 650 82 580 Q92 530 110 490
+                 L160 470 L215 460 L270 470 L320 490
+                 Q338 530 348 580 Q360 650 350 700
+                 Q310 740 215 755 Q120 740 80 700Z"
+              fill="url(#hropa)" opacity="0.98"/>
+
+        <!-- Hombro izquierdo — con rimlight azul sutil -->
+        <path d="M82 520 Q62 505 55 520 Q48 538 60 550 Q75 558 90 545Z"
+              fill="#0e1220" opacity="0.9"/>
+        <path d="M56 518 Q48 530 55 544 Q58 535 65 526Z"
+              fill="#0653ff" opacity="0.18" filter="url(#hblur)"/>
+
+        <!-- Hombro derecho — con rimlight dorado -->
+        <path d="M348 520 Q368 505 375 520 Q382 538 370 550 Q355 558 340 545Z"
+              fill="#0e1220" opacity="0.9"/>
+        <path d="M374 515 Q383 528 376 543 Q372 535 366 524Z"
+              fill="#C9A84C" opacity="0.32" filter="url(#hblur)"/>
+
+        <!-- Cuello -->
+        <path d="M190 462 Q190 432 215 425 Q240 432 240 462
+                 Q235 472 215 476 Q195 472 190 462Z"
+              fill="url(#hpiel)" filter="url(#hsoft)"/>
+        <!-- Sombra cuello -->
+        <ellipse cx="228" cy="455" rx="14" ry="18"
+                 fill="#6a3820" opacity="0.22" filter="url(#hblur)"/>
+
+        <!-- ─── CARA ─── -->
+        <!-- Base cráneo / cara — óvalo principal -->
+        <ellipse cx="215" cy="300" rx="88" ry="105"
+                 fill="url(#hpiel)" filter="url(#hsoft)"/>
+        <ellipse cx="215" cy="300" rx="86" ry="103"
+                 fill="url(#hpiel2)"/>
+
+        <!-- Sombra facial derecha (luz viene de izquierda-frente) -->
+        <ellipse cx="268" cy="308" rx="38" ry="65"
+                 fill="#7a4025" opacity="0.30" filter="url(#hblur)"/>
+
+        <!-- Highlight pómulo izquierdo -->
+        <ellipse cx="175" cy="285" rx="26" ry="20"
+                 fill="#f0c898" opacity="0.28" filter="url(#hblur)"/>
+
+        <!-- Bajo-ojo / ojeras sutil -->
+        <ellipse cx="185" cy="315" rx="18" ry="8"
+                 fill="#9a5838" opacity="0.18" filter="url(#hblur)"/>
+        <ellipse cx="245" cy="315" rx="18" ry="8"
+                 fill="#9a5838" opacity="0.18" filter="url(#hblur)"/>
+
+        <!-- ─── OJOS ─── -->
+        <!-- Ojo izquierdo -->
+        <ellipse cx="183" cy="290" rx="18" ry="10" fill="#0d0804"/>
+        <ellipse cx="183" cy="290" rx="14" ry="8" fill="#1a0e06"/>
+        <circle cx="183" cy="290" r="7" fill="#2a1608"/>
+        <circle cx="183" cy="290" r="4" fill="#0a0504"/>
+        <ellipse cx="186" cy="287" rx="2.5" ry="2" fill="rgba(255,255,255,0.82)"/>
+        <ellipse cx="179" cy="292" rx="1.2" ry="0.9" fill="rgba(255,255,255,0.4)"/>
+        <!-- Párpado superior izq -->
+        <path d="M165 285 Q183 278 201 285" stroke="#0a0604" stroke-width="1.5" fill="none" opacity="0.9"/>
+        <!-- Pestañas izq -->
+        <path d="M165 285 Q170 280 175 282" stroke="#0a0604" stroke-width="1.2" fill="none"/>
+        <path d="M196 283 Q200 279 203 282" stroke="#0a0604" stroke-width="1.2" fill="none"/>
+
+        <!-- Ojo derecho -->
+        <ellipse cx="247" cy="290" rx="18" ry="10" fill="#0d0804"/>
+        <ellipse cx="247" cy="290" rx="14" ry="8" fill="#1a0e06"/>
+        <circle cx="247" cy="290" r="7" fill="#2a1608"/>
+        <circle cx="247" cy="290" r="4" fill="#0a0504"/>
+        <ellipse cx="250" cy="287" rx="2.5" ry="2" fill="rgba(255,255,255,0.82)"/>
+        <ellipse cx="243" cy="292" rx="1.2" ry="0.9" fill="rgba(255,255,255,0.4)"/>
+        <!-- Párpado superior der -->
+        <path d="M229 285 Q247 278 265 285" stroke="#0a0604" stroke-width="1.5" fill="none" opacity="0.9"/>
+        <path d="M227 285 Q224 280 222 282" stroke="#0a0604" stroke-width="1.2" fill="none"/>
+        <path d="M262 283 Q265 279 268 282" stroke="#0a0604" stroke-width="1.2" fill="none"/>
+
+        <!-- ─── CEJAS ─── -->
+        <path d="M162 268 Q183 258 204 265"
+              stroke="#1e0e06" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+        <path d="M162 268 Q183 260 204 265"
+              stroke="#2a1408" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.6"/>
+        <path d="M226 265 Q247 258 268 268"
+              stroke="#1e0e06" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+        <path d="M226 265 Q247 260 268 268"
+              stroke="#2a1408" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.6"/>
+
+        <!-- ─── NARIZ ─── -->
+        <path d="M210 300 Q206 332 200 340 Q208 346 215 344 Q222 346 230 340
+                 Q224 332 220 300"
+              fill="#a86040" opacity="0.25" filter="url(#hsoft)"/>
+        <!-- Ventanas nasales -->
+        <ellipse cx="205" cy="340" rx="8" ry="5" fill="#8a4828" opacity="0.45"/>
+        <ellipse cx="225" cy="340" rx="8" ry="5" fill="#8a4828" opacity="0.45"/>
+        <!-- Punta nariz -->
+        <ellipse cx="215" cy="338" rx="11" ry="7" fill="#c07858" opacity="0.35"/>
+
+        <!-- ─── LABIOS ─── -->
+        <!-- Labio superior -->
+        <path d="M188 368 Q198 360 215 364 Q232 360 242 368
+                 Q232 375 215 376 Q198 375 188 368Z"
+              fill="#a03040"/>
+        <!-- Labio inferior -->
+        <path d="M188 368 Q198 378 215 382 Q232 378 242 368
+                 Q232 376 215 377 Q198 376 188 368Z"
+              fill="#b84050"/>
+        <!-- Línea labios -->
+        <path d="M188 368 Q215 370 242 368" stroke="#7a1828" stroke-width="1" fill="none" opacity="0.7"/>
+        <!-- Comisuras -->
+        <path d="M188 368 Q184 372 185 376" stroke="#8a2838" stroke-width="1.5" fill="none" opacity="0.6"/>
+        <path d="M242 368 Q246 372 245 376" stroke="#8a2838" stroke-width="1.5" fill="none" opacity="0.6"/>
+        <!-- Highlight labio inferior -->
+        <ellipse cx="215" cy="374" rx="16" ry="5"
+                 fill="#e06878" opacity="0.22" filter="url(#hblur)"/>
+
+        <!-- ─── CABELLO ─── -->
+        <!-- Masa principal del cabello — ondulado, volumen natural -->
+        <path d="M128 230 Q126 140 155 100 Q175 68 215 62
+                 Q255 68 275 100 Q304 140 302 230
+                 Q295 270 288 250 Q278 210 270 195
+                 Q256 165 215 160 Q174 165 160 195
+                 Q152 210 142 250 Q135 270 128 230Z"
+              fill="url(#hhair)"/>
+
+        <!-- Mechas laterales que caen -->
+        <path d="M128 230 Q118 260 115 310 Q112 360 120 400
+                 Q130 370 138 330 Q142 280 142 250 Z"
+              fill="#140a04" opacity="0.88"/>
+        <path d="M302 230 Q312 260 315 310 Q318 360 310 400
+                 Q300 370 292 330 Q288 280 288 250 Z"
+              fill="#140a04" opacity="0.88"/>
+
+        <!-- Flequillo / frente -->
+        <path d="M145 185 Q155 155 175 148 Q195 142 215 140
+                 Q235 142 255 148 Q275 155 285 185
+                 Q268 170 215 168 Q162 170 145 185Z"
+              fill="#0e0804" opacity="0.92"/>
+
+        <!-- Brillo cabello — efecto editorial -->
+        <ellipse cx="248" cy="105" rx="32" ry="24"
+                 fill="url(#hhairshine)" filter="url(#hblur)"/>
+        <path d="M250 88 Q268 98 272 118 Q260 104 248 96Z"
+              fill="#C9A84C" opacity="0.18" filter="url(#hblur)"/>
+
+        <!-- Rimlight dorado en perfil derecho -->
+        <path d="M296 180 Q308 220 304 270 Q295 250 292 210Z"
+              fill="#C9A84C" opacity="0.22" filter="url(#hblur)"/>
+        <!-- Rimlight en hombro derecho -->
+        <path d="M368 490 Q380 520 376 560 Q362 540 355 510Z"
+              fill="#C9A84C" opacity="0.28" filter="url(#hblur)"/>
+
+        <!-- Pendiente / arete sutil (elemento de moda) -->
+        <circle cx="130" cy="365" r="5" fill="#C9A84C" opacity="0.7"/>
+        <circle cx="130" cy="365" r="3" fill="#EDD070" opacity="0.85"/>
+        <line x1="130" y1="348" x2="130" y2="360" stroke="#C9A84C" stroke-width="1.5" opacity="0.6"/>
+
+        <!-- Collar sutil -->
+        <path d="M172 428 Q215 438 258 428" stroke="#C9A84C" stroke-width="1.2"
+              fill="none" opacity="0.35" stroke-linecap="round"/>
+
+        <!-- Grain / textura fotográfica sutil -->
+        <rect width="430" height="860" fill="rgba(20,15,8,0.08)" filter="url(#hgrain)" opacity="0.4"/>
+
+        <!-- Overlay texto — asegura legibilidad del copy -->
+        <rect width="430" height="860" fill="url(#hover)"/>
+      </g>
+    </svg>
+  </div>
+  <div class="htop">
+    <span class="sls-wm"><b>soul</b> lens studios</span>
+    <div class="sc-pill"><span class="sc-d" aria-hidden="true"></span>Soul Circle™</div>
+  </div>
+  <div class="hcont">
+    <!-- CopyVal: escasez real. 9 fundadores es un hecho documentado en Soul Circle™ -->
+    <div class="h-founder" style="display:inline-flex;align-items:center;gap:6px;font-size:var(--fs-xs);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.2);padding:5px 12px;border-radius:20px;margin-bottom:0.85rem;opacity:0;transform:translateY(14px);animation:hup var(--slow) var(--ease-out-expo) .05s forwards">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      Una de los 9 Arquitectos Fundadores
+    </div>
+    <p class="h-eye">{{TITULO_HERO}}</p>
+    <h1 class="h-name">{{NOMBRE_FIRST}}<span class="h-name-lt">{{NOMBRE_LAST}}</span></h1>
+    <!-- CopyVal: StoryBrand SB7 + 4U. Visitante=héroe, {{NOMBRE_FIRST}}=guía. Zeigarnik abierto. -->
+    <p class="h-tag">Si tu negocio necesita ser visto<br>por quien importa, <em>yo tengo el puente.</em></p>
+    <div class="cta-s">
+      <a href="https://wa.me/{{WA_NUMBER}}?text=Hola%2C+te+contacto+desde+el+Smart+Pass+de+{{WA_TEXT_HERO}}" class="btn btn-wa magnetic" aria-label="{{CTA_WA_LABEL}} por WhatsApp">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white" aria-hidden="true" style="filter:drop-shadow(0 2px 4px rgba(0,0,0,.4))"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        {{CTA_WA_LABEL}}
+      </a>
+      <a href="https://soullensstudios.live/agendar" class="btn btn-cal magnetic" aria-label="Agendar sesión estratégica con Soul Lens Studios">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="filter:drop-shadow(0 2px 4px rgba(0,0,0,.35))"><rect x="3" y="4" width="18" height="18" rx="3" fill="rgba(201,168,76,0.25)" stroke="var(--gold)" stroke-width="1.5"/><rect x="3" y="4" width="18" height="6" rx="3" fill="rgba(201,168,76,0.4)"/><line x1="8" y1="2" x2="8" y2="6" stroke="var(--gold)" stroke-width="2" stroke-linecap="round"/><line x1="16" y1="2" x2="16" y2="6" stroke="var(--gold)" stroke-width="2" stroke-linecap="round"/><rect x="7" y="12" width="3" height="3" rx=".5" fill="var(--gold)" opacity=".7"/><rect x="11" y="12" width="3" height="3" rx=".5" fill="var(--t1)" opacity=".35"/><rect x="15" y="12" width="3" height="3" rx=".5" fill="var(--t1)" opacity=".35"/><rect x="7" y="16" width="3" height="3" rx=".5" fill="var(--t1)" opacity=".35"/><rect x="11" y="16" width="3" height="3" rx=".5" fill="var(--t1)" opacity=".35"/></svg>
+        Agendar sesión estratégica
+      </a>
+      <a href="data:text/vcard;charset=utf-8,BEGIN%3AVCARD%0AVERSION%3A3.0%0AFN%3A{{VCF_FN}}%0AN%3A{{VCF_N}}%3B%3B%3B%0AORG%3ASoul%20Lens%20Studios%0ATITLE%3A{{VCF_TITLE}}%0ATEL%3BTYPE%3DCELL%2CPREF%3A%2B{{WA_NUMBER}}%0AURL%3Ahttps%3A//soullensstudios.live%0ANOTE%3ASmart%20Pass%20Soul%20Circle%E2%84%A2%202026%0AEND%3AVCARD" download="{{VCF_FILENAME}}" class="btn btn-save magnetic" aria-label="Guardar contacto de {{NOMBRE_COMPLETO}} en tu teléfono">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="filter:drop-shadow(0 2px 6px rgba(201,168,76,.4))"><circle cx="9" cy="7" r="4" fill="url(#vc1a)"/><path d="M2 20c0-3.5 3.1-6 7-6s7 2.5 7 6" stroke="url(#vc2a)" stroke-width="1.8" stroke-linecap="round" fill="none"/><line x1="19" y1="8" x2="19" y2="14" stroke="var(--gold-lt)" stroke-width="2.2" stroke-linecap="round"/><line x1="16" y1="11" x2="22" y2="11" stroke="var(--gold-lt)" stroke-width="2.2" stroke-linecap="round"/><defs><radialGradient id="vc1a" cx=".4" cy=".35" r=".6"><stop stop-color="#E8C96A"/><stop offset="1" stop-color="#9A6818"/></radialGradient><linearGradient id="vc2a" x1="2" y1="20" x2="16" y2="14" gradientUnits="userSpaceOnUse"><stop stop-color="#C9A84C"/><stop offset="1" stop-color="#8A6020"/></linearGradient></defs></svg>
+        Guardar contacto
+      </a>
+    </div>
+  </div>
+  <div class="scroll-hint" aria-hidden="true"><div class="scl"></div><span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(201,168,76,.35);margin-top:4px">scroll</span></div>
+</section>
+
+<!-- ══ SOBRE EL EMBAJADOR ══ -->
+<section class="about-sec rev" aria-labelledby="about-h">
+  <p class="slbl" id="about-h">Sobre {{NOMBRE_FIRST}}</p>
+  <div class="about-inner">
+    <div class="about-av" aria-label="Foto de {{NOMBRE_COMPLETO}}"><picture><source srcset="{{IMG_PREFIX}}-perfil.webp" type="image/webp"><img class="photo-real" src="{{IMG_PREFIX}}-perfil.jpg" alt="{{NOMBRE_COMPLETO}}" width="400" height="400" loading="lazy" style="border-radius:50%" onload="this.classList.add('loaded')" onerror="this.closest('picture').remove()"></picture><svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:100%;height:100%;border-radius:50%">
+  <defs>
+    <radialGradient id="avbg" cx="40%" cy="30%" r="70%"><stop offset="0%" stop-color="#1a2a4a"/><stop offset="100%" stop-color="#040507"/></radialGradient>
+    <linearGradient id="avpiel" x1="0" y1="0" x2="0.2" y2="1"><stop offset="0%" stop-color="#d49870"/><stop offset="55%" stop-color="#b07848"/><stop offset="100%" stop-color="#7a4828"/></linearGradient>
+    <linearGradient id="avhair" x1="0.3" y1="0" x2="0.6" y2="1"><stop offset="0%" stop-color="#2a180a"/><stop offset="100%" stop-color="#0a0502"/></linearGradient>
+    <radialGradient id="avhshine" cx="65%" cy="15%" r="35%"><stop offset="0%" stop-color="#C9A84C" stop-opacity="0.3"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+    <filter id="avsoft"><feGaussianBlur stdDeviation="0.6"/></filter>
+    <filter id="avblur"><feGaussianBlur stdDeviation="1.8"/></filter>
+    <clipPath id="avclip"><circle cx="40" cy="40" r="40"/></clipPath>
+  </defs>
+  <g clip-path="url(#avclip)">
+    <rect width="80" height="80" fill="url(#avbg)"/>
+    <!-- Luz rim dorado -->
+    <ellipse cx="70" cy="20" rx="40" ry="50" fill="#C9A84C" opacity="0.14" filter="url(#avblur)"/>
+    <!-- Fill azul -->
+    <ellipse cx="8" cy="38" rx="32" ry="42" fill="#0653ff" opacity="0.10" filter="url(#avblur)"/>
+    <!-- Cuerpo -->
+    <path d="M8 80 Q8 58 40 54 Q72 58 72 80Z" fill="#141820" opacity="0.97"/>
+    <!-- Cuello -->
+    <path d="M34 53 Q34 44 40 42 Q46 44 46 53 Q44 57 40 58 Q36 57 34 53Z" fill="url(#avpiel)" filter="url(#avsoft)"/>
+    <!-- Cara -->
+    <ellipse cx="40" cy="32" rx="22" ry="26" fill="url(#avpiel)" filter="url(#avsoft)"/>
+    <!-- Sombra facial derecha -->
+    <ellipse cx="54" cy="34" rx="10" ry="18" fill="#7a4025" opacity="0.22" filter="url(#avblur)"/>
+    <!-- Highlight pómulo -->
+    <ellipse cx="29" cy="28" rx="8" ry="6" fill="#f0c898" opacity="0.28" filter="url(#avblur)"/>
+    <!-- Ojos -->
+    <ellipse cx="32" cy="30" rx="5" ry="3" fill="#0a0604"/>
+    <ellipse cx="48" cy="30" rx="5" ry="3" fill="#0a0604"/>
+    <circle cx="33" cy="29" r="1.5" fill="rgba(255,255,255,0.8)"/>
+    <circle cx="49" cy="29" r="1.5" fill="rgba(255,255,255,0.8)"/>
+    <!-- Cejas -->
+    <path d="M26 24 Q32 20 38 23" stroke="#1e0e06" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+    <path d="M42 23 Q48 20 54 24" stroke="#1e0e06" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+    <!-- Nariz -->
+    <ellipse cx="37" cy="38" rx="3" ry="2" fill="#8a4828" opacity="0.38" filter="url(#avsoft)"/>
+    <ellipse cx="43" cy="38" rx="3" ry="2" fill="#8a4828" opacity="0.38" filter="url(#avsoft)"/>
+    <!-- Labios -->
+    <path d="M33 43 Q40 40 47 43 Q44 48 40 49 Q36 48 33 43Z" fill="#a83040"/>
+    <ellipse cx="40" cy="46" rx="5" ry="2" fill="#d05060" opacity="0.35" filter="url(#avblur)"/>
+    <!-- Cabello -->
+    <path d="M18 26 Q18 6 40 4 Q62 6 62 26 Q58 38 56 32 Q50 16 40 15 Q30 16 24 32 Q22 38 18 26Z" fill="url(#avhair)"/>
+    <path d="M18 26 Q14 14 17 6 Q20 3 24 2 Q20 10 20 22Z" fill="#0e0804" opacity="0.9"/>
+    <path d="M62 26 Q66 14 63 6 Q60 3 56 2 Q60 10 60 22Z" fill="#0e0804" opacity="0.9"/>
+    <!-- Brillo cabello -->
+    <ellipse cx="52" cy="10" rx="12" ry="8" fill="url(#avhshine)" filter="url(#avblur)"/>
+    <!-- Rimlight en cara -->
+    <path d="M60 18 Q64 26 62 36 Q58 28 57 18Z" fill="#C9A84C" opacity="0.2" filter="url(#avblur)"/>
+    <!-- Arete dorado -->
+    <circle cx="18" cy="38" r="2.5" fill="#C9A84C" opacity="0.8"/>
+    <circle cx="18" cy="38" r="1.5" fill="#EDD070"/>
+  </g>
+</svg></div>
+    <div class="about-info">
+      <p class="about-name">{{NOMBRE_COMPLETO}}</p>
+      <p class="about-role">{{ROL_CORTO}}</p>
+      <p class="about-origin">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="var(--t3)" stroke-width="1.5"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20" stroke="var(--t3)" stroke-width="1.5" stroke-linecap="round"/></svg>
+        {{ORIGEN}}
+      </p>
+    </div>
+  </div>
+  <!-- CopyVal: Viaje del Héroe comprimido. Origen→tensión→misión. Simpatía+Unidad LATAM. -->
+  <p class="about-bio">{{BIO_HTML}}</p>
+  <!-- CopyVal: Arco VALENTIS. Propósito>servicios. Identificación>admiración. Voz real de {{NOMBRE_FIRST}}. -->
+  <blockquote class="about-quote-pulse" style="position:relative;padding:1.1rem 1.25rem 1.1rem 1.5rem;margin-bottom:1.25rem;border-left:3px solid var(--gold);background:rgba(201,168,76,0.04);border-radius:0 9px 9px 0">
+    <p style="font-size:15px;font-style:italic;color:var(--t1);line-height:1.65;margin-bottom:.5rem">"{{QUOTE}}"</p>
+    <footer style="font-size:12px;font-weight:700;color:var(--gold);letter-spacing:.06em">— {{NOMBRE_COMPLETO}} · {{ROL_CORTO}}</footer>
+  </blockquote>
+  <p class="mercados-title">Mercados que atiendo</p>
+  <div class="mercados-pills">
+{{MERCADOS_PILLS}}
+  </div>
+</section>
+
+<!-- ══ GALERÍA ══ -->
+<section class="gal-sec rev" aria-labelledby="gal-h">
+  <div class="gal-lbl">
+    <p class="slbl" id="gal-h" style="margin-bottom:0">Momentos</p>
+    <span class="gal-counter" id="gal-cnt" aria-live="polite">1 / 9</span>
+  </div>
+  <div class="gal-viewport" id="gal-vp" role="region" aria-label="Galería de momentos de {{NOMBRE_COMPLETO}}">
+    <div class="gal-track" id="gal-track" role="list">
+
+      <div class="gitem" role="listitem" aria-label="En el estudio">
+        <div class="gimg"><picture><source srcset="{{IMG_PREFIX}}-01.webp" type="image/webp"><img class="photo-real" src="{{IMG_PREFIX}}-01.jpg" alt="{{NOMBRE_FIRST}} en el estudio SLS" width="400" height="576" loading="lazy" style="width:100%;height:100%;object-fit:cover" onload="this.classList.add('loaded')" onerror="this.closest('picture').remove()"></picture>
+          
+          <svg viewBox="0 0 196 182" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:100%;height:100%;object-fit:cover" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="gs1bg" x1="0.3" y1="0" x2="0.7" y2="1"><stop offset="0%" stop-color="#1a2844"/><stop offset="100%" stop-color="#080e1c"/></linearGradient>
+    <radialGradient id="gs1rim" cx="85%" cy="20%" r="55%"><stop offset="0%" stop-color="#C9A84C" stop-opacity="0.22"/><stop offset="100%" stop-color="#C9A84C" stop-opacity="0"/></radialGradient>
+    <radialGradient id="gs1fill" cx="10%" cy="55%" r="50%"><stop offset="0%" stop-color="#0653ff" stop-opacity="0.12"/><stop offset="100%" stop-color="#0653ff" stop-opacity="0"/></radialGradient>
+    <linearGradient id="gs1p" x1="0" y1="0" x2="0.15" y2="1"><stop offset="0%" stop-color="#d4a070"/><stop offset="55%" stop-color="#a87040"/><stop offset="100%" stop-color="#7a4820"/></linearGradient>
+    <linearGradient id="gs1h" x1="0.2" y1="0" x2="0.5" y2="1"><stop offset="0%" stop-color="#280e04"/><stop offset="100%" stop-color="#0a0402"/></linearGradient>
+    <filter id="gs1s"><feGaussianBlur stdDeviation="0.7"/></filter>
+    <filter id="gs1b"><feGaussianBlur stdDeviation="1.8"/></filter>
+    <linearGradient id="gs1ov" x1="0" y1="0" x2="0" y2="1"><stop offset="45%" stop-color="transparent"/><stop offset="100%" stop-color="rgba(4,5,7,0.75)"/></linearGradient>
+  </defs>
+  <!-- Fondo ambiente -->
+  <rect width="196" height="182" fill="url(#gs1bg)"/>
+  <rect width="196" height="182" fill="url(#gs1rim)"/>
+  <rect width="196" height="182" fill="url(#gs1fill)"/>
+  <!-- Figura humana -->
+  <!-- Cuerpo -->
+  <path d="M72 180 Q68 155 74 130 Q78 112 84 100 L98 95 L110 100 Q116 112 120 130 Q126 155 122 180Z" fill="#0e1018" opacity="0.95"/>
+  <!-- Cuello -->
+  <path d="M93 96 Q93 86 98 84 Q103 86 103 96 Q101 100 98 101 Q95 100 93 96Z" fill="url(#gs1p)" filter="url(#gs1s)"/>
+  <!-- Cara -->
+  <ellipse cx="98" cy="70" rx="20" ry="24" fill="url(#gs1p)" filter="url(#gs1s)"/>
+  <ellipse cx="108" cy="72" rx="9" ry="14" fill="rgba(100,50,20,0.22)" filter="url(#gs1b)"/>
+  <!-- Ojos -->
+  <ellipse cx="91" cy="67" rx="4" ry="2.5" fill="#0a0604"/>
+  <ellipse cx="105" cy="67" rx="4" ry="2.5" fill="#0a0604"/>
+  <circle cx="92" cy="66" r="1.2" fill="rgba(255,255,255,0.8)"/>
+  <circle cx="106" cy="66" r="1.2" fill="rgba(255,255,255,0.8)"/>
+  <!-- Cejas -->
+  <path d="M86 62 Q91 58 96 61" stroke="#1e0e06" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <path d="M100 61 Q105 58 110 62" stroke="#1e0e06" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Labios -->
+  <path d="M92 79 Q98 77 104 79 Q101 83 98 84 Q95 83 92 79Z" fill="#a03040"/>
+  <!-- Cabello -->
+  <path d="M78 60 Q78 40 98 38 Q118 40 118 60 Q115 72 113 65 Q108 52 98 51 Q88 52 83 65 Q81 72 78 60Z" fill="url(#gs1h)"/>
+  <!-- Rimlight en perfil -->
+  <path d="M116 50 Q120 60 117 72 Q114 62 113 50Z" fill="#C9A84C" opacity="0.28" filter="url(#gs1b)"/>
+  <!-- Overlay inferior -->
+  <rect width="196" height="182" fill="url(#gs1ov)"/>
+  <!-- Label foto simulada -->
+  <text x="98" y="175" text-anchor="middle" font-family="system-ui" font-size="7" fill="rgba(255,255,255,0.2)" letter-spacing="1">ESTUDIO</text>
+</svg>
+        </div>
+        <div class="gcap"><p class="gcap-t">En el estudio</p><p class="gcap-s">Producción SLS · Mérida</p></div>
+      </div>
+
+      <div class="gitem" role="listitem" aria-label="Conectando marcas">
+        <div class="gimg"><picture><source srcset="{{IMG_PREFIX}}-02.webp" type="image/webp"><img class="photo-real" src="{{IMG_PREFIX}}-02.jpg" alt="{{NOMBRE_FIRST}} conectando marcas" width="400" height="576" loading="lazy" style="width:100%;height:100%;object-fit:cover" onload="this.classList.add('loaded')" onerror="this.closest('picture').remove()"></picture>
+          
+          <svg viewBox="0 0 196 182" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:100%;height:100%;object-fit:cover" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="gs2bg" x1="0.3" y1="0" x2="0.7" y2="1"><stop offset="0%" stop-color="#0e1c38"/><stop offset="100%" stop-color="#060c1a"/></linearGradient>
+    <radialGradient id="gs2rim" cx="85%" cy="20%" r="55%"><stop offset="0%" stop-color="#0653ff" stop-opacity="0.22"/><stop offset="100%" stop-color="#0653ff" stop-opacity="0"/></radialGradient>
+    <radialGradient id="gs2fill" cx="10%" cy="55%" r="50%"><stop offset="0%" stop-color="#0653ff" stop-opacity="0.12"/><stop offset="100%" stop-color="#0653ff" stop-opacity="0"/></radialGradient>
+    <linearGradient id="gs2p" x1="0" y1="0" x2="0.15" y2="1"><stop offset="0%" stop-color="#d4a070"/><stop offset="55%" stop-color="#a87040"/><stop offset="100%" stop-color="#7a4820"/></linearGradient>
+    <linearGradient id="gs2h" x1="0.2" y1="0" x2="0.5" y2="1"><stop offset="0%" stop-color="#280e04"/><stop offset="100%" stop-color="#0a0402"/></linearGradient>
+    <filter id="gs2s"><feGaussianBlur stdDeviation="0.7"/></filter>
+    <filter id="gs2b"><feGaussianBlur stdDeviation="1.8"/></filter>
+    <linearGradient id="gs2ov" x1="0" y1="0" x2="0" y2="1"><stop offset="45%" stop-color="transparent"/><stop offset="100%" stop-color="rgba(4,5,7,0.75)"/></linearGradient>
+  </defs>
+  <!-- Fondo ambiente -->
+  <rect width="196" height="182" fill="url(#gs2bg)"/>
+  <rect width="196" height="182" fill="url(#gs2rim)"/>
+  <rect width="196" height="182" fill="url(#gs2fill)"/>
+  <!-- Figura humana -->
+  <!-- Cuerpo -->
+  <path d="M72 180 Q68 155 74 130 Q78 112 84 100 L98 95 L110 100 Q116 112 120 130 Q126 155 122 180Z" fill="#0e1018" opacity="0.95"/>
+  <!-- Cuello -->
+  <path d="M93 96 Q93 86 98 84 Q103 86 103 96 Q101 100 98 101 Q95 100 93 96Z" fill="url(#gs2p)" filter="url(#gs2s)"/>
+  <!-- Cara -->
+  <ellipse cx="98" cy="70" rx="20" ry="24" fill="url(#gs2p)" filter="url(#gs2s)"/>
+  <ellipse cx="108" cy="72" rx="9" ry="14" fill="rgba(100,50,20,0.22)" filter="url(#gs2b)"/>
+  <!-- Ojos -->
+  <ellipse cx="91" cy="67" rx="4" ry="2.5" fill="#0a0604"/>
+  <ellipse cx="105" cy="67" rx="4" ry="2.5" fill="#0a0604"/>
+  <circle cx="92" cy="66" r="1.2" fill="rgba(255,255,255,0.8)"/>
+  <circle cx="106" cy="66" r="1.2" fill="rgba(255,255,255,0.8)"/>
+  <!-- Cejas -->
+  <path d="M86 62 Q91 58 96 61" stroke="#1e0e06" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <path d="M100 61 Q105 58 110 62" stroke="#1e0e06" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Labios -->
+  <path d="M92 79 Q98 77 104 79 Q101 83 98 84 Q95 83 92 79Z" fill="#a03040"/>
+  <!-- Cabello -->
+  <path d="M78 60 Q78 40 98 38 Q118 40 118 60 Q115 72 113 65 Q108 52 98 51 Q88 52 83 65 Q81 72 78 60Z" fill="url(#gs2h)"/>
+  <!-- Rimlight en perfil -->
+  <path d="M116 50 Q120 60 117 72 Q114 62 113 50Z" fill="#0653ff" opacity="0.28" filter="url(#gs2b)"/>
+  <!-- Overlay inferior -->
+  <rect width="196" height="182" fill="url(#gs2ov)"/>
+  <!-- Label foto simulada -->
+  <text x="98" y="175" text-anchor="middle" font-family="system-ui" font-size="7" fill="rgba(255,255,255,0.2)" letter-spacing="1">EVENTO</text>
+</svg>
+        </div>
+        <div class="gcap"><p class="gcap-t">Conectando marcas</p><p class="gcap-s">Networking · Yucatán</p></div>
+      </div>
+
+      <div class="gitem" role="listitem" aria-label="Al aire libre">
+        <div class="gimg"><picture><source srcset="{{IMG_PREFIX}}-03.webp" type="image/webp"><img class="photo-real" src="{{IMG_PREFIX}}-03.jpg" alt="{{NOMBRE_FIRST}} al aire libre" width="400" height="576" loading="lazy" style="width:100%;height:100%;object-fit:cover" onload="this.classList.add('loaded')" onerror="this.closest('picture').remove()"></picture>
+          
+          <svg viewBox="0 0 196 182" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:100%;height:100%;object-fit:cover" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="gs3bg" x1="0.3" y1="0" x2="0.7" y2="1"><stop offset="0%" stop-color="#0a1a0e"/><stop offset="100%" stop-color="#040e06"/></linearGradient>
+    <radialGradient id="gs3rim" cx="85%" cy="20%" r="55%"><stop offset="0%" stop-color="#8FF0B5" stop-opacity="0.22"/><stop offset="100%" stop-color="#8FF0B5" stop-opacity="0"/></radialGradient>
+    <radialGradient id="gs3fill" cx="10%" cy="55%" r="50%"><stop offset="0%" stop-color="#0653ff" stop-opacity="0.12"/><stop offset="100%" stop-color="#0653ff" stop-opacity="0"/></radialGradient>
+    <linearGradient id="gs3p" x1="0" y1="0" x2="0.15" y2="1"><stop offset="0%" stop-color="#d4a070"/><stop offset="55%" stop-color="#a87040"/><stop offset="100%" stop-color="#7a4820"/></linearGradient>
+    <linearGradient id="gs3h" x1="0.2" y1="0" x2="0.5" y2="1"><stop offset="0%" stop-color="#280e04"/><stop offset="100%" stop-color="#0a0402"/></linearGradient>
+    <filter id="gs3s"><feGaussianBlur stdDeviation="0.7"/></filter>
+    <filter id="gs3b"><feGaussianBlur stdDeviation="1.8"/></filter>
+    <linearGradient id="gs3ov" x1="0" y1="0" x2="0" y2="1"><stop offset="45%" stop-color="transparent"/><stop offset="100%" stop-color="rgba(4,5,7,0.75)"/></linearGradient>
+  </defs>
+  <!-- Fondo ambiente -->
+  <rect width="196" height="182" fill="url(#gs3bg)"/>
+  <rect width="196" height="182" fill="url(#gs3rim)"/>
+  <rect width="196" height="182" fill="url(#gs3fill)"/>
+  <!-- Figura humana -->
+  <!-- Cuerpo -->
+  <path d="M72 180 Q68 155 74 130 Q78 112 84 100 L98 95 L110 100 Q116 112 120 130 Q126 155 122 180Z" fill="#0e1018" opacity="0.95"/>
+  <!-- Cuello -->
+  <path d="M93 96 Q93 86 98 84 Q103 86 103 96 Q101 100 98 101 Q95 100 93 96Z" fill="url(#gs3p)" filter="url(#gs3s)"/>
+  <!-- Cara -->
+  <ellipse cx="98" cy="70" rx="20" ry="24" fill="url(#gs3p)" filter="url(#gs3s)"/>
+  <ellipse cx="108" cy="72" rx="9" ry="14" fill="rgba(100,50,20,0.22)" filter="url(#gs3b)"/>
+  <!-- Ojos -->
+  <ellipse cx="91" cy="67" rx="4" ry="2.5" fill="#0a0604"/>
+  <ellipse cx="105" cy="67" rx="4" ry="2.5" fill="#0a0604"/>
+  <circle cx="92" cy="66" r="1.2" fill="rgba(255,255,255,0.8)"/>
+  <circle cx="106" cy="66" r="1.2" fill="rgba(255,255,255,0.8)"/>
+  <!-- Cejas -->
+  <path d="M86 62 Q91 58 96 61" stroke="#1e0e06" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <path d="M100 61 Q105 58 110 62" stroke="#1e0e06" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Labios -->
+  <path d="M92 79 Q98 77 104 79 Q101 83 98 84 Q95 83 92 79Z" fill="#a03040"/>
+  <!-- Cabello -->
+  <path d="M78 60 Q78 40 98 38 Q118 40 118 60 Q115 72 113 65 Q108 52 98 51 Q88 52 83 65 Q81 72 78 60Z" fill="url(#gs3h)"/>
+  <!-- Rimlight en perfil -->
+  <path d="M116 50 Q120 60 117 72 Q114 62 113 50Z" fill="#8FF0B5" opacity="0.28" filter="url(#gs3b)"/>
+  <!-- Overlay inferior -->
+  <rect width="196" height="182" fill="url(#gs3ov)"/>
+  <!-- Label foto simulada -->
+  <text x="98" y="175" text-anchor="middle" font-family="system-ui" font-size="7" fill="rgba(255,255,255,0.2)" letter-spacing="1">OUTDOOR</text>
+</svg>
+        </div>
+        <div class="gcap"><p class="gcap-t">Al aire libre</p><p class="gcap-s">Mérida · Yucatán</p></div>
+      </div>
+
+      <div class="gitem" role="listitem" aria-label="Estrategia en acción">
+        <div class="gimg"><picture><source srcset="{{IMG_PREFIX}}-04.webp" type="image/webp"><img class="photo-real" src="{{IMG_PREFIX}}-04.jpg" alt="{{NOMBRE_FIRST}} en sesión de estrategia" width="400" height="576" loading="lazy" style="width:100%;height:100%;object-fit:cover" onload="this.classList.add('loaded')" onerror="this.closest('picture').remove()"></picture>
+          
+          <svg viewBox="0 0 196 182" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:100%;height:100%;object-fit:cover" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="gs4bg" x1="0.3" y1="0" x2="0.7" y2="1"><stop offset="0%" stop-color="#0e1a30"/><stop offset="100%" stop-color="#060e1e"/></linearGradient>
+    <radialGradient id="gs4rim" cx="85%" cy="20%" r="55%"><stop offset="0%" stop-color="#0653ff" stop-opacity="0.22"/><stop offset="100%" stop-color="#0653ff" stop-opacity="0"/></radialGradient>
+    <radialGradient id="gs4fill" cx="10%" cy="55%" r="50%"><stop offset="0%" stop-color="#0653ff" stop-opacity="0.12"/><stop offset="100%" stop-color="#0653ff" stop-opacity="0"/></radialGradient>
+    <linearGradient id="gs4p" x1="0" y1="0" x2="0.15" y2="1"><stop offset="0%" stop-color="#d4a070"/><stop offset="55%" stop-color="#a87040"/><stop offset="100%" stop-color="#7a4820"/></linearGradient>
+    <linearGradient id="gs4h" x1="0.2" y1="0" x2="0.5" y2="1"><stop offset="0%" stop-color="#280e04"/><stop offset="100%" stop-color="#0a0402"/></linearGradient>
+    <filter id="gs4s"><feGaussianBlur stdDeviation="0.7"/></filter>
+    <filter id="gs4b"><feGaussianBlur stdDeviation="1.8"/></filter>
+    <linearGradient id="gs4ov" x1="0" y1="0" x2="0" y2="1"><stop offset="45%" stop-color="transparent"/><stop offset="100%" stop-color="rgba(4,5,7,0.75)"/></linearGradient>
+  </defs>
+  <!-- Fondo ambiente -->
+  <rect width="196" height="182" fill="url(#gs4bg)"/>
+  <rect width="196" height="182" fill="url(#gs4rim)"/>
+  <rect width="196" height="182" fill="url(#gs4fill)"/>
+  <!-- Figura humana -->
+  <!-- Cuerpo -->
+  <path d="M72 180 Q68 155 74 130 Q78 112 84 100 L98 95 L110 100 Q116 112 120 130 Q126 155 122 180Z" fill="#0e1018" opacity="0.95"/>
+  <!-- Cuello -->
+  <path d="M93 96 Q93 86 98 84 Q103 86 103 96 Q101 100 98 101 Q95 100 93 96Z" fill="url(#gs4p)" filter="url(#gs4s)"/>
+  <!-- Cara -->
+  <ellipse cx="98" cy="70" rx="20" ry="24" fill="url(#gs4p)" filter="url(#gs4s)"/>
+  <ellipse cx="108" cy="72" rx="9" ry="14" fill="rgba(100,50,20,0.22)" filter="url(#gs4b)"/>
+  <!-- Ojos -->
+  <ellipse cx="91" cy="67" rx="4" ry="2.5" fill="#0a0604"/>
+  <ellipse cx="105" cy="67" rx="4" ry="2.5" fill="#0a0604"/>
+  <circle cx="92" cy="66" r="1.2" fill="rgba(255,255,255,0.8)"/>
+  <circle cx="106" cy="66" r="1.2" fill="rgba(255,255,255,0.8)"/>
+  <!-- Cejas -->
+  <path d="M86 62 Q91 58 96 61" stroke="#1e0e06" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <path d="M100 61 Q105 58 110 62" stroke="#1e0e06" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Labios -->
+  <path d="M92 79 Q98 77 104 79 Q101 83 98 84 Q95 83 92 79Z" fill="#a03040"/>
+  <!-- Cabello -->
+  <path d="M78 60 Q78 40 98 38 Q118 40 118 60 Q115 72 113 65 Q108 52 98 51 Q88 52 83 65 Q81 72 78 60Z" fill="url(#gs4h)"/>
+  <!-- Rimlight en perfil -->
+  <path d="M116 50 Q120 60 117 72 Q114 62 113 50Z" fill="#0653ff" opacity="0.28" filter="url(#gs4b)"/>
+  <!-- Overlay inferior -->
+  <rect width="196" height="182" fill="url(#gs4ov)"/>
+  <!-- Label foto simulada -->
+  <text x="98" y="175" text-anchor="middle" font-family="system-ui" font-size="7" fill="rgba(255,255,255,0.2)" letter-spacing="1">ESTRATEGIA</text>
+</svg>
+        </div>
+        <div class="gcap"><p class="gcap-t">Estrategia en acción</p><p class="gcap-s">Soul Circle™ 2026</p></div>
+      </div>
+
+      <div class="gitem" role="listitem" aria-label="Caribe y lifestyle">
+        <div class="gimg"><picture><source srcset="{{IMG_PREFIX}}-05.webp" type="image/webp"><img class="photo-real" src="{{IMG_PREFIX}}-05.jpg" alt="{{NOMBRE_FIRST}} en el Caribe" width="400" height="576" loading="lazy" style="width:100%;height:100%;object-fit:cover" onload="this.classList.add('loaded')" onerror="this.closest('picture').remove()"></picture>
+          
+          <svg viewBox="0 0 196 182" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:100%;height:100%;object-fit:cover" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="gs5bg" x1="0.3" y1="0" x2="0.7" y2="1"><stop offset="0%" stop-color="#1c1408"/><stop offset="100%" stop-color="#0c0804"/></linearGradient>
+    <radialGradient id="gs5rim" cx="85%" cy="20%" r="55%"><stop offset="0%" stop-color="#F5C840" stop-opacity="0.22"/><stop offset="100%" stop-color="#F5C840" stop-opacity="0"/></radialGradient>
+    <radialGradient id="gs5fill" cx="10%" cy="55%" r="50%"><stop offset="0%" stop-color="#0653ff" stop-opacity="0.12"/><stop offset="100%" stop-color="#0653ff" stop-opacity="0"/></radialGradient>
+    <linearGradient id="gs5p" x1="0" y1="0" x2="0.15" y2="1"><stop offset="0%" stop-color="#d4a070"/><stop offset="55%" stop-color="#a87040"/><stop offset="100%" stop-color="#7a4820"/></linearGradient>
+    <linearGradient id="gs5h" x1="0.2" y1="0" x2="0.5" y2="1"><stop offset="0%" stop-color="#280e04"/><stop offset="100%" stop-color="#0a0402"/></linearGradient>
+    <filter id="gs5s"><feGaussianBlur stdDeviation="0.7"/></filter>
+    <filter id="gs5b"><feGaussianBlur stdDeviation="1.8"/></filter>
+    <linearGradient id="gs5ov" x1="0" y1="0" x2="0" y2="1"><stop offset="45%" stop-color="transparent"/><stop offset="100%" stop-color="rgba(4,5,7,0.75)"/></linearGradient>
+  </defs>
+  <!-- Fondo ambiente -->
+  <rect width="196" height="182" fill="url(#gs5bg)"/>
+  <rect width="196" height="182" fill="url(#gs5rim)"/>
+  <rect width="196" height="182" fill="url(#gs5fill)"/>
+  <!-- Figura humana -->
+  <!-- Cuerpo -->
+  <path d="M72 180 Q68 155 74 130 Q78 112 84 100 L98 95 L110 100 Q116 112 120 130 Q126 155 122 180Z" fill="#0e1018" opacity="0.95"/>
+  <!-- Cuello -->
+  <path d="M93 96 Q93 86 98 84 Q103 86 103 96 Q101 100 98 101 Q95 100 93 96Z" fill="url(#gs5p)" filter="url(#gs5s)"/>
+  <!-- Cara -->
+  <ellipse cx="98" cy="70" rx="20" ry="24" fill="url(#gs5p)" filter="url(#gs5s)"/>
+  <ellipse cx="108" cy="72" rx="9" ry="14" fill="rgba(100,50,20,0.22)" filter="url(#gs5b)"/>
+  <!-- Ojos -->
+  <ellipse cx="91" cy="67" rx="4" ry="2.5" fill="#0a0604"/>
+  <ellipse cx="105" cy="67" rx="4" ry="2.5" fill="#0a0604"/>
+  <circle cx="92" cy="66" r="1.2" fill="rgba(255,255,255,0.8)"/>
+  <circle cx="106" cy="66" r="1.2" fill="rgba(255,255,255,0.8)"/>
+  <!-- Cejas -->
+  <path d="M86 62 Q91 58 96 61" stroke="#1e0e06" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <path d="M100 61 Q105 58 110 62" stroke="#1e0e06" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Labios -->
+  <path d="M92 79 Q98 77 104 79 Q101 83 98 84 Q95 83 92 79Z" fill="#a03040"/>
+  <!-- Cabello -->
+  <path d="M78 60 Q78 40 98 38 Q118 40 118 60 Q115 72 113 65 Q108 52 98 51 Q88 52 83 65 Q81 72 78 60Z" fill="url(#gs5h)"/>
+  <!-- Rimlight en perfil -->
+  <path d="M116 50 Q120 60 117 72 Q114 62 113 50Z" fill="#F5C840" opacity="0.28" filter="url(#gs5b)"/>
+  <!-- Overlay inferior -->
+  <rect width="196" height="182" fill="url(#gs5ov)"/>
+  <!-- Label foto simulada -->
+  <text x="98" y="175" text-anchor="middle" font-family="system-ui" font-size="7" fill="rgba(255,255,255,0.2)" letter-spacing="1">CARIBE</text>
+</svg>
+        </div>
+        <div class="gcap"><p class="gcap-t">Lifestyle</p><p class="gcap-s">Caribe · VEN &amp; MX</p></div>
+      </div>
+
+      <div class="gitem" role="listitem" aria-label="Rodaje en exterior">
+        <div class="gimg"><picture><source srcset="{{IMG_PREFIX}}-06.webp" type="image/webp"><img class="photo-real" src="{{IMG_PREFIX}}-06.jpg" alt="{{NOMBRE_FIRST}} en rodaje exterior" width="400" height="576" loading="lazy" style="width:100%;height:100%;object-fit:cover" onload="this.classList.add('loaded')" onerror="this.closest('picture').remove()"></picture>
+          
+          <svg viewBox="0 0 196 182" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:100%;height:100%;object-fit:cover" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="gs6bg" x1="0.3" y1="0" x2="0.7" y2="1"><stop offset="0%" stop-color="#141c30"/><stop offset="100%" stop-color="#080e1c"/></linearGradient>
+    <radialGradient id="gs6rim" cx="85%" cy="20%" r="55%"><stop offset="0%" stop-color="#0653ff" stop-opacity="0.22"/><stop offset="100%" stop-color="#0653ff" stop-opacity="0"/></radialGradient>
+    <radialGradient id="gs6fill" cx="10%" cy="55%" r="50%"><stop offset="0%" stop-color="#0653ff" stop-opacity="0.12"/><stop offset="100%" stop-color="#0653ff" stop-opacity="0"/></radialGradient>
+    <linearGradient id="gs6p" x1="0" y1="0" x2="0.15" y2="1"><stop offset="0%" stop-color="#d4a070"/><stop offset="55%" stop-color="#a87040"/><stop offset="100%" stop-color="#7a4820"/></linearGradient>
+    <linearGradient id="gs6h" x1="0.2" y1="0" x2="0.5" y2="1"><stop offset="0%" stop-color="#280e04"/><stop offset="100%" stop-color="#0a0402"/></linearGradient>
+    <filter id="gs6s"><feGaussianBlur stdDeviation="0.7"/></filter>
+    <filter id="gs6b"><feGaussianBlur stdDeviation="1.8"/></filter>
+    <linearGradient id="gs6ov" x1="0" y1="0" x2="0" y2="1"><stop offset="45%" stop-color="transparent"/><stop offset="100%" stop-color="rgba(4,5,7,0.75)"/></linearGradient>
+  </defs>
+  <!-- Fondo ambiente -->
+  <rect width="196" height="182" fill="url(#gs6bg)"/>
+  <rect width="196" height="182" fill="url(#gs6rim)"/>
+  <rect width="196" height="182" fill="url(#gs6fill)"/>
+  <!-- Figura humana -->
+  <!-- Cuerpo -->
+  <path d="M72 180 Q68 155 74 130 Q78 112 84 100 L98 95 L110 100 Q116 112 120 130 Q126 155 122 180Z" fill="#0e1018" opacity="0.95"/>
+  <!-- Cuello -->
+  <path d="M93 96 Q93 86 98 84 Q103 86 103 96 Q101 100 98 101 Q95 100 93 96Z" fill="url(#gs6p)" filter="url(#gs6s)"/>
+  <!-- Cara -->
+  <ellipse cx="98" cy="70" rx="20" ry="24" fill="url(#gs6p)" filter="url(#gs6s)"/>
+  <ellipse cx="108" cy="72" rx="9" ry="14" fill="rgba(100,50,20,0.22)" filter="url(#gs6b)"/>
+  <!-- Ojos -->
+  <ellipse cx="91" cy="67" rx="4" ry="2.5" fill="#0a0604"/>
+  <ellipse cx="105" cy="67" rx="4" ry="2.5" fill="#0a0604"/>
+  <circle cx="92" cy="66" r="1.2" fill="rgba(255,255,255,0.8)"/>
+  <circle cx="106" cy="66" r="1.2" fill="rgba(255,255,255,0.8)"/>
+  <!-- Cejas -->
+  <path d="M86 62 Q91 58 96 61" stroke="#1e0e06" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <path d="M100 61 Q105 58 110 62" stroke="#1e0e06" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Labios -->
+  <path d="M92 79 Q98 77 104 79 Q101 83 98 84 Q95 83 92 79Z" fill="#a03040"/>
+  <!-- Cabello -->
+  <path d="M78 60 Q78 40 98 38 Q118 40 118 60 Q115 72 113 65 Q108 52 98 51 Q88 52 83 65 Q81 72 78 60Z" fill="url(#gs6h)"/>
+  <!-- Rimlight en perfil -->
+  <path d="M116 50 Q120 60 117 72 Q114 62 113 50Z" fill="#0653ff" opacity="0.28" filter="url(#gs6b)"/>
+  <!-- Overlay inferior -->
+  <rect width="196" height="182" fill="url(#gs6ov)"/>
+  <!-- Label foto simulada -->
+  <text x="98" y="175" text-anchor="middle" font-family="system-ui" font-size="7" fill="rgba(255,255,255,0.2)" letter-spacing="1">RODAJE</text>
+</svg>
+        </div>
+        <div class="gcap"><p class="gcap-t">Rodaje exterior</p><p class="gcap-s">Producción · Yucatán</p></div>
+      </div>
+
+      <div class="gitem" role="listitem" aria-label="Música y cultura">
+        <div class="gimg"><picture><source srcset="{{IMG_PREFIX}}-07.webp" type="image/webp"><img class="photo-real" src="{{IMG_PREFIX}}-07.jpg" alt="{{NOMBRE_FIRST}} disfrutando música" width="400" height="576" loading="lazy" style="width:100%;height:100%;object-fit:cover" onload="this.classList.add('loaded')" onerror="this.closest('picture').remove()"></picture>
+          
+          <svg viewBox="0 0 196 182" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:100%;height:100%;object-fit:cover" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="gs7bg" x1="0.3" y1="0" x2="0.7" y2="1"><stop offset="0%" stop-color="#180e24"/><stop offset="100%" stop-color="#0c0614"/></linearGradient>
+    <radialGradient id="gs7rim" cx="85%" cy="20%" r="55%"><stop offset="0%" stop-color="#C9A84C" stop-opacity="0.22"/><stop offset="100%" stop-color="#C9A84C" stop-opacity="0"/></radialGradient>
+    <radialGradient id="gs7fill" cx="10%" cy="55%" r="50%"><stop offset="0%" stop-color="#0653ff" stop-opacity="0.12"/><stop offset="100%" stop-color="#0653ff" stop-opacity="0"/></radialGradient>
+    <linearGradient id="gs7p" x1="0" y1="0" x2="0.15" y2="1"><stop offset="0%" stop-color="#d4a070"/><stop offset="55%" stop-color="#a87040"/><stop offset="100%" stop-color="#7a4820"/></linearGradient>
+    <linearGradient id="gs7h" x1="0.2" y1="0" x2="0.5" y2="1"><stop offset="0%" stop-color="#280e04"/><stop offset="100%" stop-color="#0a0402"/></linearGradient>
+    <filter id="gs7s"><feGaussianBlur stdDeviation="0.7"/></filter>
+    <filter id="gs7b"><feGaussianBlur stdDeviation="1.8"/></filter>
+    <linearGradient id="gs7ov" x1="0" y1="0" x2="0" y2="1"><stop offset="45%" stop-color="transparent"/><stop offset="100%" stop-color="rgba(4,5,7,0.75)"/></linearGradient>
+  </defs>
+  <!-- Fondo ambiente -->
+  <rect width="196" height="182" fill="url(#gs7bg)"/>
+  <rect width="196" height="182" fill="url(#gs7rim)"/>
+  <rect width="196" height="182" fill="url(#gs7fill)"/>
+  <!-- Figura humana -->
+  <!-- Cuerpo -->
+  <path d="M72 180 Q68 155 74 130 Q78 112 84 100 L98 95 L110 100 Q116 112 120 130 Q126 155 122 180Z" fill="#0e1018" opacity="0.95"/>
+  <!-- Cuello -->
+  <path d="M93 96 Q93 86 98 84 Q103 86 103 96 Q101 100 98 101 Q95 100 93 96Z" fill="url(#gs7p)" filter="url(#gs7s)"/>
+  <!-- Cara -->
+  <ellipse cx="98" cy="70" rx="20" ry="24" fill="url(#gs7p)" filter="url(#gs7s)"/>
+  <ellipse cx="108" cy="72" rx="9" ry="14" fill="rgba(100,50,20,0.22)" filter="url(#gs7b)"/>
+  <!-- Ojos -->
+  <ellipse cx="91" cy="67" rx="4" ry="2.5" fill="#0a0604"/>
+  <ellipse cx="105" cy="67" rx="4" ry="2.5" fill="#0a0604"/>
+  <circle cx="92" cy="66" r="1.2" fill="rgba(255,255,255,0.8)"/>
+  <circle cx="106" cy="66" r="1.2" fill="rgba(255,255,255,0.8)"/>
+  <!-- Cejas -->
+  <path d="M86 62 Q91 58 96 61" stroke="#1e0e06" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <path d="M100 61 Q105 58 110 62" stroke="#1e0e06" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Labios -->
+  <path d="M92 79 Q98 77 104 79 Q101 83 98 84 Q95 83 92 79Z" fill="#a03040"/>
+  <!-- Cabello -->
+  <path d="M78 60 Q78 40 98 38 Q118 40 118 60 Q115 72 113 65 Q108 52 98 51 Q88 52 83 65 Q81 72 78 60Z" fill="url(#gs7h)"/>
+  <!-- Rimlight en perfil -->
+  <path d="M116 50 Q120 60 117 72 Q114 62 113 50Z" fill="#C9A84C" opacity="0.28" filter="url(#gs7b)"/>
+  <!-- Overlay inferior -->
+  <rect width="196" height="182" fill="url(#gs7ov)"/>
+  <!-- Label foto simulada -->
+  <text x="98" y="175" text-anchor="middle" font-family="system-ui" font-size="7" fill="rgba(255,255,255,0.2)" letter-spacing="1">MUSICA</text>
+</svg>
+        </div>
+        <div class="gcap"><p class="gcap-t">Música y cultura</p><p class="gcap-s">Venezuela en el alma</p></div>
+      </div>
+
+      <div class="gitem" role="listitem" aria-label="Aprendizaje constante">
+        <div class="gimg"><picture><source srcset="{{IMG_PREFIX}}-08.webp" type="image/webp"><img class="photo-real" src="{{IMG_PREFIX}}-08.jpg" alt="{{NOMBRE_FIRST}} aprendiendo" width="400" height="576" loading="lazy" style="width:100%;height:100%;object-fit:cover" onload="this.classList.add('loaded')" onerror="this.closest('picture').remove()"></picture>
+          
+          <svg viewBox="0 0 196 182" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:100%;height:100%;object-fit:cover" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="gs8bg" x1="0.3" y1="0" x2="0.7" y2="1"><stop offset="0%" stop-color="#0e1628"/><stop offset="100%" stop-color="#060a16"/></linearGradient>
+    <radialGradient id="gs8rim" cx="85%" cy="20%" r="55%"><stop offset="0%" stop-color="#0653ff" stop-opacity="0.22"/><stop offset="100%" stop-color="#0653ff" stop-opacity="0"/></radialGradient>
+    <radialGradient id="gs8fill" cx="10%" cy="55%" r="50%"><stop offset="0%" stop-color="#0653ff" stop-opacity="0.12"/><stop offset="100%" stop-color="#0653ff" stop-opacity="0"/></radialGradient>
+    <linearGradient id="gs8p" x1="0" y1="0" x2="0.15" y2="1"><stop offset="0%" stop-color="#d4a070"/><stop offset="55%" stop-color="#a87040"/><stop offset="100%" stop-color="#7a4820"/></linearGradient>
+    <linearGradient id="gs8h" x1="0.2" y1="0" x2="0.5" y2="1"><stop offset="0%" stop-color="#280e04"/><stop offset="100%" stop-color="#0a0402"/></linearGradient>
+    <filter id="gs8s"><feGaussianBlur stdDeviation="0.7"/></filter>
+    <filter id="gs8b"><feGaussianBlur stdDeviation="1.8"/></filter>
+    <linearGradient id="gs8ov" x1="0" y1="0" x2="0" y2="1"><stop offset="45%" stop-color="transparent"/><stop offset="100%" stop-color="rgba(4,5,7,0.75)"/></linearGradient>
+  </defs>
+  <!-- Fondo ambiente -->
+  <rect width="196" height="182" fill="url(#gs8bg)"/>
+  <rect width="196" height="182" fill="url(#gs8rim)"/>
+  <rect width="196" height="182" fill="url(#gs8fill)"/>
+  <!-- Figura humana -->
+  <!-- Cuerpo -->
+  <path d="M72 180 Q68 155 74 130 Q78 112 84 100 L98 95 L110 100 Q116 112 120 130 Q126 155 122 180Z" fill="#0e1018" opacity="0.95"/>
+  <!-- Cuello -->
+  <path d="M93 96 Q93 86 98 84 Q103 86 103 96 Q101 100 98 101 Q95 100 93 96Z" fill="url(#gs8p)" filter="url(#gs8s)"/>
+  <!-- Cara -->
+  <ellipse cx="98" cy="70" rx="20" ry="24" fill="url(#gs8p)" filter="url(#gs8s)"/>
+  <ellipse cx="108" cy="72" rx="9" ry="14" fill="rgba(100,50,20,0.22)" filter="url(#gs8b)"/>
+  <!-- Ojos -->
+  <ellipse cx="91" cy="67" rx="4" ry="2.5" fill="#0a0604"/>
+  <ellipse cx="105" cy="67" rx="4" ry="2.5" fill="#0a0604"/>
+  <circle cx="92" cy="66" r="1.2" fill="rgba(255,255,255,0.8)"/>
+  <circle cx="106" cy="66" r="1.2" fill="rgba(255,255,255,0.8)"/>
+  <!-- Cejas -->
+  <path d="M86 62 Q91 58 96 61" stroke="#1e0e06" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <path d="M100 61 Q105 58 110 62" stroke="#1e0e06" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Labios -->
+  <path d="M92 79 Q98 77 104 79 Q101 83 98 84 Q95 83 92 79Z" fill="#a03040"/>
+  <!-- Cabello -->
+  <path d="M78 60 Q78 40 98 38 Q118 40 118 60 Q115 72 113 65 Q108 52 98 51 Q88 52 83 65 Q81 72 78 60Z" fill="url(#gs8h)"/>
+  <!-- Rimlight en perfil -->
+  <path d="M116 50 Q120 60 117 72 Q114 62 113 50Z" fill="#0653ff" opacity="0.28" filter="url(#gs8b)"/>
+  <!-- Overlay inferior -->
+  <rect width="196" height="182" fill="url(#gs8ov)"/>
+  <!-- Label foto simulada -->
+  <text x="98" y="175" text-anchor="middle" font-family="system-ui" font-size="7" fill="rgba(255,255,255,0.2)" letter-spacing="1">LIBROS</text>
+</svg>
+        </div>
+        <div class="gcap"><p class="gcap-t">Aprendizaje constante</p><p class="gcap-s">Libros · Estrategia</p></div>
+      </div>
+
+      <div class="gitem" role="listitem" aria-label="Playa y mar">
+        <div class="gimg"><picture><source srcset="{{IMG_PREFIX}}-09.webp" type="image/webp"><img class="photo-real" src="{{IMG_PREFIX}}-09.jpg" alt="{{NOMBRE_FIRST}} en la playa" width="400" height="576" loading="lazy" style="width:100%;height:100%;object-fit:cover" onload="this.classList.add('loaded')" onerror="this.closest('picture').remove()"></picture>
+          
+          <svg viewBox="0 0 196 182" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:100%;height:100%;object-fit:cover" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="gs9bg" x1="0.3" y1="0" x2="0.7" y2="1"><stop offset="0%" stop-color="#0a1624"/><stop offset="100%" stop-color="#040c12"/></linearGradient>
+    <radialGradient id="gs9rim" cx="85%" cy="20%" r="55%"><stop offset="0%" stop-color="#60C0FF" stop-opacity="0.22"/><stop offset="100%" stop-color="#60C0FF" stop-opacity="0"/></radialGradient>
+    <radialGradient id="gs9fill" cx="10%" cy="55%" r="50%"><stop offset="0%" stop-color="#0653ff" stop-opacity="0.12"/><stop offset="100%" stop-color="#0653ff" stop-opacity="0"/></radialGradient>
+    <linearGradient id="gs9p" x1="0" y1="0" x2="0.15" y2="1"><stop offset="0%" stop-color="#d4a070"/><stop offset="55%" stop-color="#a87040"/><stop offset="100%" stop-color="#7a4820"/></linearGradient>
+    <linearGradient id="gs9h" x1="0.2" y1="0" x2="0.5" y2="1"><stop offset="0%" stop-color="#280e04"/><stop offset="100%" stop-color="#0a0402"/></linearGradient>
+    <filter id="gs9s"><feGaussianBlur stdDeviation="0.7"/></filter>
+    <filter id="gs9b"><feGaussianBlur stdDeviation="1.8"/></filter>
+    <linearGradient id="gs9ov" x1="0" y1="0" x2="0" y2="1"><stop offset="45%" stop-color="transparent"/><stop offset="100%" stop-color="rgba(4,5,7,0.75)"/></linearGradient>
+  </defs>
+  <!-- Fondo ambiente -->
+  <rect width="196" height="182" fill="url(#gs9bg)"/>
+  <rect width="196" height="182" fill="url(#gs9rim)"/>
+  <rect width="196" height="182" fill="url(#gs9fill)"/>
+  <!-- Figura humana -->
+  <!-- Cuerpo -->
+  <path d="M72 180 Q68 155 74 130 Q78 112 84 100 L98 95 L110 100 Q116 112 120 130 Q126 155 122 180Z" fill="#0e1018" opacity="0.95"/>
+  <!-- Cuello -->
+  <path d="M93 96 Q93 86 98 84 Q103 86 103 96 Q101 100 98 101 Q95 100 93 96Z" fill="url(#gs9p)" filter="url(#gs9s)"/>
+  <!-- Cara -->
+  <ellipse cx="98" cy="70" rx="20" ry="24" fill="url(#gs9p)" filter="url(#gs9s)"/>
+  <ellipse cx="108" cy="72" rx="9" ry="14" fill="rgba(100,50,20,0.22)" filter="url(#gs9b)"/>
+  <!-- Ojos -->
+  <ellipse cx="91" cy="67" rx="4" ry="2.5" fill="#0a0604"/>
+  <ellipse cx="105" cy="67" rx="4" ry="2.5" fill="#0a0604"/>
+  <circle cx="92" cy="66" r="1.2" fill="rgba(255,255,255,0.8)"/>
+  <circle cx="106" cy="66" r="1.2" fill="rgba(255,255,255,0.8)"/>
+  <!-- Cejas -->
+  <path d="M86 62 Q91 58 96 61" stroke="#1e0e06" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <path d="M100 61 Q105 58 110 62" stroke="#1e0e06" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Labios -->
+  <path d="M92 79 Q98 77 104 79 Q101 83 98 84 Q95 83 92 79Z" fill="#a03040"/>
+  <!-- Cabello -->
+  <path d="M78 60 Q78 40 98 38 Q118 40 118 60 Q115 72 113 65 Q108 52 98 51 Q88 52 83 65 Q81 72 78 60Z" fill="url(#gs9h)"/>
+  <!-- Rimlight en perfil -->
+  <path d="M116 50 Q120 60 117 72 Q114 62 113 50Z" fill="#60C0FF" opacity="0.28" filter="url(#gs9b)"/>
+  <!-- Overlay inferior -->
+  <rect width="196" height="182" fill="url(#gs9ov)"/>
+  <!-- Label foto simulada -->
+  <text x="98" y="175" text-anchor="middle" font-family="system-ui" font-size="7" fill="rgba(255,255,255,0.2)" letter-spacing="1">PLAYA</text>
+</svg>
+        </div>
+        <div class="gcap"><p class="gcap-t">Playa y mar</p><p class="gcap-s">Caribe · Raíces</p></div>
+      </div>
+
+    </div>
+  </div>
+  <div class="gal-dots" id="gal-dots" role="tablist" aria-label="Navegar galería"></div>
+</section>
+
+<!-- ══ TOP 3 ══ -->
+<section class="stars-sec rev" aria-labelledby="st-h">
+  <div class="stars-hdr">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+    <span class="stars-lbl" id="st-h">Lo que más recomiendo</span>
+  </div>
+  <a href="https://soullensstudios.live/produccion" class="stcard rev d1" aria-label="Producción audiovisual premium">
+    <div class="st-top"><span class="st-num">★ 01</span><span class="st-badge">Más solicitado</span></div>
+    <p class="st-title">Producción audiovisual premium</p>
+    <!-- CopyVal: FAB — beneficio claro. Activa identificación del visitante. -->
+    <p class="st-desc">La imagen que posiciona antes de que abras la boca. Videos institucionales, spots, reels y contenido cinematográfico que tu cliente recuerda.</p>
+    <span class="st-arr" aria-hidden="true">↗</span>
+  </a>
+  <a href="https://soullensstudios.live/identidad" class="stcard rev d2" aria-label="Identidad y branding estratégico">
+    <div class="st-top"><span class="st-num">★ 02</span><span class="st-badge">Alto impacto</span></div>
+    <p class="st-title">Identidad y branding estratégico</p>
+    <p class="st-desc">Una marca que posiciona desde el primer contacto. Sistema visual completo con criterio y visión — para que tu negocio se vea como lo que vale.</p>
+    <span class="st-arr" aria-hidden="true">↗</span>
+  </a>
+  <a href="https://soullensstudios.live/cx" class="stcard rev d3" aria-label="CX humanizado con IA">
+    <div class="st-top"><span class="st-num">★ 03</span><span class="st-badge">Recurrente</span></div>
+    <p class="st-title">CX humanizado con IA</p>
+    <p class="st-desc">Tu negocio atendiendo, convirtiendo y dando seguimiento — mientras tú duermes. Inteligencia artificial que no pierde el tono humano.</p>
+    <span class="st-arr" aria-hidden="true">↗</span>
+  </a>
+</section>
+
+<!-- ══ VIDEO ══ -->
+<section class="rev" aria-labelledby="vid-h">
+  <p class="slbl" id="vid-h">El estudio detrás de {{NOMBRE_FIRST}}</p>
+  <div class="vid-wrap">
+    <iframe id="ytp" src="about:blank" data-src="https://www.youtube.com/embed/videoseries?list=UUCIN21M8Eof11J17eWjQYUmA&rel=0&modestbranding=1&color=white" title="Soul Lens Studios — Canal oficial" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy" aria-label="Video de Soul Lens Studios"></iframe>
+    <div class="vid-thumb" id="vthumb" role="button" tabindex="0" aria-label="Reproducir video de Soul Lens Studios">
+      <div style="text-align:center">
+        <div class="play3d"><svg width="24" height="24" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></div>
+        <p style="font-size:var(--fs-sm);color:var(--t2);margin-top:14px;letter-spacing:.04em">Soul Lens Studios · Canal oficial</p>
+      </div>
+    </div>
+  </div>
+  <p class="vid-lbl">Producción · IA · Estrategia digital — Mérida, Yucatán</p>
+  <p class="vid-note"><a href="https://www.youtube.com/@SoulLensStudios" target="_blank" rel="noopener" style="color:var(--blue);text-decoration:none">@SoulLensStudios</a> en YouTube</p>
+</section>
+
+<!-- ══ HOBBIES ══ -->
+<section aria-labelledby="hbb-h">
+  <p class="slbl" id="hbb-h">Fuera del trabajo</p>
+  <div class="hbb-grid">
+    <div class="hbb rev d1">
+      <svg class="hbbicon" width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M4 26c3-4 7-4 10 0s7 4 10 0 7-4 10 0" stroke="url(#wv1)" stroke-width="3" stroke-linecap="round" fill="none"/><path d="M4 20c3-4 7-4 10 0s7 4 10 0 7-4 10 0" stroke="url(#wv2)" stroke-width="2.5" stroke-linecap="round" fill="none" opacity=".6"/><path d="M4 14c3-4 7-4 10 0s7 4 10 0 7-4 10 0" stroke="url(#wv3)" stroke-width="2" stroke-linecap="round" fill="none" opacity=".3"/><defs><linearGradient id="wv1" x1="4" y1="26" x2="36" y2="26" gradientUnits="userSpaceOnUse"><stop stop-color="#40A0E0"/><stop offset="1" stop-color="#2060C0"/></linearGradient><linearGradient id="wv2" x1="4" y1="20" x2="36" y2="20" gradientUnits="userSpaceOnUse"><stop stop-color="#60B8F0"/><stop offset="1" stop-color="#3080D0"/></linearGradient><linearGradient id="wv3" x1="4" y1="14" x2="36" y2="14" gradientUnits="userSpaceOnUse"><stop stop-color="#90D0FF"/><stop offset="1" stop-color="#50A0E0"/></linearGradient></defs></svg>
+      <p class="hbb-name">{{HBB_NOMBRE_0}}</p><p class="hbb-sub">{{HBB_SUB_0}}</p>
+    </div>
+    <div class="hbb rev d2">
+      <svg class="hbbicon" width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true"><rect x="4" y="12" width="32" height="22" rx="4" fill="url(#ph1)"/><rect x="14" y="7" width="12" height="6" rx="2" fill="url(#ph2)"/><circle cx="20" cy="23" r="7" fill="url(#ph3)"/><circle cx="20" cy="23" r="4.5" fill="url(#ph4)"/><circle cx="20" cy="23" r="2" fill="#1a2040"/><circle cx="18.5" cy="21.5" r=".9" fill="rgba(255,255,255,.6)"/><circle cx="30" cy="17" r="2" fill="url(#ph5)"/><defs><linearGradient id="ph1" x1="4" y1="12" x2="36" y2="34" gradientUnits="userSpaceOnUse"><stop stop-color="#2a3550"/><stop offset="1" stop-color="#141c30"/></linearGradient><linearGradient id="ph2" x1="14" y1="7" x2="26" y2="13" gradientUnits="userSpaceOnUse"><stop stop-color="#3a4560"/><stop offset="1" stop-color="#202840"/></linearGradient><radialGradient id="ph3" cx=".5" cy=".5" r=".5"><stop stop-color="#3a5080"/><stop offset="1" stop-color="#1a2a50"/></radialGradient><radialGradient id="ph4" cx=".5" cy=".5" r=".5"><stop stop-color="#5070a0"/><stop offset="1" stop-color="#2a3870"/></radialGradient><radialGradient id="ph5" cx=".5" cy=".5" r=".5"><stop stop-color="#F0D060"/><stop offset="1" stop-color="#C09020"/></radialGradient></defs></svg>
+      <p class="hbb-name">{{HBB_NOMBRE_1}}</p><p class="hbb-sub">{{HBB_SUB_1}}</p>
+    </div>
+    <div class="hbb rev d3">
+      <svg class="hbbicon" width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M20 10v22c-2-3-6-5-12-5V8c6 0 10 2 12 2Z" fill="url(#bk1)"/><path d="M20 10v22c2-3 6-5 12-5V8c-6 0-10 2-12 2Z" fill="url(#bk2)"/><path d="M8 30h24l-2 3H10l-2-3Z" fill="url(#bk3)"/><line x1="20" y1="10" x2="20" y2="32" stroke="rgba(255,255,255,.15)" stroke-width="1"/><line x1="10" y1="16" x2="18" y2="17" stroke="rgba(255,255,255,.2)" stroke-width="1" stroke-linecap="round"/><line x1="10" y1="20" x2="18" y2="21" stroke="rgba(255,255,255,.15)" stroke-width="1" stroke-linecap="round"/><line x1="22" y1="16" x2="30" y2="17" stroke="rgba(255,255,255,.2)" stroke-width="1" stroke-linecap="round"/><line x1="22" y1="20" x2="30" y2="21" stroke="rgba(255,255,255,.15)" stroke-width="1" stroke-linecap="round"/><defs><linearGradient id="bk1" x1="8" y1="8" x2="20" y2="32" gradientUnits="userSpaceOnUse"><stop stop-color="#4060a0"/><stop offset="1" stop-color="#1a3070"/></linearGradient><linearGradient id="bk2" x1="20" y1="8" x2="32" y2="32" gradientUnits="userSpaceOnUse"><stop stop-color="#5070b0"/><stop offset="1" stop-color="#203880"/></linearGradient><linearGradient id="bk3" x1="8" y1="30" x2="32" y2="33" gradientUnits="userSpaceOnUse"><stop stop-color="#2a3a60"/><stop offset="1" stop-color="#101828"/></linearGradient></defs></svg>
+      <p class="hbb-name">{{HBB_NOMBRE_2}}</p><p class="hbb-sub">{{HBB_SUB_2}}</p>
+    </div>
+    <div class="hbb rev d4">
+      <svg class="hbbicon" width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle cx="13" cy="28" r="5" fill="url(#mu1)"/><circle cx="27" cy="24" r="5" fill="url(#mu2)"/><line x1="18" y1="28" x2="18" y2="10" stroke="url(#mu3)" stroke-width="2.5" stroke-linecap="round"/><line x1="32" y1="24" x2="32" y2="8" stroke="url(#mu4)" stroke-width="2.5" stroke-linecap="round"/><line x1="18" y1="10" x2="32" y2="8" stroke="url(#mu5)" stroke-width="3" stroke-linecap="round"/><defs><radialGradient id="mu1" cx=".4" cy=".4" r=".6"><stop stop-color="#C060E0"/><stop offset="1" stop-color="#6020a0"/></radialGradient><radialGradient id="mu2" cx=".4" cy=".4" r=".6"><stop stop-color="#D070F0"/><stop offset="1" stop-color="#7030b0"/></radialGradient><linearGradient id="mu3" x1="18" y1="28" x2="18" y2="10" gradientUnits="userSpaceOnUse"><stop stop-color="#C060E0"/><stop offset="1" stop-color="#8040c0"/></linearGradient><linearGradient id="mu4" x1="32" y1="24" x2="32" y2="8" gradientUnits="userSpaceOnUse"><stop stop-color="#D070F0"/><stop offset="1" stop-color="#9050d0"/></linearGradient><linearGradient id="mu5" x1="18" y1="10" x2="32" y2="8" gradientUnits="userSpaceOnUse"><stop stop-color="#E080FF"/><stop offset="1" stop-color="#C060E0"/></linearGradient></defs></svg>
+      <p class="hbb-name">{{HBB_NOMBRE_3}}</p><p class="hbb-sub">{{HBB_SUB_3}}</p>
+    </div>
+    <div class="hbb rev d1" style="grid-column:span 2">
+      <svg class="hbbicon" width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle cx="20" cy="20" r="4" fill="url(#net1)"/><circle cx="8" cy="10" r="3" fill="url(#net2)"/><circle cx="32" cy="10" r="3" fill="url(#net2)"/><circle cx="8" cy="30" r="3" fill="url(#net3)"/><circle cx="32" cy="30" r="3" fill="url(#net3)"/><line x1="11" y1="12" x2="17" y2="17" stroke="url(#netl1)" stroke-width="1.5" stroke-linecap="round"/><line x1="29" y1="12" x2="23" y2="17" stroke="url(#netl1)" stroke-width="1.5" stroke-linecap="round"/><line x1="11" y1="28" x2="17" y2="23" stroke="url(#netl2)" stroke-width="1.5" stroke-linecap="round"/><line x1="29" y1="28" x2="23" y2="23" stroke="url(#netl2)" stroke-width="1.5" stroke-linecap="round"/><defs><radialGradient id="net1" cx=".5" cy=".5" r=".5"><stop stop-color="#E8C96A"/><stop offset="1" stop-color="#A07828"/></radialGradient><radialGradient id="net2" cx=".5" cy=".5" r=".5"><stop stop-color="#60A0E0"/><stop offset="1" stop-color="#2060B0"/></radialGradient><radialGradient id="net3" cx=".5" cy=".5" r=".5"><stop stop-color="#80B0F0"/><stop offset="1" stop-color="#3070C0"/></radialGradient><linearGradient id="netl1" x1="8" y1="10" x2="20" y2="20" gradientUnits="userSpaceOnUse"><stop stop-color="#60A0E0" stop-opacity=".7"/><stop offset="1" stop-color="#E8C96A" stop-opacity=".5"/></linearGradient><linearGradient id="netl2" x1="8" y1="30" x2="20" y2="20" gradientUnits="userSpaceOnUse"><stop stop-color="#80B0F0" stop-opacity=".7"/><stop offset="1" stop-color="#E8C96A" stop-opacity=".5"/></linearGradient></defs></svg>
+      <p class="hbb-name">{{HBB_NOMBRE_4}}</p><p class="hbb-sub">{{HBB_SUB_4}}</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CASOS DE ÉXITO ══ -->
+<section class="casos-sec rev" aria-labelledby="casos-h">
+  <p class="slbl" id="casos-h">Resultados reales</p>
+  <div class="caso-card rev d1">
+    <p class="caso-client">SIMCA · Sector inmobiliario</p>
+    <p class="caso-result">Imagen de marca que acelera el cierre en preventa</p>
+    <p class="caso-desc">Producción audiovisual y estrategia de contenido que elevó la percepción de marca y aceleró el cierre de unidades en preventa.</p>
+  </div>
+  <div class="caso-card rev d2">
+    <p class="caso-client">AMPI Yucatán · Asociación inmobiliaria</p>
+    <p class="caso-result">Referente de autoridad del sector en la región</p>
+    <p class="caso-desc">Identidad renovada, producción de eventos y contenido estratégico que posicionó a AMPI como referencia del sector en Yucatán.</p>
+  </div>
+</section>
+
+<!-- ══ CATÁLOGO ══ -->
+<section aria-labelledby="svc-h">
+  <p class="slbl" id="svc-h">Catálogo completo</p>
+  <div class="svc-grid">
+    <a href="https://soullensstudios.live/produccion"     class="svc csl  rev d1"><div class="sdot" aria-hidden="true"></div><p class="svc-n">Producción audiovisual</p><p class="svc-s">Video institucional, spots, reels y documental</p><span class="sarr" aria-hidden="true">↗</span></a>
+    <a href="https://soullensstudios.live/identidad"      class="svc csl  rev d2"><div class="sdot" aria-hidden="true"></div><p class="svc-n">Identidad y branding</p><p class="svc-s">Logo, sistema visual, brandbook y aplicaciones</p><span class="sarr" aria-hidden="true">↗</span></a>
+    <a href="https://soullensstudios.live/podcast"        class="svc csl  rev d3"><div class="sdot" aria-hidden="true"></div><p class="svc-n">Producción de podcast</p><p class="svc-s">Estudio, grabación, edición y distribución</p><span class="sarr" aria-hidden="true">↗</span></a>
+    <a href="https://soullensstudios.live/smart-cards"    class="svc csl  rev d4"><div class="sdot" aria-hidden="true"></div><p class="svc-n">Smart Cards</p><p class="svc-s">Tarjetas digitales de alta conversión con QR</p><span class="sarr" aria-hidden="true">↗</span></a>
+    <a href="https://soullensstudios.live/contenido"      class="svc csf  rev d1"><div class="sdot" aria-hidden="true"></div><p class="svc-n">Estrategia de contenido</p><p class="svc-s">Plan editorial, reels, stories y campañas sociales</p><span class="sarr" aria-hidden="true">↗</span></a>
+    <a href="https://soullensstudios.live/landing"        class="svc csf  rev d2"><div class="sdot" aria-hidden="true"></div><p class="svc-n">Business Pages</p><p class="svc-s">Páginas de negocio y landing pages de conversión</p><span class="sarr" aria-hidden="true">↗</span></a>
+    <a href="https://soullensstudios.live/ads"            class="svc csf  rev d3"><div class="sdot" aria-hidden="true"></div><p class="svc-n">Campañas digitales</p><p class="svc-s">Meta Ads, Google Ads y pauta estratégica</p><span class="sarr" aria-hidden="true">↗</span></a>
+    <a href="https://soullensstudios.live/email"          class="svc csf  rev d4"><div class="sdot" aria-hidden="true"></div><p class="svc-n">Email marketing</p><p class="svc-s">Secuencias, newsletters y automatizaciones</p><span class="sarr" aria-hidden="true">↗</span></a>
+    <a href="https://soullensstudios.live/cx"             class="svc cslb rev d1"><div class="sdot" aria-hidden="true"></div><p class="svc-n">CX humanizado con IA</p><p class="svc-s">Atención, conversión y seguimiento automatizado</p><span class="sarr" aria-hidden="true">↗</span></a>
+    <a href="https://soullensstudios.live/automatizacion" class="svc cslb rev d2"><div class="sdot" aria-hidden="true"></div><p class="svc-n">Automatización</p><p class="svc-s">Flujos, integraciones y operación sin fricción</p><span class="sarr" aria-hidden="true">↗</span></a>
+    <a href="https://soullensstudios.live/saas"           class="svc cslb rev d3"><div class="sdot" aria-hidden="true"></div><p class="svc-n">SaaS y plataformas</p><p class="svc-s">Soluciones digitales a medida con IA integrada</p><span class="sarr" aria-hidden="true">↗</span></a>
+    <a href="https://soullensstudios.live/seo"            class="svc cslb rev d4"><div class="sdot" aria-hidden="true"></div><p class="svc-n">SEO y posicionamiento</p><p class="svc-s">Visibilidad orgánica y presencia en Google</p><span class="sarr" aria-hidden="true">↗</span></a>
+    <a href="https://soullensstudios.live/estrategia"     class="svc csc  rev d1"><div class="sdot" aria-hidden="true"></div><p class="svc-n">Estrategia de marca</p><p class="svc-s">Diagnóstico, posicionamiento y plan de crecimiento</p><span class="sarr" aria-hidden="true">↗</span></a>
+    <a href="https://soullensstudios.live/consultoria"    class="svc csc  rev d2"><div class="sdot" aria-hidden="true"></div><p class="svc-n">Consultoría premium</p><p class="svc-s">Sesiones estratégicas y aceleración comercial</p><span class="sarr" aria-hidden="true">↗</span></a>
+    <a href="https://soullensstudios.live/eventos"        class="svc csca rev d3"><div class="sdot" aria-hidden="true"></div><p class="svc-n">Eventos y activaciones</p><p class="svc-s">Producción audiovisual de lanzamientos y eventos</p><span class="sarr" aria-hidden="true">↗</span></a>
+    <a href="https://soullensstudios.live/comunidad"      class="svc csca rev d4"><div class="sdot" aria-hidden="true"></div><p class="svc-n">Comunidades y programas</p><p class="svc-s">Diseño y activación de ecosistemas de marca</p><span class="sarr" aria-hidden="true">↗</span></a>
+  </div>
+</section>
+
+<!-- ══ CREDENCIAL ══ -->
+<section aria-labelledby="id-h">
+  <p class="slbl" id="id-h">Credencial oficial</p>
+  <div class="idwrap rev">
+    <div class="idcard" id="tcard">
+      <div class="id-top">
+        <div class="id-av" aria-hidden="true"><svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:100%;height:100%;border-radius:50%">
+  <defs>
+    <radialGradient id="av2bg" cx="40%" cy="30%" r="70%"><stop offset="0%" stop-color="#1a2a4a"/><stop offset="100%" stop-color="#040507"/></radialGradient>
+    <linearGradient id="av2p" x1="0" y1="0" x2="0.2" y2="1"><stop offset="0%" stop-color="#d49870"/><stop offset="55%" stop-color="#b07848"/><stop offset="100%" stop-color="#7a4828"/></linearGradient>
+    <linearGradient id="av2h" x1="0.3" y1="0" x2="0.6" y2="1"><stop offset="0%" stop-color="#2a180a"/><stop offset="100%" stop-color="#0a0502"/></linearGradient>
+    <filter id="av2s"><feGaussianBlur stdDeviation="0.5"/></filter>
+    <filter id="av2b"><feGaussianBlur stdDeviation="1.2"/></filter>
+    <clipPath id="av2c"><circle cx="26" cy="26" r="26"/></clipPath>
+  </defs>
+  <g clip-path="url(#av2c)">
+    <rect width="52" height="52" fill="url(#av2bg)"/>
+    <ellipse cx="46" cy="12" rx="26" ry="32" fill="#C9A84C" opacity="0.14" filter="url(#av2b)"/>
+    <ellipse cx="5" cy="24" rx="20" ry="28" fill="#0653ff" opacity="0.10" filter="url(#av2b)"/>
+    <path d="M4 52 Q4 38 26 35 Q48 38 48 52Z" fill="#141820" opacity="0.97"/>
+    <ellipse cx="26" cy="21" rx="14" ry="17" fill="url(#av2p)" filter="url(#av2s)"/>
+    <ellipse cx="34" cy="22" rx="7" ry="12" fill="#7a4025" opacity="0.20" filter="url(#av2b)"/>
+    <ellipse cx="20" cy="19" rx="5" ry="4" fill="#f0c898" opacity="0.25" filter="url(#av2b)"/>
+    <ellipse cx="21" cy="20" rx="3" ry="2" fill="#0a0604"/>
+    <ellipse cx="31" cy="20" rx="3" ry="2" fill="#0a0604"/>
+    <circle cx="22" cy="19" r="1" fill="rgba(255,255,255,0.8)"/>
+    <circle cx="32" cy="19" r="1" fill="rgba(255,255,255,0.8)"/>
+    <path d="M17 16 Q21 13 25 15" stroke="#1e0e06" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+    <path d="M27 15 Q31 13 35 16" stroke="#1e0e06" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+    <path d="M21 28 Q26 26 31 28 Q29 31 26 32 Q23 31 21 28Z" fill="#a83040"/>
+    <path d="M11 17 Q11 4 26 3 Q41 4 41 17 Q38 25 37 21 Q32 11 26 10 Q20 11 15 21 Q14 25 11 17Z" fill="url(#av2h)"/>
+    <path d="M39 14 Q42 24 40 30 Q37 23 37 14Z" fill="#C9A84C" opacity="0.2" filter="url(#av2b)"/>
+    <circle cx="11" cy="25" r="1.8" fill="#C9A84C" opacity="0.8"/>
+  </g>
+</svg></div>
+        <div>
+          <p class="id-nm">{{NOMBRE_COMPLETO}}</p>
+          <p class="id-rl">{{ROL_CORTO}}</p>
+          <p class="id-st">{{ROL_CREDENCIAL}}</p>
+          <div class="id-band-row">
+            <span class="id-band">Origen</span>
+            <span style="font-size:var(--fs-xs);font-weight:700;color:rgba(143,240,181,.85);background:rgba(143,240,181,.08);border:1px solid rgba(143,240,181,.2);padding:4px 10px;border-radius:20px;letter-spacing:.06em;text-transform:uppercase">{{BAND_LABEL}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="id-div" aria-hidden="true"></div>
+      <div class="id-ft">
+        <span class="id-code">{{PASS_ID}} · v1.0</span>
+        <div class="qrbox" aria-label="Código QR — apunta a soullensstudios.live/embajador/{{SLUG}}">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true"><rect x="1" y="1" width="6" height="6" rx="1" fill="#3a3830"/><rect x="2" y="2" width="4" height="4" rx=".5" fill="#0d1117"/><rect x="3" y="3" width="2" height="2" fill="#3a3830"/><rect x="21" y="1" width="6" height="6" rx="1" fill="#3a3830"/><rect x="22" y="2" width="4" height="4" rx=".5" fill="#0d1117"/><rect x="23" y="3" width="2" height="2" fill="#3a3830"/><rect x="1" y="21" width="6" height="6" rx="1" fill="#3a3830"/><rect x="2" y="22" width="4" height="4" rx=".5" fill="#0d1117"/><rect x="3" y="23" width="2" height="2" fill="#3a3830"/><rect x="9" y="1" width="2" height="2" fill="#3a3830"/><rect x="12" y="1" width="3" height="1" fill="#3a3830"/><rect x="16" y="1" width="1" height="3" fill="#3a3830"/><rect x="9" y="5" width="3" height="2" fill="#3a3830"/><rect x="13" y="4" width="2" height="1" fill="#3a3830"/><rect x="1" y="9" width="1" height="3" fill="#3a3830"/><rect x="3" y="10" width="4" height="1" fill="#3a3830"/><rect x="9" y="9" width="11" height="1" fill="#3a3830"/><rect x="9" y="11" width="1" height="6" fill="#3a3830"/><rect x="11" y="12" width="5" height="2" fill="#3a3830"/><rect x="16" y="11" width="3" height="4" fill="#3a3830"/><rect x="20" y="9" width="1" height="5" fill="#3a3830"/><rect x="22" y="10" width="5" height="1" fill="#3a3830"/><rect x="24" y="12" width="3" height="3" fill="#3a3830"/><rect x="1" y="13" width="5" height="1" fill="#3a3830"/><rect x="1" y="15" width="2" height="4" fill="#3a3830"/><rect x="4" y="16" width="3" height="2" fill="#3a3830"/><rect x="9" y="17" width="4" height="3" fill="#3a3830"/><rect x="14" y="15" width="2" height="5" fill="#3a3830"/><rect x="17" y="16" width="3" height="2" fill="#3a3830"/><rect x="21" y="15" width="2" height="4" fill="#3a3830"/><rect x="24" y="16" width="3" height="2" fill="#3a3830"/><rect x="9" y="21" width="1" height="6" fill="#3a3830"/><rect x="11" y="22" width="3" height="2" fill="#3a3830"/><rect x="11" y="25" width="2" height="2" fill="#3a3830"/><rect x="15" y="21" width="4" height="2" fill="#3a3830"/><rect x="20" y="21" width="2" height="6" fill="#3a3830"/><rect x="23" y="22" width="4" height="1" fill="#3a3830"/><rect x="23" y="24" width="1" height="3" fill="#3a3830"/><rect x="25" y="25" width="2" height="2" fill="#3a3830"/></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ GARANTÍA ══ -->
+<section aria-labelledby="g-h">
+  <p class="slbl" id="g-h">Compromiso del estudio</p>
+  <div class="gbox rev">
+    <svg class="gico" width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true"><path d="M14 2L4 7v8c0 6 4.5 10.5 10 11.5C19.5 25.5 24 21 24 15V7L14 2Z" fill="url(#sh1)"/><path d="M14 2L4 7v8c0 6 4.5 10.5 10 11.5V2Z" fill="url(#sh2)"/><path d="M9 14l3.5 3.5 6-7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="sh1" x1="4" y1="2" x2="24" y2="26" gradientUnits="userSpaceOnUse"><stop stop-color="#2060d0"/><stop offset="1" stop-color="#0830a0"/></linearGradient><linearGradient id="sh2" x1="4" y1="2" x2="14" y2="26" gradientUnits="userSpaceOnUse"><stop stop-color="#3070e0" stop-opacity=".5"/><stop offset="1" stop-color="#0840b0" stop-opacity="0"/></linearGradient></defs></svg>
+    <div>
+      <p class="gt">Garantía de 90 días</p>
+      <!-- CopyVal: neocórtex — elimina riesgo percibido. Específico > genérico. -->
+      <p class="gd">Soul Lens Studios respalda cada proyecto. Si el resultado no cumple lo acordado, el equipo trabaja hasta que lo haga. O devuelve la inversión. Sin letra pequeña, sin cláusulas.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ BOTTOM CTA ══ -->
+<div class="bcta rev">
+  <!-- CopyVal: BOFU AIDA. Atención activada por el copy anterior. -->
+  <p class="bc-eye">¿Listo para que tu negocio sea imposible de ignorar?</p>
+  <h2 class="bc-h">El primer paso<br>es una conversación.</h2>
+  <!-- CopyVal: SB7 — frena el miedo al primer contacto. Sin urgencia falsa. -->
+  <p class="bc-s">{{CTA_BOTTOM_TEXT}}</p>
+  <div class="cta-s">
+    <a href="https://wa.me/{{WA_NUMBER}}?text=Hola%2C+te+contacto+desde+el+Smart+Pass+de+{{WA_TEXT_BOTTOM}}" class="btn btn-wa magnetic" aria-label="{{CTA_WA_LABEL}} por WhatsApp">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="white" aria-hidden="true" style="filter:drop-shadow(0 2px 4px rgba(0,0,0,.4))"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      {{CTA_WA_LABEL}}
+    </a>
+    <a href="https://soullensstudios.live/agendar" class="btn btn-cal magnetic" aria-label="Agendar sesión estratégica">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="filter:drop-shadow(0 2px 4px rgba(0,0,0,.35))"><rect x="3" y="4" width="18" height="18" rx="3" fill="rgba(201,168,76,0.22)" stroke="var(--gold)" stroke-width="1.5"/><rect x="3" y="4" width="18" height="6" rx="3" fill="rgba(201,168,76,0.38)"/><line x1="8" y1="2" x2="8" y2="6" stroke="var(--gold)" stroke-width="2" stroke-linecap="round"/><line x1="16" y1="2" x2="16" y2="6" stroke="var(--gold)" stroke-width="2" stroke-linecap="round"/><rect x="7" y="12" width="3" height="3" rx=".5" fill="var(--gold)" opacity=".7"/><rect x="11" y="12" width="3" height="3" rx=".5" fill="var(--t2)" opacity=".4"/><rect x="15" y="12" width="3" height="3" rx=".5" fill="var(--t2)" opacity=".4"/><rect x="7" y="16" width="3" height="3" rx=".5" fill="var(--t2)" opacity=".4"/><rect x="11" y="16" width="3" height="3" rx=".5" fill="var(--t2)" opacity=".4"/></svg>
+      Agendar sesión estratégica
+    </a>
+    <a href="data:text/vcard;charset=utf-8,BEGIN%3AVCARD%0AVERSION%3A3.0%0AFN%3A{{VCF_FN}}%0AN%3A{{VCF_N}}%3B%3B%3B%0AORG%3ASoul%20Lens%20Studios%0ATITLE%3A{{VCF_TITLE}}%0ATEL%3BTYPE%3DCELL%2CPREF%3A%2B{{WA_NUMBER}}%0AURL%3Ahttps%3A//soullensstudios.live%0ANOTE%3ASmart%20Pass%20Soul%20Circle%E2%84%A2%202026%0AEND%3AVCARD" download="{{VCF_FILENAME}}" class="btn btn-save magnetic" aria-label="Guardar contacto en teléfono">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="filter:drop-shadow(0 2px 6px rgba(201,168,76,.4))"><circle cx="9" cy="7" r="4" fill="url(#vc1b)"/><path d="M2 20c0-3.5 3.1-6 7-6s7 2.5 7 6" stroke="url(#vc2b)" stroke-width="1.8" stroke-linecap="round" fill="none"/><line x1="19" y1="8" x2="19" y2="14" stroke="var(--gold-lt)" stroke-width="2.2" stroke-linecap="round"/><line x1="16" y1="11" x2="22" y2="11" stroke="var(--gold-lt)" stroke-width="2.2" stroke-linecap="round"/><defs><radialGradient id="vc1b" cx=".4" cy=".35" r=".6"><stop stop-color="#E8C96A"/><stop offset="1" stop-color="#9A6818"/></radialGradient><linearGradient id="vc2b" x1="2" y1="20" x2="16" y2="14" gradientUnits="userSpaceOnUse"><stop stop-color="#C9A84C"/><stop offset="1" stop-color="#8A6020"/></linearGradient></defs></svg>
+      Guardar contacto
+    </a>
+  </div>
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <p class="fl"><span>soul</span> lens studios</p>
+  <p class="fsc">Soul Circle™ 2026 · Primera Generación Fundadora · Smart Pass Prototipo v1.0</p>
+  <p class="fdes">Designed by <a href="https://soullensstudios.live">Soul Lens</a> · Powered by <a href="https://xplorerstartups.ai">Xplorers Startups</a></p>
+  <p class="fleg">Este Smart Pass es una herramienta oficial. Todos los servicios, precios y condiciones son definidos y garantizados directamente por Soul Lens Studios.</p>
+</footer>
+
+<script>
+/* ── LITE MODE ── */
+(function(){
+  const c=navigator.connection||navigator.mozConnection||navigator.webkitConnection;
+  if(c&&(c.saveData||['slow-2g','2g'].includes(c.effectiveType)))
+    document.body.classList.add('lite');
+})();
+
+/* ── CURSOR + SPOTLIGHT ── */
+const cur=document.getElementById('cur');
+const spl=document.getElementById('spl');
+if(window.matchMedia('(hover:hover)').matches){
+  spl.style.opacity='1';
+  document.addEventListener('mousemove',e=>{
+    cur.style.left=e.clientX+'px';
+    cur.style.top=e.clientY+'px';
+    spl.style.setProperty('--mx',e.clientX+'px');
+    spl.style.setProperty('--my',e.clientY+'px');
+  });
+  document.querySelectorAll('a,button,.hbb,.gitem,.idcard').forEach(el=>{
+    el.addEventListener('mouseenter',()=>cur.classList.add('h'));
+    el.addEventListener('mouseleave',()=>cur.classList.remove('h'));
+  });
+}
+
+/* ── CARRUSEL — scrollLeft nativo (bug-free) ── */
+(function(){
+  const vp=document.getElementById('gal-vp')||document.querySelector('.gal-viewport');
+  const dotsC=document.getElementById('gal-dots');
+  const cnt=document.getElementById('gal-cnt');
+  if(!vp)return;
+  const items=vp.querySelectorAll('.gitem');
+  const N=items.length;
+  let curIdx=0,autoT=null;
+
+  function getItemW(){return items[0]?items[0].getBoundingClientRect().width+10:206}
+
+  for(let i=0;i<N;i++){
+    const d=document.createElement('button');
+    d.className='gdot'+(i===0?' a':'');
+    d.setAttribute('role','tab');
+    d.setAttribute('aria-label','Momento '+(i+1));
+    d.setAttribute('aria-selected',i===0?'true':'false');
+    d.addEventListener('click',()=>{goTo(i);resetAuto()});
+    dotsC.appendChild(d);
+  }
+
+  function goTo(idx){
+    curIdx=((idx%N)+N)%N;
+    vp.scrollTo({left:curIdx*getItemW(),behavior:'smooth'});
+    updateUI();
+  }
+
+  function updateUI(){
+    dotsC.querySelectorAll('.gdot').forEach((d,i)=>{
+      d.classList.toggle('a',i===curIdx);
+      d.setAttribute('aria-selected',i===curIdx?'true':'false');
+    });
+    if(cnt)cnt.textContent=(curIdx+1)+' / '+N;
+  }
+
+  let scrollEndT=null;
+  vp.addEventListener('scroll',()=>{
+    clearTimeout(scrollEndT);
+    scrollEndT=setTimeout(()=>{
+      const newIdx=Math.round(vp.scrollLeft/getItemW());
+      if(newIdx!==curIdx){curIdx=newIdx;updateUI()}
+    },80);
+  },{passive:true});
+
+  function startAuto(){
+    clearInterval(autoT);
+    if(window.matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+    autoT=setInterval(()=>goTo(curIdx+1),3500);
+  }
+  function resetAuto(){clearInterval(autoT);startAuto()}
+
+  vp.addEventListener('mouseenter',()=>clearInterval(autoT));
+  vp.addEventListener('mouseleave',startAuto);
+  vp.addEventListener('touchstart',()=>clearInterval(autoT),{passive:true});
+  vp.addEventListener('touchend',()=>setTimeout(startAuto,800));
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)clearInterval(autoT);else startAuto()});
+
+  startAuto();
+})();
+
+/* ── REVEALS ── */
+const ro=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');ro.unobserve(e.target)}});
+},{threshold:.06});
+document.querySelectorAll('.rev').forEach(el=>ro.observe(el));
+
+/* ── TILT ID CARD ── */
+const tc=document.getElementById('tcard');
+if(tc&&window.matchMedia('(hover:hover)').matches){
+  tc.parentElement.addEventListener('mousemove',e=>{
+    const r=tc.getBoundingClientRect();
+    tc.style.transform=`perspective(800px) rotateY(${((e.clientX-r.left)/r.width-.5)*12}deg) rotateX(${-((e.clientY-r.top)/r.height-.5)*8}deg) scale(1.02)`;
+  });
+  tc.parentElement.addEventListener('mouseleave',()=>{tc.style.transform=''});
+}
+
+/* ── HOBBY SPOTLIGHT ── */
+document.querySelectorAll('.hbb').forEach(c=>{
+  c.addEventListener('mousemove',e=>{
+    const r=c.getBoundingClientRect();
+    c.style.setProperty('--mx',((e.clientX-r.left)/r.width*100).toFixed(1)+'%');
+    c.style.setProperty('--my',((e.clientY-r.top)/r.height*100).toFixed(1)+'%');
+  });
+});
+
+/* ── VIDEO LAZY ── */
+const vt=document.getElementById('vthumb');
+const yp=document.getElementById('ytp');
+function loadVid(){yp.src=yp.dataset.src+'&autoplay=1';vt.classList.add('gone')}
+if(vt&&yp){
+  vt.addEventListener('click',loadVid);
+  vt.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();loadVid()}});
+}
+
+/* ── MAGNETIC ── */
+document.querySelectorAll('.magnetic').forEach(b=>{
+  b.addEventListener('mousemove',e=>{
+    const r=b.getBoundingClientRect();
+    b.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.16}px,${(e.clientY-r.top-r.height/2)*.16}px)`;
+  });
+  b.addEventListener('mouseleave',()=>{b.style.transform=''});
+});
+
+/* ── KONAMI ── */
+const kk=['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+let ki=0;
+document.addEventListener('keydown',e=>{
+  if(e.key===kk[ki]){ki++;if(ki===kk.length){ki=0;const m=document.createElement('div');m.textContent='✦ Soul Circle™ te eligió. Los primeros construyen posición.';m.style.cssText='position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:rgba(201,168,76,0.92);color:#040507;padding:13px 24px;border-radius:8px;font-size:14px;font-weight:700;z-index:9999;white-space:nowrap';document.body.appendChild(m);setTimeout(()=>m.remove(),4000);}}else{ki=0}
+});
+
+/* ── REDUCED MOTION fallback ── */
+if(window.matchMedia('(prefers-reduced-motion:reduce)').matches){
+  document.querySelectorAll('.rev').forEach(el=>{el.classList.add('in');el.style.transition='none'});
+}
+
+/* ══════════════════════════════════════════════════════════
+   HERO CANVAS — partículas cinematográficas última generación
+   Gold #C9A84C + Blue #0653ff · parallax gyroscopo · 60fps
+   Degrada a CSS ambient en prefers-reduced-motion / lite
+══════════════════════════════════════════════════════════ */
+(function(){
+  const canvas = document.getElementById('heroCanvas');
+  if(!canvas) return;
+  if(document.body.classList.contains('lite') ||
+     window.matchMedia('(prefers-reduced-motion:reduce)').matches){
+    canvas.style.display='none'; return;
+  }
+
+  const ctx = canvas.getContext('2d');
+  let W, H, raf, gyroX=0, gyroY=0, mouseX=0, mouseY=0;
+  let hasGyro = false;
+
+  function resize(){
+    const dpr = Math.min(window.devicePixelRatio||1, 2);
+    W = canvas.offsetWidth; H = canvas.offsetHeight;
+    canvas.width = W*dpr; canvas.height = H*dpr;
+    ctx.scale(dpr,dpr);
+  }
+
+  // Partículas
+  const GOLD = 'rgba(201,168,76,';
+  const BLUE = 'rgba(6,83,255,';
+  const WHITE= 'rgba(245,240,232,';
+
+  class Particle {
+    constructor(){
+      this.reset(true);
+    }
+    reset(init){
+      this.x = Math.random()*W;
+      this.y = init ? Math.random()*H : H + 20;
+      this.r = Math.random()*1.4 + 0.3;
+      this.vx = (Math.random()-0.5)*0.22;
+      this.vy = -(Math.random()*0.45 + 0.08);
+      this.life = 0;
+      this.maxLife = Math.random()*280 + 180;
+      // color: 60% gold, 30% blue, 10% white
+      const roll = Math.random();
+      if(roll < 0.60) { this.col = GOLD; this.r *= 1; }
+      else if(roll < 0.90){ this.col = BLUE; this.r *= 0.85; }
+      else { this.col = WHITE; this.r *= 0.7; }
+      this.parallax = Math.random()*0.018 + 0.004;
+    }
+    update(px, py){
+      this.life++;
+      this.x += this.vx + px*this.parallax;
+      this.y += this.vy + py*this.parallax*0.6;
+      if(this.life > this.maxLife || this.y < -20 || this.x < -20 || this.x > W+20)
+        this.reset(false);
+    }
+    draw(){
+      const t = this.life/this.maxLife;
+      // fade in 0-10%, full 10-80%, fade out 80-100%
+      let alpha;
+      if(t < 0.1) alpha = t/0.1 * 0.45;
+      else if(t < 0.8) alpha = 0.45;
+      else alpha = (1-t)/0.2 * 0.45;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.r, 0, Math.PI*2);
+      ctx.fillStyle = this.col + alpha + ')';
+      ctx.fill();
+    }
+  }
+
+  // Orbes de luz (grandes, lentos, en capas)
+  class Orb {
+    constructor(col, rx, ry, speed){
+      this.ox = Math.random()*W;
+      this.oy = Math.random()*H*0.7;
+      this.col = col;
+      this.rx = rx; this.ry = ry;
+      this.speed = speed;
+      this.t = Math.random()*Math.PI*2;
+      this.parallax = 0.008 + Math.random()*0.012;
+    }
+    update(px, py){
+      this.t += this.speed;
+      this.x = this.ox + Math.cos(this.t)*28 + px*this.parallax*W;
+      this.y = this.oy + Math.sin(this.t*0.7)*18 + py*this.parallax*H;
+    }
+    draw(){
+      const g = ctx.createRadialGradient(this.x,this.y,0,this.x,this.y,this.rx);
+      g.addColorStop(0, this.col+'0.07)');
+      g.addColorStop(0.5, this.col+'0.04)');
+      g.addColorStop(1, this.col+'0)');
+      ctx.save();
+      ctx.scale(1, this.ry/this.rx);
+      ctx.beginPath();
+      ctx.arc(this.x, this.y*this.rx/this.ry, this.rx, 0, Math.PI*2);
+      ctx.fillStyle = g;
+      ctx.fill();
+      ctx.restore();
+    }
+  }
+
+  const orbs = [
+    new Orb('rgba(6,83,255,', 160, 110, 0.0008),
+    new Orb('rgba(201,168,76,', 120, 90, 0.0006),
+    new Orb('rgba(6,83,255,', 100, 80, 0.0012),
+  ];
+
+  const N_PARTICLES = 55;
+  let particles = [];
+
+  function init(){
+    resize();
+    particles = Array.from({length:N_PARTICLES}, ()=>new Particle());
+    orbs.forEach(o=>{ o.ox=Math.random()*W; o.oy=Math.random()*H*0.65; });
+  }
+
+  function loop(){
+    raf = requestAnimationFrame(loop);
+    ctx.clearRect(0,0,W,H);
+
+    // Punto de parallax — gyro o mouse
+    let px = hasGyro ? gyroX : (mouseX/W - 0.5)*2;
+    let py = hasGyro ? gyroY : (mouseY/H - 0.5)*2;
+
+    // Dibujar orbes primero (fondo)
+    orbs.forEach(o=>{ o.update(px,py); o.draw(); });
+
+    // Partículas encima
+    particles.forEach(p=>{ p.update(px,py); p.draw(); });
+  }
+
+  // Gyroscopo — móvil
+  function onGyro(e){
+    hasGyro = true;
+    gyroX = Math.max(-1,Math.min(1,(e.gamma||0)/30));
+    gyroY = Math.max(-1,Math.min(1,((e.beta||0)-40)/40));
+  }
+  if('DeviceOrientationEvent' in window){
+    if(typeof DeviceOrientationEvent.requestPermission==='function'){
+      // iOS 13+ requiere permiso — se activa en primer tap
+      document.addEventListener('click',function once(){
+        DeviceOrientationEvent.requestPermission().then(r=>{
+          if(r==='granted') window.addEventListener('deviceorientation',onGyro,{passive:true});
+        }).catch(()=>{});
+        document.removeEventListener('click',once);
+      },{once:true});
+    } else {
+      window.addEventListener('deviceorientation',onGyro,{passive:true});
+    }
+  }
+
+  // Mouse parallax — desktop
+  document.addEventListener('mousemove',e=>{
+    if(hasGyro) return;
+    mouseX = e.clientX; mouseY = e.clientY;
+  });
+
+  window.addEventListener('resize',()=>{ resize(); });
+
+  init();
+  loop();
+
+  // Detener cuando no es visible
+  document.addEventListener('visibilitychange',()=>{
+    if(document.hidden){ cancelAnimationFrame(raf); }
+    else { loop(); }
+  });
+})();
+/* ══════════════════════════════════════════════════════════ */
+
+</script>
+</body>
+</html>

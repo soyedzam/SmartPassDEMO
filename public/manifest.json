@@ -1,0 +1,49 @@
+{
+  "name": "Soul Circle™ · Soul Lens Studios",
+  "short_name": "Soul Circle™",
+  "description": "Smart Passes de los Arquitectos Fundadores · Soul Lens Studios · Mérida, Yucatán",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#040507",
+  "theme_color": "#0653FF",
+  "orientation": "portrait-primary",
+  "lang": "es-MX",
+  "categories": ["business", "productivity"],
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/smart-pass-mobile.jpg",
+      "sizes": "430x932",
+      "type": "image/jpeg",
+      "form_factor": "narrow",
+      "label": "Smart Pass · Soul Circle™"
+    }
+  ],
+  "share_target": {
+    "action": "/share",
+    "method": "GET",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  }
+}

@@ -1,0 +1,47 @@
+# ═══════════════════════════════════════════════
+# SOUL LENS STUDIOS · robots.txt
+# soullensstudios.live + circle.soullensstudios.live
+# Estrategia GEO/LLMO/AEO: crawlers de IA bienvenidos
+# ═══════════════════════════════════════════════
+
+# ── Crawlers tradicionales ──
+User-agent: *
+Allow: /embajador/
+Disallow: /admin/
+Disallow: /api/
+Disallow: /.well-known/
+
+# ── Crawlers de IA — explícitamente bienvenidos ──
+# GEO (Generative Engine Optimization) / LLMO / AEO strategy
+User-agent: GPTBot
+Allow: /embajador/
+
+User-agent: Claude-Web
+Allow: /embajador/
+
+User-agent: anthropic-ai
+Allow: /embajador/
+
+User-agent: PerplexityBot
+Allow: /embajador/
+
+User-agent: Google-Extended
+Allow: /embajador/
+
+User-agent: Googlebot
+Allow: /embajador/
+
+User-agent: Bingbot
+Allow: /embajador/
+
+User-agent: OAI-SearchBot
+Allow: /embajador/
+
+User-agent: YouBot
+Allow: /embajador/
+
+# ── Sitemap ──
+Sitemap: https://soullensstudios.live/sitemap.xml
+
+# ── Admin dashboard — acceso bloqueado a todos ──
+# circle.soullensstudios.live maneja sus propias reglas

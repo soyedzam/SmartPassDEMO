@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>404 · Página no encontrada · Soul Lens Studios</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#040507; --blue:#0653FF; --gold:#C9A84C;
+  --t1:#F0EBE2; --t2:#A8A29B; --t3:#5E5A55;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:var(--bg); color:var(--t1);
+  display:flex; align-items:center; justify-content:center;
+  text-align:center; padding:2rem;
+  -webkit-font-smoothing:antialiased;
+  position:relative;
+}
+.orb {
+  position:fixed; border-radius:50%; filter:blur(90px);
+  pointer-events:none; z-index:0;
+}
+.orb-1{width:400px;height:400px;top:-100px;right:-80px;background:radial-gradient(circle,rgba(6,83,255,.12),transparent 70%)}
+.orb-2{width:350px;height:350px;bottom:0;left:-80px;background:radial-gradient(circle,rgba(201,168,76,.09),transparent 70%)}
+.inner{position:relative;z-index:1;max-width:460px}
+.code{
+  font-size:clamp(96px,18vw,140px);font-weight:900;
+  letter-spacing:-.08em;line-height:.9;
+  background:linear-gradient(135deg,var(--t2),var(--t3));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+  margin-bottom:1.5rem;
+}
+.eyebrow{
+  font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:.85rem;
+}
+.title{
+  font-size:clamp(20px,4vw,26px);font-weight:800;
+  letter-spacing:-.03em;line-height:1.15;
+  color:var(--t1);margin-bottom:.65rem;
+}
+.sub{font-size:14px;color:var(--t2);line-height:1.65;margin-bottom:2rem}
+.links{display:flex;flex-direction:column;gap:.55rem;align-items:center}
+.btn-home{
+  display:inline-flex;align-items:center;gap:.55rem;
+  padding:.85rem 1.85rem;border-radius:99px;
+  background:var(--blue);color:#fff;
+  font-family:inherit;font-size:14px;font-weight:700;
+  text-decoration:none;transition:background .15s,transform .15s;
+  border:none;cursor:pointer;
+}
+.btn-home:hover{background:#1a5eff;transform:translateY(-2px)}
+.btn-back{
+  font-size:12px;color:var(--t3);cursor:pointer;
+  background:none;border:none;font-family:inherit;
+  transition:color .15s;padding:.35rem;
+}
+.btn-back:hover{color:var(--t2)}
+.pass-ids{
+  margin-top:2rem;padding-top:1.25rem;
+  border-top:1px solid rgba(255,255,255,.06);
+  font-size:10.5px;color:var(--t3);line-height:1.6;
+}
+.pass-ids a{
+  color:var(--blue);text-decoration:none;font-weight:600;
+}
+.pass-ids a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
+<div class="inner">
+  <div class="eyebrow">Soul Lens Studios · Error</div>
+  <div class="code">404</div>
+  <div class="title">Esta página no existe.</div>
+  <div class="sub">El Smart Pass que buscas puede haber cambiado de URL,<br>o todavía no está publicado.</div>
+
+  <div class="links">
+    <a href="https://soullensstudios.live" class="btn-home">
+      ← Ir a Soul Lens Studios
+    </a>
+    <button class="btn-back" onclick="history.back()">Volver a la página anterior</button>
+  </div>
+
+  <div class="pass-ids">
+    ¿Eres un Arquitecto Fundador? Tu Smart Pass está en<br>
+    <a href="https://soullensstudios.live/embajador/">soullensstudios.live/embajador/tu-nombre/</a>
+  </div>
+</div>
+</body>
+</html>

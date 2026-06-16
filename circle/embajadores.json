@@ -1,0 +1,730 @@
+{
+  "_meta": {
+    "sistema": "Soul Circle™ Smart Pass System 2026",
+    "version": "2.0",
+    "generado": "2026-06-10",
+    "arquitecto": "Ed Zam · Xplorers Startups",
+    "template": "Smart_Pass_MASTER_TEMPLATE.html",
+    "pass_url_base": "https://soullensstudios.live/embajador/",
+    "total": 9,
+    "activos": 6,
+    "pendientes": 3
+  },
+  "embajadores": [
+    {
+      "id": 1,
+      "slug": "anais-hidalgo",
+      "pass_id": "PASS-SLS-2026-ANA-H",
+      "estado": "activo",
+      "programa": "SC",
+      "band_label": "Arquitecto/a Fundador/a",
+      "fecha_ingreso": "2026-06-02",
+      "nombre_completo": "Anais Hidalgo",
+      "nombre_first": "Anais",
+      "nombre_last": "Hidalgo",
+      "titulo_hero": "Directora Creativa · Embajadora de Expansión",
+      "rol_corto": "Directora Creativa",
+      "rol_credencial": "Embajadora de Expansión · AI Soul Lens Studios",
+      "origen": "Venezolana · Mérida, Yucatán",
+      "ciudad": "Mérida, Yucatán",
+      "schema_locality": "Mérida",
+      "schema_region": "Yucatán",
+      "wa_number": "5215644844928",
+      "email": "anais@email.com",
+      "instagram": "@anais.hid",
+      "bio_html": "Venezolana por origen, yucateca por convicción. Conecta negocios reales con la audiencia que necesitan. Lleva más de 8 años impulsando marcas en LATAM con una combinación de estrategia y producción audiovisual.",
+      "quote": "No abro puertas de servicios. Abro conversaciones que cambian el rumbo de un negocio.",
+      "meta_description": "¿Tu negocio necesita ser visto por quien importa? Anais Hidalgo conecta marcas de Mérida con el estudio audiovisual más completo de Yucatán. Soul Lens Studios · Soul Circle™.",
+      "mercados": [
+        "Real estate",
+        "Gastronomía",
+        "Wellness y salud",
+        "Turismo y hospedaje"
+      ],
+      "hobbies": [
+        {
+          "nombre": "Fotografía",
+          "sub": "Ojo entrenado para capturar lo que otros no ven."
+        },
+        {
+          "nombre": "Música latina",
+          "sub": "Venezuela en la sangre, Yucatán en el corazón."
+        },
+        {
+          "nombre": "Libros y estrategia",
+          "sub": "Psicología, negocios y narrativa siempre en mano."
+        },
+        {
+          "nombre": "Playa y mar",
+          "sub": "El Caribe me inspira. Mérida me da el escenario."
+        },
+        {
+          "nombre": "Networking",
+          "sub": "Conectar personas es mi superpoder."
+        }
+      ],
+      "talla_playera": "S",
+      "talla_tenis": "24",
+      "fotos": {
+        "hero": true,
+        "perfil": true,
+        "og": true,
+        "galeria": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "pendientes": [
+          "gal-05",
+          "gal-06",
+          "gal-07",
+          "gal-08",
+          "gal-09"
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "slug": "carlos-mendez",
+      "pass_id": "PASS-SLS-2026-CAR-M",
+      "estado": "activo",
+      "programa": "SC",
+      "band_label": "Arquitecto/a Fundador/a",
+      "fecha_ingreso": "2026-06-02",
+      "nombre_completo": "Carlos Méndez",
+      "nombre_first": "Carlos",
+      "nombre_last": "Méndez",
+      "titulo_hero": "Coach de Negocios · Embajador de Expansión",
+      "rol_corto": "Coach de Negocios",
+      "rol_credencial": "Embajador de Expansión · AI Soul Lens Studios",
+      "origen": "Mexicano · Mérida, Yucatán",
+      "ciudad": "Mérida, Yucatán",
+      "schema_locality": "Mérida",
+      "schema_region": "Yucatán",
+      "wa_number": "5219992223344",
+      "email": "carlos@email.com",
+      "instagram": "@carlos.mnd",
+      "bio_html": "Coach de negocios con más de 10 años formando empresarios en Yucatán. Especialista en estrategia comercial y expansión de mercados para Pymes que quieren crecer sin perder el control.",
+      "quote": "Un negocio sin estrategia es un negocio con fecha de caducidad.",
+      "meta_description": "Carlos Méndez — Coach de Negocios en Mérida, Yucatán. Estrategia comercial y expansión de mercados. Soul Lens Studios · Soul Circle™.",
+      "mercados": [
+        "Pymes en expansión",
+        "Educación",
+        "Servicios profesionales",
+        "Consultoría"
+      ],
+      "hobbies": [
+        {
+          "nombre": "Lectura",
+          "sub": "Filosofía, estrategia y liderazgo."
+        },
+        {
+          "nombre": "Running",
+          "sub": "5 días a la semana, sin excusas."
+        },
+        {
+          "nombre": "Viajes",
+          "sub": "Aprender de otros mercados."
+        },
+        {
+          "nombre": "Familia",
+          "sub": "Mi ancla y mi motor."
+        },
+        {
+          "nombre": "Mentoría",
+          "sub": "Dar lo que me costó años aprender."
+        }
+      ],
+      "talla_playera": "M",
+      "talla_tenis": "27",
+      "fotos": {
+        "hero": true,
+        "perfil": true,
+        "og": true,
+        "galeria": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "pendientes": []
+      }
+    },
+    {
+      "id": 3,
+      "slug": "valentina-flores",
+      "pass_id": "PASS-SLS-2026-VAL-F",
+      "estado": "activo",
+      "programa": "SC",
+      "band_label": "Arquitecto/a Fundador/a",
+      "fecha_ingreso": "2026-06-02",
+      "nombre_completo": "Valentina Flores",
+      "nombre_first": "Valentina",
+      "nombre_last": "Flores",
+      "titulo_hero": "Estratega Digital · Embajadora de Expansión",
+      "rol_corto": "Estratega Digital",
+      "rol_credencial": "Embajadora de Expansión · AI Soul Lens Studios",
+      "origen": "Mexicana · Mérida, Yucatán",
+      "ciudad": "Mérida, Yucatán",
+      "schema_locality": "Mérida",
+      "schema_region": "Yucatán",
+      "wa_number": "5219993334455",
+      "email": "vale@email.com",
+      "instagram": "@vale.flores",
+      "bio_html": "Estratega digital con enfoque en marcas de lifestyle y hospitalidad. Transforma presencias digitales en máquinas de captación en el sector turístico y de hospitalidad de Yucatán.",
+      "quote": "La mejor estrategia no es la más compleja. Es la que tu cliente entiende y ejecuta.",
+      "meta_description": "Valentina Flores — Estratega Digital en Mérida. Marcas de lifestyle, hoteles y hospitalidad. Soul Lens Studios · Soul Circle™.",
+      "mercados": [
+        "Marcas personales",
+        "Hoteles y hospedaje",
+        "Beach clubs y costa",
+        "Restaurantes"
+      ],
+      "hobbies": [
+        {
+          "nombre": "Surf",
+          "sub": "El mar siempre tiene razón."
+        },
+        {
+          "nombre": "Diseño",
+          "sub": "Visión estética aplicada a la estrategia."
+        },
+        {
+          "nombre": "Podcasts",
+          "sub": "Aprender mientras me muevo."
+        },
+        {
+          "nombre": "Yoga",
+          "sub": "Claridad mental es claridad estratégica."
+        },
+        {
+          "nombre": "Gastronomía",
+          "sub": "La cultura de un lugar vive en su comida."
+        }
+      ],
+      "talla_playera": "XS",
+      "talla_tenis": "23",
+      "fotos": {
+        "hero": false,
+        "perfil": true,
+        "og": false,
+        "galeria": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "pendientes": [
+          "hero",
+          "og",
+          "gal-01",
+          "gal-02",
+          "gal-03",
+          "gal-04",
+          "gal-05",
+          "gal-06",
+          "gal-07",
+          "gal-08",
+          "gal-09"
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "slug": "marco-morales",
+      "pass_id": "PASS-SLS-2026-MAR-M",
+      "estado": "pendiente",
+      "programa": "SC",
+      "band_label": "Arquitecto/a Fundador/a",
+      "fecha_ingreso": "2026-06-03",
+      "nombre_completo": "Marco Morales",
+      "nombre_first": "Marco",
+      "nombre_last": "Morales",
+      "titulo_hero": "Consultor Inmobiliario · Embajador de Expansión",
+      "rol_corto": "Consultor Inmobiliario",
+      "rol_credencial": "Embajador de Expansión · AI Soul Lens Studios",
+      "origen": "Mexicano · Mérida, Yucatán",
+      "ciudad": "Mérida, Yucatán",
+      "schema_locality": "Mérida",
+      "schema_region": "Yucatán",
+      "wa_number": "5219994445566",
+      "email": "marco@email.com",
+      "instagram": "@marco.mor",
+      "bio_html": "Consultor inmobiliario con 12 años en el mercado yucateco. Experto en preventa de desarrollos y en conectar a inversionistas con los proyectos correctos en Mérida y la Riviera Maya.",
+      "quote": "En real estate, la primera impresión no es el inmueble. Es la confianza.",
+      "meta_description": "Marco Morales — Consultor Inmobiliario en Mérida. Preventa de desarrollos y conexión con inversionistas. Soul Lens Studios · Soul Circle™.",
+      "mercados": [
+        "Real estate",
+        "Desarrollos inmobiliarios",
+        "Brokers inmobiliarios"
+      ],
+      "hobbies": [
+        {
+          "nombre": "Golf",
+          "sub": "Disciplina, paciencia y estrategia."
+        },
+        {
+          "nombre": "Arquitectura",
+          "sub": "El espacio define la experiencia."
+        },
+        {
+          "nombre": "Vinos",
+          "sub": "Catador ocasional, entusiasta constante."
+        },
+        {
+          "nombre": "Ciclismo",
+          "sub": "Ciudad y naturaleza al mismo tiempo."
+        },
+        {
+          "nombre": "Inversiones",
+          "sub": "El dinero que trabaja mientras tú duermes."
+        }
+      ],
+      "talla_playera": "L",
+      "talla_tenis": "28",
+      "fotos": {
+        "hero": false,
+        "perfil": false,
+        "og": false,
+        "galeria": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "pendientes": [
+          "hero",
+          "perfil",
+          "og",
+          "gal-01",
+          "gal-02",
+          "gal-03",
+          "gal-04",
+          "gal-05",
+          "gal-06",
+          "gal-07",
+          "gal-08",
+          "gal-09"
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "slug": "lucia-garcia",
+      "pass_id": "PASS-SLS-2026-LUC-G",
+      "estado": "activo",
+      "programa": "SC",
+      "band_label": "Arquitecto/a Fundador/a",
+      "fecha_ingreso": "2026-06-03",
+      "nombre_completo": "Lucía García",
+      "nombre_first": "Lucía",
+      "nombre_last": "García",
+      "titulo_hero": "Nutrióloga · Embajadora de Expansión",
+      "rol_corto": "Nutrióloga",
+      "rol_credencial": "Embajadora de Expansión · AI Soul Lens Studios",
+      "origen": "Mexicana · Mérida, Yucatán",
+      "ciudad": "Mérida, Yucatán",
+      "schema_locality": "Mérida",
+      "schema_region": "Yucatán",
+      "wa_number": "5219995556677",
+      "email": "lucia@email.com",
+      "instagram": "@lucia.gar",
+      "bio_html": "Nutrióloga clínica y especialista en rendimiento humano. Trabaja con clínicas, empresas y profesionales que entienden que la energía es el activo más valioso de cualquier negocio.",
+      "quote": "La salud no es un lujo. Es la plataforma desde la que construyes todo lo demás.",
+      "meta_description": "Lucía García — Nutrióloga en Mérida. Salud, rendimiento humano y wellness empresarial. Soul Lens Studios · Soul Circle™.",
+      "mercados": [
+        "Clínicas y salud",
+        "Wellness y salud",
+        "Educación"
+      ],
+      "hobbies": [
+        {
+          "nombre": "Crossfit",
+          "sub": "Fuerza funcional, mentalidad de hierro."
+        },
+        {
+          "nombre": "Cocina saludable",
+          "sub": "Que sea nutritivo y que sepa bien."
+        },
+        {
+          "nombre": "Meditación",
+          "sub": "10 minutos al día que valen 2 horas."
+        },
+        {
+          "nombre": "Naturaleza",
+          "sub": "Los cenotes son mi lugar de recarga."
+        },
+        {
+          "nombre": "Lectura científica",
+          "sub": "La evidencia siempre gana."
+        }
+      ],
+      "talla_playera": "S",
+      "talla_tenis": "23.5",
+      "fotos": {
+        "hero": true,
+        "perfil": true,
+        "og": true,
+        "galeria": [
+          true,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "pendientes": [
+          "gal-03",
+          "gal-04",
+          "gal-05",
+          "gal-06",
+          "gal-07",
+          "gal-08",
+          "gal-09"
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "slug": "rodrigo-perez",
+      "pass_id": "PASS-SLS-2026-ROD-P",
+      "estado": "pendiente",
+      "programa": "SC",
+      "band_label": "Arquitecto/a Fundador/a",
+      "fecha_ingreso": "2026-06-04",
+      "nombre_completo": "Rodrigo Pérez",
+      "nombre_first": "Rodrigo",
+      "nombre_last": "Pérez",
+      "titulo_hero": "Chef y Restaurantero · Embajador de Expansión",
+      "rol_corto": "Chef y Restaurantero",
+      "rol_credencial": "Embajador de Expansión · AI Soul Lens Studios",
+      "origen": "Mexicano · Mérida, Yucatán",
+      "ciudad": "Mérida, Yucatán",
+      "schema_locality": "Mérida",
+      "schema_region": "Yucatán",
+      "wa_number": "5219996667788",
+      "email": "rod@email.com",
+      "instagram": "@rod.perez",
+      "bio_html": "Chef con restaurante propio en Mérida y 15 años de carrera en la industria gastronómica del sureste. Especialista en posicionar negocios de hospitalidad que quieren llenar su local todas las noches.",
+      "quote": "Un restaurante no vende comida. Vende una experiencia que la gente quiere repetir.",
+      "meta_description": "Rodrigo Pérez — Chef y Restaurantero en Mérida. Gastronomía y hospitalidad en Yucatán. Soul Lens Studios · Soul Circle™.",
+      "mercados": [
+        "Gastronomía",
+        "Turismo y hospedaje",
+        "Beach clubs y costa"
+      ],
+      "hobbies": [
+        {
+          "nombre": "Cocina de autor",
+          "sub": "Yucatán en cada plato."
+        },
+        {
+          "nombre": "Agricultura",
+          "sub": "De la tierra a la mesa, literalmente."
+        },
+        {
+          "nombre": "Boxeo",
+          "sub": "Disciplina que se construye rep a rep."
+        },
+        {
+          "nombre": "Viajes gastronómicos",
+          "sub": "Comer es la mejor forma de conocer un lugar."
+        },
+        {
+          "nombre": "Música",
+          "sub": "La banda sonora de la cocina importa."
+        }
+      ],
+      "talla_playera": "XL",
+      "talla_tenis": "29",
+      "fotos": {
+        "hero": true,
+        "perfil": false,
+        "og": false,
+        "galeria": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "pendientes": [
+          "perfil",
+          "og",
+          "gal-01",
+          "gal-02",
+          "gal-03",
+          "gal-04",
+          "gal-05",
+          "gal-06",
+          "gal-07",
+          "gal-08",
+          "gal-09"
+        ]
+      }
+    },
+    {
+      "id": 7,
+      "slug": "sofia-ruiz",
+      "pass_id": "PASS-SLS-2026-SOF-R",
+      "estado": "activo",
+      "programa": "SC",
+      "band_label": "Arquitecto/a Fundador/a",
+      "fecha_ingreso": "2026-06-04",
+      "nombre_completo": "Sofía Ruiz",
+      "nombre_first": "Sofía",
+      "nombre_last": "Ruiz",
+      "titulo_hero": "Arquitecta · Embajadora de Expansión",
+      "rol_corto": "Arquitecta",
+      "rol_credencial": "Embajadora de Expansión · AI Soul Lens Studios",
+      "origen": "Mexicana · Mérida, Yucatán",
+      "ciudad": "Mérida, Yucatán",
+      "schema_locality": "Mérida",
+      "schema_region": "Yucatán",
+      "wa_number": "5219997778899",
+      "email": "sofia@email.com",
+      "instagram": "@sofia.rz",
+      "bio_html": "Arquitecta con despacho propio en Mérida. Especialista en diseño residencial de alto nivel y desarrollos mixtos en la Riviera Maya. Convierte espacios en experiencias que valen el precio.",
+      "quote": "El espacio que habitas te moldea. Diseñar bien es un acto de responsabilidad.",
+      "meta_description": "Sofía Ruiz — Arquitecta en Mérida. Diseño residencial y desarrollos de alto nivel en Yucatán. Soul Lens Studios · Soul Circle™.",
+      "mercados": [
+        "Constructoras y arquitectura",
+        "Real estate",
+        "Servicios profesionales"
+      ],
+      "hobbies": [
+        {
+          "nombre": "Diseño de interiores",
+          "sub": "El detalle que convierte un espacio en experiencia."
+        },
+        {
+          "nombre": "Pintura",
+          "sub": "El arte que informa la arquitectura."
+        },
+        {
+          "nombre": "Yoga",
+          "sub": "La estructura del cuerpo informa la del espacio."
+        },
+        {
+          "nombre": "Viajes de arquitectura",
+          "sub": "Aprender de los maestros en sus obras."
+        },
+        {
+          "nombre": "Fotografía",
+          "sub": "El encuadre perfecto revela la esencia."
+        }
+      ],
+      "talla_playera": "XS",
+      "talla_tenis": "23",
+      "fotos": {
+        "hero": true,
+        "perfil": true,
+        "og": true,
+        "galeria": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "pendientes": [
+          "gal-06",
+          "gal-07",
+          "gal-08",
+          "gal-09"
+        ]
+      }
+    },
+    {
+      "id": 8,
+      "slug": "edwin-rodriguez",
+      "pass_id": "PASS-NS-2026-EDW-R",
+      "estado": "activo",
+      "programa": "NS",
+      "band_label": "Soul Origen™",
+      "fecha_ingreso": "2026-06-02",
+      "nombre_completo": "Edwin Rodríguez",
+      "nombre_first": "Edwin",
+      "nombre_last": "Rodríguez",
+      "titulo_hero": "Productor de Video & Animador · Soul Origen™",
+      "rol_corto": "Productor de Video & Animador",
+      "rol_credencial": "Soul Origen™ · Núcleo Soul™",
+      "origen": "Mexicano · Mérida, Yucatán",
+      "ciudad": "Mérida, Yucatán",
+      "schema_locality": "Mérida",
+      "schema_region": "Yucatán",
+      "wa_number": "5219998889900",
+      "email": "edwin@soullens.com",
+      "instagram": "@edwin.sl",
+      "bio_html": "Productor de video y animador en Soul Lens Studios. Especialista en motion graphics, postproducción y narrativa visual para marcas que quieren impacto real y medible.",
+      "quote": "Las marcas que no se ven, no existen. Las que se ven mal, desearían no existir.",
+      "meta_description": "Edwin Rodríguez — Productor de Video y Animador en Soul Lens Studios, Mérida. Motion graphics y postproducción. Núcleo Soul™.",
+      "mercados": [
+        "Producción audiovisual",
+        "Motion design",
+        "Postproducción",
+        "Animación"
+      ],
+      "hobbies": [
+        {
+          "nombre": "Cine independiente",
+          "sub": "La narrativa que mueve al mundo."
+        },
+        {
+          "nombre": "Skateboarding",
+          "sub": "Creatividad y equilibrio sobre ruedas."
+        },
+        {
+          "nombre": "Música electrónica",
+          "sub": "El ritmo detrás del movimiento."
+        },
+        {
+          "nombre": "Fotografía urbana",
+          "sub": "La ciudad como estudio abierto."
+        },
+        {
+          "nombre": "Gaming",
+          "sub": "El diseño interactivo como referencia."
+        }
+      ],
+      "talla_playera": "M",
+      "talla_tenis": "27",
+      "fotos": {
+        "hero": true,
+        "perfil": true,
+        "og": true,
+        "galeria": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          false
+        ],
+        "pendientes": [
+          "gal-09"
+        ]
+      }
+    },
+    {
+      "id": 9,
+      "slug": "valeria-morales",
+      "pass_id": "PASS-NS-2026-VAL-M",
+      "estado": "pendiente",
+      "programa": "NS",
+      "band_label": "Soul Origen™",
+      "fecha_ingreso": "2026-06-05",
+      "nombre_completo": "Valeria Morales",
+      "nombre_first": "Valeria",
+      "nombre_last": "Morales",
+      "titulo_hero": "Diseñadora de Marca · Soul Origen™",
+      "rol_corto": "Diseñadora de Marca",
+      "rol_credencial": "Soul Origen™ · Núcleo Soul™",
+      "origen": "Mexicana · Mérida, Yucatán",
+      "ciudad": "Mérida, Yucatán",
+      "schema_locality": "Mérida",
+      "schema_region": "Yucatán",
+      "wa_number": "5219990001122",
+      "email": "val@soullens.com",
+      "instagram": "@val.design",
+      "bio_html": "Diseñadora de marca en Soul Lens Studios. Crea sistemas visuales que hablan antes de que el negocio abra la boca. Especialista en brandbooks y UI para productos digitales.",
+      "quote": "El buen diseño no se nota. El mal diseño no se olvida.",
+      "meta_description": "Valeria Morales — Diseñadora de Marca en Soul Lens Studios, Mérida. Branding e identidad visual. Núcleo Soul™.",
+      "mercados": [
+        "Branding",
+        "Identidad visual",
+        "Diseño editorial",
+        "UI/UX"
+      ],
+      "hobbies": [
+        {
+          "nombre": "Ilustración",
+          "sub": "El mundo según mis ojos."
+        },
+        {
+          "nombre": "Cerámica",
+          "sub": "Diseño tangible, forma y función."
+        },
+        {
+          "nombre": "Pilates",
+          "sub": "Control, precisión y conciencia corporal."
+        },
+        {
+          "nombre": "Tipografía",
+          "sub": "Las letras que dan personalidad a las marcas."
+        },
+        {
+          "nombre": "Naturaleza",
+          "sub": "La referencia de diseño más antigua del mundo."
+        }
+      ],
+      "talla_playera": "S",
+      "talla_tenis": "24",
+      "fotos": {
+        "hero": false,
+        "perfil": false,
+        "og": false,
+        "galeria": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "pendientes": [
+          "hero",
+          "perfil",
+          "og",
+          "gal-01",
+          "gal-02",
+          "gal-03",
+          "gal-04",
+          "gal-05",
+          "gal-06",
+          "gal-07",
+          "gal-08",
+          "gal-09"
+        ]
+      }
+    }
+  ]
+}

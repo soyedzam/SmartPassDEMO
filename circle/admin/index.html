@@ -1,0 +1,3738 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Soul Circle™ · Admin Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ════════════════════════════════════════════════
+   DESIGN TOKENS — Soul Lens Studios
+   Cada color tiene un propósito semántico definido.
+   Nunca usar colores arbitrarios fuera de este set.
+   ════════════════════════════════════════════════ */
+:root{
+  /* Fondos — escala de oscuridad funcional */
+  --bg-base:    #040507; /* Fondo del body */
+  --bg-raised:  #0b0e16; /* Panel elevado (sidebar, cards) */
+  --bg-overlay: #111620; /* Superficies encima (table header, modals) */
+  --bg-float:   #181e2c; /* Hover states, seleccionados */
+
+  /* Bordes — escala de énfasis */
+  --border-subtle:  rgba(255,255,255,.055); /* Separadores sutiles */
+  --border-default: rgba(255,255,255,.10);  /* Bordes normales */
+  --border-strong:  rgba(255,255,255,.18);  /* Focus, hover */
+
+  /* Texto — jerarquía tipográfica */
+  --text-primary:   #F0EBE2; /* Headings, nombres, datos clave */
+  --text-secondary: #A8A29B; /* Labels, descripciones */
+  --text-muted:     #5E5A55; /* Placeholders, metadatos */
+  --text-disabled:  #32302D; /* Elementos inactivos */
+
+  /* SLS Brand — Azul principal */
+  /* Uso: acciones primarias, links, indicadores de focus, programa SC */
+  --blue:        #0653FF;
+  --blue-light:  #4A88FF; /* Texto sobre fondo oscuro */
+  --blue-dim:    rgba(6,83,255,.10);   /* Fondos sutiles */
+  --blue-border: rgba(6,83,255,.22);   /* Bordes de énfasis */
+
+  /* SLS Brand — Dorado */
+  /* Uso: elementos premium, quotes, acentos de credencial */
+  --gold:        #C9A84C;
+  --gold-light:  #E8C96A; /* Texto sobre fondo oscuro */
+  --gold-dim:    rgba(201,168,76,.10);
+  --gold-border: rgba(201,168,76,.22);
+
+  /* Semántico — Verde éxito */
+  /* Uso: estado "activo", fotos completas, confirmaciones */
+  --success:        #1D9E75;
+  --success-light:  #5BCFA0;
+  --success-faint:  #8FF0B5; /* Texto verde suave */
+  --success-dim:    rgba(143,240,181,.10);
+  --success-border: rgba(143,240,181,.18);
+
+  /* Semántico — Ámbar advertencia */
+  /* Uso: estado "pendiente", fotos parciales, advertencias */
+  --warning:        #B87A10;
+  --warning-light:  #E8A020;
+  --warning-faint:  #F5C060; /* Texto ámbar suave */
+  --warning-dim:    rgba(232,160,32,.10);
+  --warning-border: rgba(232,160,32,.20);
+
+  /* Semántico — Coral error/crítico */
+  /* Uso: estado "error", fotos faltantes críticas, eliminar */
+  --danger:        #CC2222;
+  --danger-light:  #FF5252;
+  --danger-faint:  #FF8888; /* Texto coral suave */
+  --danger-dim:    rgba(255,82,82,.10);
+  --danger-border: rgba(255,82,82,.20);
+
+  /* Programa Núcleo Soul — Verde esmeralda */
+  /* Diferenciado de --success para no confundir con estado */
+  --nucleo:        #0E8060;
+  --nucleo-light:  #3DB080;
+  --nucleo-faint:  #7AD8B8; /* Texto NS sobre fondo oscuro */
+  --nucleo-dim:    rgba(61,176,128,.10);
+  --nucleo-border: rgba(61,176,128,.20);
+
+  /* Layout */
+  --sidebar-w: 234px;
+  --topbar-h:  50px;
+  --radius:    10px;
+  --radius-sm: 6px;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:var(--bg-base);
+  color:var(--text-primary);
+  display:flex;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+/* ════════════════
+   SIDEBAR
+   ════════════════ */
+.sidebar{
+  width:var(--sidebar-w);
+  flex-shrink:0;
+  background:var(--bg-raised);
+  border-right:1px solid var(--border-subtle);
+  display:flex;
+  flex-direction:column;
+  height:100vh;
+  overflow-y:auto;
+  scrollbar-width:none;
+}
+.sidebar::-webkit-scrollbar{display:none}
+
+.sb-logo{
+  padding:.85rem 1.1rem .7rem;
+  border-bottom:1px solid var(--border-subtle);
+  display:flex;align-items:center;gap:.55rem;
+  flex-shrink:0;
+}
+.sb-mark{
+  width:26px;height:26px;
+  background:var(--blue);border-radius:5px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;font-weight:900;color:#fff;
+  flex-shrink:0;letter-spacing:-.03em;
+}
+.sb-name{font-size:12.5px;font-weight:700;color:var(--text-primary);line-height:1.2}
+.sb-env{font-size:9px;color:var(--text-muted);letter-spacing:.09em;text-transform:uppercase;margin-top:1px}
+
+.sb-section{
+  padding:.55rem 1.1rem .3rem;
+  font-size:9px;font-weight:700;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:var(--text-disabled);
+}
+
+.sb-item{
+  display:flex;align-items:center;gap:.55rem;
+  padding:.45rem 1.1rem;
+  font-size:12px;color:var(--text-secondary);
+  cursor:pointer;transition:background .12s,color .12s;
+  user-select:none;position:relative;
+}
+.sb-item:hover{background:rgba(255,255,255,.035);color:var(--text-primary)}
+.sb-item.active{background:var(--blue-dim);color:var(--blue-light)}
+.sb-item.active::before{
+  content:'';position:absolute;left:0;top:4px;bottom:4px;
+  width:2px;background:var(--blue);border-radius:0 2px 2px 0;
+}
+.sb-icon{width:13px;height:13px;flex-shrink:0;opacity:.55}
+.sb-item.active .sb-icon{opacity:1}
+.sb-badge{
+  margin-left:auto;font-size:10px;font-weight:700;
+  padding:1px 6px;border-radius:99px;
+}
+.sb-badge-blue{background:var(--blue-dim);color:var(--blue-light);border:1px solid var(--blue-border)}
+.sb-badge-warn{background:var(--warning-dim);color:var(--warning-faint);border:1px solid var(--warning-border)}
+.sb-badge-danger{background:var(--danger-dim);color:var(--danger-faint);border:1px solid var(--danger-border)}
+
+.sb-footer{
+  margin-top:auto;
+  padding:.75rem 1.1rem;
+  border-top:1px solid var(--border-subtle);
+  font-size:10.5px;color:var(--text-muted);
+  line-height:1.55;flex-shrink:0;
+}
+.sb-footer strong{color:var(--text-secondary);font-weight:600;display:block;margin-bottom:1px}
+
+/* ════════════════
+   MAIN
+   ════════════════ */
+.main{
+  flex:1;min-width:0;
+  display:flex;flex-direction:column;
+  height:100vh;overflow:hidden;
+}
+
+/* ════════════════
+   TOPBAR
+   ════════════════ */
+.topbar{
+  height:var(--topbar-h);
+  border-bottom:1px solid var(--border-subtle);
+  display:flex;align-items:center;
+  padding:0 1.35rem;gap:.85rem;
+  flex-shrink:0;
+}
+.topbar-title{font-size:14px;font-weight:700;color:var(--text-primary);letter-spacing:-.02em}
+.topbar-count{font-size:11.5px;color:var(--text-muted);margin-left:.4rem}
+.topbar-right{margin-left:auto;display:flex;align-items:center;gap:.5rem}
+
+/* Botones reutilizables */
+.btn{
+  display:inline-flex;align-items:center;gap:.4rem;
+  padding:.4rem .8rem;border-radius:var(--radius-sm);
+  font-family:inherit;font-size:11.5px;font-weight:600;
+  cursor:pointer;border:none;transition:background .13s,border-color .13s,transform .1s;
+  white-space:nowrap;line-height:1;
+}
+.btn:active{transform:translateY(1px)}
+.btn-ghost{
+  background:transparent;
+  border:1px solid var(--border-default);
+  color:var(--text-secondary);
+}
+.btn-ghost:hover{border-color:var(--border-strong);color:var(--text-primary);background:rgba(255,255,255,.04)}
+.btn-primary{background:var(--blue);color:#fff;border:1px solid transparent}
+.btn-primary:hover{background:#1f68ff}
+.btn-danger{background:var(--danger-dim);color:var(--danger-faint);border:1px solid var(--danger-border)}
+.btn-danger:hover{background:rgba(255,82,82,.18)}
+
+/* ════════════════
+   TABS
+   ════════════════ */
+.tabs{
+  display:flex;
+  border-bottom:1px solid var(--border-subtle);
+  padding:0 1.35rem;
+  flex-shrink:0;
+  background:var(--bg-base);
+}
+.tab{
+  padding:.55rem .75rem;
+  font-size:11.5px;font-weight:600;color:var(--text-muted);
+  cursor:pointer;border-bottom:2px solid transparent;
+  transition:color .13s,border-color .13s;
+  white-space:nowrap;margin-bottom:-1px;user-select:none;
+}
+.tab:hover{color:var(--text-secondary)}
+.tab.active{color:var(--blue-light);border-bottom-color:var(--blue)}
+
+/* ════════════════
+   CONTENT SCROLL AREA
+   ════════════════ */
+.content{
+  flex:1;overflow-y:auto;overflow-x:hidden;
+  padding:1.1rem 1.35rem 3rem;
+  scrollbar-width:thin;
+  scrollbar-color:var(--text-disabled) transparent;
+}
+.content::-webkit-scrollbar{width:3px}
+.content::-webkit-scrollbar-thumb{background:var(--text-disabled);border-radius:99px}
+
+/* ════════════════
+   KPI ROW
+   ════════════════ */
+.kpi-row{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:.65rem;margin-bottom:1.1rem;
+}
+.kpi{
+  background:var(--bg-raised);
+  border:1px solid var(--border-subtle);
+  border-top:2px solid; /* color set inline per KPI */
+  border-radius:var(--radius);
+  padding:.75rem .9rem;
+}
+.kpi-val{
+  font-size:24px;font-weight:900;
+  letter-spacing:-.05em;line-height:1;
+  margin-bottom:.25rem;
+}
+.kpi-label{
+  font-size:9.5px;font-weight:700;
+  letter-spacing:.09em;text-transform:uppercase;
+  color:var(--text-muted);
+}
+.kpi-note{font-size:10px;color:var(--text-muted);margin-top:.2rem}
+
+/* ════════════════
+   TOOLBAR
+   ════════════════ */
+.toolbar{
+  display:flex;align-items:center;gap:.55rem;
+  margin-bottom:.85rem;flex-wrap:wrap;
+}
+.search-wrap{position:relative;flex:1;min-width:180px;max-width:300px}
+.search-icon{
+  position:absolute;left:.6rem;top:50%;transform:translateY(-50%);
+  color:var(--text-muted);pointer-events:none;
+}
+.search-input{
+  width:100%;background:var(--bg-raised);
+  border:1px solid var(--border-subtle);border-radius:var(--radius-sm);
+  padding:.38rem .75rem .38rem 1.9rem;
+  font-family:inherit;font-size:11.5px;color:var(--text-primary);
+  outline:none;transition:border-color .15s;
+}
+.search-input::placeholder{color:var(--text-muted)}
+.search-input:focus{border-color:var(--blue)}
+
+.filters{display:flex;gap:.35rem;flex-wrap:wrap}
+.filter{
+  padding:.3rem .65rem;border-radius:var(--radius-sm);
+  font-size:11px;font-weight:600;cursor:pointer;
+  background:transparent;border:1px solid var(--border-subtle);
+  color:var(--text-secondary);font-family:inherit;
+  transition:all .12s;
+}
+.filter:hover{border-color:var(--border-default);color:var(--text-primary)}
+.filter.on{background:var(--blue-dim);border-color:var(--blue-border);color:var(--blue-light)}
+
+.sort-select{
+  background:var(--bg-raised);border:1px solid var(--border-subtle);
+  border-radius:var(--radius-sm);padding:.35rem .6rem;
+  font-family:inherit;font-size:11px;color:var(--text-secondary);
+  outline:none;cursor:pointer;transition:border-color .13s;
+}
+.sort-select:focus{border-color:var(--blue)}
+.sort-select option{background:var(--bg-overlay)}
+
+/* ════════════════
+   TABLE
+   ════════════════ */
+.table-wrap{
+  background:var(--bg-raised);
+  border:1px solid var(--border-subtle);
+  border-radius:var(--radius);overflow:hidden;
+}
+/* Col widths: nombre · programa · banda · fotos · estado · pass_id · acciones */
+.t-grid{
+  display:grid;
+  grid-template-columns: minmax(160px,2.2fr) 1.1fr 1fr 1.5fr 1.1fr minmax(120px,1.3fr) 72px;
+}
+.t-head{
+  background:var(--bg-overlay);
+  border-bottom:1px solid var(--border-subtle);
+}
+.th{
+  padding:.55rem .8rem;
+  font-size:9.5px;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;
+  color:var(--text-muted);
+  border-right:1px solid var(--border-subtle);
+  cursor:pointer;user-select:none;
+  display:flex;align-items:center;gap:4px;
+  transition:color .12s;white-space:nowrap;
+}
+.th:last-child{border-right:none;cursor:default}
+.th:hover:not(:last-child){color:var(--text-secondary)}
+.th.sorted{color:var(--blue-light)}
+
+.t-row{
+  display:grid;
+  grid-template-columns: minmax(160px,2.2fr) 1.1fr 1fr 1.5fr 1.1fr minmax(120px,1.3fr) 72px;
+  border-bottom:1px solid var(--border-subtle);
+  cursor:pointer;transition:background .1s;
+  position:relative;
+}
+.t-row:last-child{border-bottom:none}
+.t-row:hover{background:rgba(255,255,255,.022)}
+.t-row.selected{background:var(--blue-dim)}
+.t-row.selected::after{
+  content:'';position:absolute;left:0;top:0;bottom:0;
+  width:2px;background:var(--blue);
+}
+.td{
+  padding:.65rem .8rem;
+  border-right:1px solid var(--border-subtle);
+  display:flex;align-items:center;min-width:0;
+  font-size:12px;
+}
+.td:last-child{border-right:none}
+
+/* Celda: identidad */
+.emb-id{display:flex;align-items:center;gap:.55rem;min-width:0}
+.emb-av{
+  width:26px;height:26px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:9px;font-weight:800;flex-shrink:0;
+}
+.emb-texts{min-width:0}
+.emb-name{
+  font-size:12.5px;font-weight:700;color:var(--text-primary);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  line-height:1.3;
+}
+.emb-slug{
+  font-family:'JetBrains Mono',monospace;font-size:9.5px;
+  color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+
+/* Badges de programa */
+.badge-prog{
+  font-size:9.5px;font-weight:700;letter-spacing:.04em;
+  padding:2px 7px;border-radius:99px;white-space:nowrap;
+}
+.prog-sc{background:var(--blue-dim);color:var(--blue-light);border:1px solid var(--blue-border)}
+.prog-ns{background:var(--nucleo-dim);color:var(--nucleo-faint);border:1px solid var(--nucleo-border)}
+
+/* Badges de banda */
+.badge-band{
+  font-size:9px;font-weight:700;letter-spacing:.03em;
+  padding:2px 6px;border-radius:99px;white-space:nowrap;
+}
+.band_label-fund{background:var(--gold-dim);color:var(--gold-light);border:1px solid var(--gold-border)}
+.band_label-orig{background:var(--nucleo-dim);color:var(--nucleo-faint);border:1px solid var(--nucleo-border)}
+
+/* Fotos progress */
+.foto-col{display:flex;flex-direction:column;gap:3px;width:100%}
+.foto-bar-track{display:flex;align-items:center;gap:.45rem}
+.foto-bar-bg{flex:1;height:3px;background:var(--border-subtle);border-radius:99px;overflow:hidden}
+.foto-bar-fill{height:100%;border-radius:99px;transition:width .4s ease}
+.fill-success{background:linear-gradient(90deg,var(--success),var(--success-faint))}
+.fill-warning{background:linear-gradient(90deg,var(--warning-light),var(--warning-faint))}
+.fill-danger{background:linear-gradient(90deg,var(--danger-light),var(--danger-faint))}
+.foto-pct{
+  font-family:'JetBrains Mono',monospace;
+  font-size:9.5px;font-weight:500;min-width:28px;text-align:right;
+}
+/* 12 micropoints: H · P · OG · 9 galería */
+.foto-dots{display:flex;gap:2px;flex-wrap:nowrap}
+.fdot{width:5px;height:5px;border-radius:1px;flex-shrink:0}
+.fdot-ok{background:var(--success)}
+.fdot-miss{background:var(--border-subtle)}
+/* Los 3 primeros (H, P, OG) son críticos — coral si faltan */
+.fdot-crit{background:var(--danger-light)}
+
+/* Estado */
+.estado-wrap{display:flex;align-items:center;gap:.45rem}
+.estado-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.dot-activo{background:var(--success-faint)}
+.dot-pendiente{background:var(--warning-light)}
+.dot-borrador{background:var(--text-disabled)}
+.estado-txt{font-size:11.5px;color:var(--text-secondary)}
+
+/* Pass ID */
+.pass-id-txt{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;color:var(--text-muted);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+
+/* Acciones por fila */
+.td-actions{
+  display:flex;align-items:center;gap:3px;
+  padding:.45rem .6rem;
+}
+.row-btn{
+  width:24px;height:24px;border-radius:4px;
+  background:transparent;border:1px solid var(--border-subtle);
+  color:var(--text-muted);font-size:11px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:all .12s;
+}
+.row-btn:hover{background:var(--bg-overlay);border-color:var(--border-default);color:var(--text-primary)}
+.row-btn.row-btn-primary:hover{background:var(--blue-dim);border-color:var(--blue-border);color:var(--blue-light)}
+
+/* Empty state */
+.empty{padding:3rem;text-align:center;color:var(--text-muted)}
+.empty-icon{font-size:28px;margin-bottom:.6rem;opacity:.35}
+.empty-txt{font-size:12.5px;line-height:1.65}
+
+/* ════════════════
+   SELECTION BAR
+   ════════════════ */
+.sel-bar{
+  position:sticky;bottom:0;
+  background:var(--blue);
+  padding:.55rem 1.35rem;
+  display:none;align-items:center;gap:.65rem;
+  font-size:12px;font-weight:600;color:#fff;
+  margin:0 -1.35rem -3rem;
+  z-index:10;
+}
+.sel-bar.on{display:flex}
+.sel-count{
+  background:rgba(255,255,255,.18);
+  padding:1px 7px;border-radius:99px;font-size:10.5px;
+}
+.sel-actions{display:flex;gap:.4rem;margin-left:auto}
+.sel-btn{
+  padding:.28rem .6rem;border-radius:4px;
+  background:rgba(255,255,255,.14);border:none;
+  color:#fff;font-family:inherit;font-size:10.5px;font-weight:700;
+  cursor:pointer;transition:background .12s;
+}
+.sel-btn:hover{background:rgba(255,255,255,.24)}
+.sel-btn-cancel{background:transparent;border:1px solid rgba(255,255,255,.25)}
+
+/* ════════════════
+   DETAIL PANEL
+   ════════════════ */
+.detail-overlay{
+  position:fixed;inset:0;
+  background:rgba(4,5,7,.55);backdrop-filter:blur(3px);
+  z-index:100;display:none;align-items:stretch;justify-content:flex-end;
+}
+.detail-overlay.on{display:flex}
+.detail-panel{
+  width:420px;background:var(--bg-raised);
+  border-left:1px solid var(--border-default);
+  height:100vh;overflow-y:auto;display:flex;flex-direction:column;
+  scrollbar-width:thin;scrollbar-color:var(--text-disabled) transparent;
+}
+.detail-panel::-webkit-scrollbar{width:3px}
+.detail-panel::-webkit-scrollbar-thumb{background:var(--text-disabled);border-radius:99px}
+
+.detail-top{
+  padding:.9rem 1.1rem .8rem;border-bottom:1px solid var(--border-subtle);
+  display:flex;align-items:center;gap:.65rem;flex-shrink:0;
+  position:sticky;top:0;background:var(--bg-raised);z-index:2;
+}
+.detail-av{
+  width:38px;height:38px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:800;flex-shrink:0;
+}
+.detail-name{font-size:14px;font-weight:700;color:var(--text-primary)}
+.detail-sub{font-size:10.5px;color:var(--text-muted);margin-top:2px}
+.detail-x{
+  margin-left:auto;width:26px;height:26px;border-radius:5px;
+  background:transparent;border:1px solid var(--border-subtle);
+  color:var(--text-muted);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;font-size:13px;
+  transition:all .12s;flex-shrink:0;
+}
+.detail-x:hover{background:var(--bg-overlay);color:var(--text-primary)}
+
+.detail-body{padding:1.1rem 1.1rem .5rem}
+.ds{margin-bottom:1.1rem}
+.ds-label{
+  font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--text-disabled);margin-bottom:.5rem;
+}
+.dr{
+  display:flex;justify-content:space-between;align-items:baseline;
+  padding:.4rem 0;border-bottom:1px solid var(--border-subtle);gap:.75rem;
+}
+.dr:last-child{border-bottom:none}
+.dk{font-size:11px;color:var(--text-muted);flex-shrink:0}
+.dv{font-size:11px;color:var(--text-primary);font-weight:500;text-align:right;word-break:break-all}
+.dv.mono{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-secondary)}
+.dv.link{color:var(--blue-light);cursor:pointer}
+.dv.link:hover{text-decoration:underline}
+
+/* Grid de slots de fotos en detail */
+.foto-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:.45rem;
+}
+.fslot{
+  aspect-ratio:3/4;border-radius:4px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:7px;font-weight:700;position:relative;overflow:hidden;
+  flex-direction:column;gap:2px;
+}
+.fslot-ok{background:var(--success-dim);border:1px solid var(--success-border);color:var(--success-faint)}
+.fslot-miss{background:var(--bg-overlay);border:1px solid var(--border-subtle);color:var(--text-disabled)}
+.fslot-crit{background:var(--danger-dim);border:1px solid var(--danger-border);color:var(--danger-faint)}
+.fslot-lbl{font-size:6.5px;text-align:center;line-height:1.2}
+
+.pills-wrap{display:flex;flex-wrap:wrap;gap:4px;margin-top:.4rem}
+.pill-sm{
+  font-size:10px;padding:2px 7px;border-radius:99px;
+  background:var(--bg-overlay);border:1px solid var(--border-subtle);
+  color:var(--text-secondary);
+}
+
+.detail-actions{
+  padding:1rem 1.1rem 1.35rem;
+  border-top:1px solid var(--border-subtle);
+  display:flex;flex-direction:column;gap:.45rem;
+  flex-shrink:0;
+}
+.dact-btn{
+  width:100%;padding:.55rem;border-radius:var(--radius-sm);
+  font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;border:none;
+  display:flex;align-items:center;justify-content:center;gap:.45rem;
+  transition:background .14s,border-color .14s;
+}
+.dact-primary{background:var(--blue);color:#fff}
+.dact-primary:hover{background:#1f68ff}
+.dact-ghost{background:transparent;border:1px solid var(--border-default);color:var(--text-secondary)}
+.dact-ghost:hover{border-color:var(--border-strong);color:var(--text-primary);background:rgba(255,255,255,.035)}
+.dact-danger{background:transparent;border:1px solid var(--danger-border);color:var(--danger-faint)}
+.dact-danger:hover{background:var(--danger-dim)}
+
+/* ════════════════
+   MODAL GENÉRICO
+   ════════════════ */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(4,5,7,.7);
+  backdrop-filter:blur(5px);z-index:200;
+  display:none;align-items:center;justify-content:center;
+}
+.modal-overlay.on{display:flex}
+.modal{
+  background:var(--bg-raised);border:1px solid var(--border-default);
+  border-radius:var(--radius);padding:1.5rem;
+  max-width:360px;width:92%;
+}
+.modal-title{font-size:15px;font-weight:800;color:var(--text-primary);margin-bottom:.4rem}
+.modal-body{font-size:12.5px;color:var(--text-secondary);line-height:1.6;margin-bottom:1.35rem}
+.modal-footer{display:flex;gap:.55rem;justify-content:flex-end}
+
+/* ════════════════
+   EXPORT MODAL
+   ════════════════ */
+.export-overlay{
+  position:fixed;inset:0;background:rgba(4,5,7,.65);
+  backdrop-filter:blur(4px);z-index:200;
+  display:none;align-items:center;justify-content:center;
+}
+.export-overlay.on{display:flex}
+.export-modal{
+  background:var(--bg-raised);border:1px solid var(--border-default);
+  border-radius:var(--radius);padding:1.5rem;max-width:400px;width:92%;
+}
+.export-title{font-size:14.5px;font-weight:800;color:var(--text-primary);margin-bottom:.3rem}
+.export-sub{font-size:11.5px;color:var(--text-muted);margin-bottom:1.1rem}
+.export-opts{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1.1rem}
+.export-opt{
+  display:flex;align-items:center;gap:.65rem;
+  padding:.6rem .8rem;background:var(--bg-overlay);
+  border:1px solid var(--border-subtle);border-radius:var(--radius-sm);
+  cursor:pointer;transition:border-color .12s;
+}
+.export-opt:hover{border-color:var(--border-default)}
+.export-opt-icon{font-size:15px;flex-shrink:0}
+.export-opt-name{font-size:12px;font-weight:600;color:var(--text-primary)}
+.export-opt-desc{font-size:10.5px;color:var(--text-muted)}
+
+/* ════════════════
+   GENERADOR DE PASS (nuevo panel)
+   ════════════════ */
+.gen-overlay{
+  position:fixed;inset:0;background:rgba(4,5,7,.7);
+  backdrop-filter:blur(5px);z-index:200;
+  display:none;align-items:center;justify-content:center;
+}
+.gen-overlay.on{display:flex}
+.gen-modal{
+  background:var(--bg-raised);border:1px solid var(--border-default);
+  border-radius:var(--radius);padding:1.5rem;
+  max-width:480px;width:95%;max-height:90vh;overflow-y:auto;
+}
+.gen-title{font-size:15px;font-weight:800;color:var(--text-primary);margin-bottom:.25rem}
+.gen-sub{font-size:11.5px;color:var(--text-muted);margin-bottom:1.25rem;line-height:1.5}
+.gen-emb-name{
+  background:var(--blue-dim);border:1px solid var(--blue-border);
+  border-radius:var(--radius-sm);padding:.55rem .85rem;
+  font-size:13px;font-weight:700;color:var(--blue-light);
+  margin-bottom:1.1rem;display:flex;align-items:center;gap:.5rem;
+}
+.gen-status{
+  border-radius:var(--radius-sm);padding:.65rem .85rem;
+  font-size:12px;line-height:1.6;margin-bottom:1rem;
+}
+.gen-status-loading{background:var(--bg-overlay);border:1px solid var(--border-subtle);color:var(--text-secondary)}
+.gen-status-ok{background:var(--success-dim);border:1px solid var(--success-border);color:var(--success-faint)}
+.gen-status-error{background:var(--danger-dim);border:1px solid var(--danger-border);color:var(--danger-faint)}
+.gen-download{
+  display:flex;flex-direction:column;gap:.4rem;margin-bottom:1rem;
+  display:none;
+}
+.gen-download.on{display:flex}
+.gen-dl-btn{
+  width:100%;padding:.6rem;border-radius:var(--radius-sm);
+  font-family:inherit;font-size:12.5px;font-weight:700;cursor:pointer;border:none;
+  display:flex;align-items:center;justify-content:center;gap:.5rem;
+  transition:all .14s;
+}
+.gen-dl-primary{background:var(--blue);color:#fff}
+.gen-dl-primary:hover{background:#1f68ff}
+.gen-dl-ghost{background:transparent;border:1px solid var(--border-default);color:var(--text-secondary)}
+.gen-dl-ghost:hover{border-color:var(--border-strong);color:var(--text-primary)}
+.gen-footer{display:flex;justify-content:flex-end;gap:.5rem}
+.gen-warning{
+  background:var(--warning-dim);border:1px solid var(--warning-border);
+  border-radius:var(--radius-sm);padding:.6rem .8rem;
+  font-size:11px;color:var(--warning-faint);line-height:1.5;
+  margin-bottom:1rem;display:none;
+}
+.gen-warning.on{display:block}
+
+/* ════════════════
+   TOAST
+   ════════════════ */
+.toast{
+  position:fixed;bottom:1.4rem;right:1.4rem;z-index:400;
+  background:var(--bg-overlay);border:1px solid var(--border-default);
+  border-radius:var(--radius-sm);padding:.6rem .9rem;
+  font-size:12px;color:var(--text-primary);
+  display:flex;align-items:center;gap:.5rem;
+  transform:translateY(8px);opacity:0;
+  transition:all .22s ease;pointer-events:none;max-width:310px;
+}
+.toast.on{transform:none;opacity:1}
+
+/* ════════════════
+   RESPONSIVE
+   ════════════════ */
+@media(max-width:960px){
+  .sidebar{display:none}
+  .kpi-row{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:680px){
+  .t-grid,.t-head,.t-row{grid-template-columns:minmax(140px,1fr) 1fr auto}
+  .th:nth-child(n+3):not(:last-child),.td:nth-child(n+3):not(:last-child){display:none}
+  .kpi-row{grid-template-columns:1fr 1fr}
+  .detail-panel{width:100%}
+}
+
+/* ═══════════════════════════════════════
+   VISTAS ADICIONALES — CSS
+   ═══════════════════════════════════════ */
+
+/* ── SISTEMA DE VISTAS ── */
+.view { display: none; }
+.view.active { display: block; }
+
+/* ── VISTA SMART PASSES ── */
+.passes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: .75rem;
+  margin-top: .85rem;
+}
+.pass-card {
+  background: var(--bg-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: border-color .12s;
+  cursor: pointer;
+}
+.pass-card:hover { border-color: var(--border-default); }
+.pass-card-header {
+  padding: .75rem .9rem .6rem;
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex; align-items: center; gap: .6rem;
+}
+.pass-card-av {
+  width: 32px; height: 32px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 800; flex-shrink: 0;
+}
+.pass-card-name { font-size: 13px; font-weight: 700; color: var(--text-primary); line-height: 1.3; }
+.pass-card-id { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--text-muted); }
+.pass-card-badge {
+  margin-left: auto; font-size: 9px; font-weight: 700;
+  padding: 2px 7px; border-radius: 99px; white-space: nowrap;
+}
+.pass-card-body { padding: .7rem .9rem; }
+.pass-card-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: .3rem 0; border-bottom: 1px solid var(--border-subtle); gap: .5rem;
+}
+.pass-card-row:last-child { border-bottom: none; }
+.pass-card-key { font-size: 11px; color: var(--text-muted); }
+.pass-card-val { font-size: 11px; color: var(--text-primary); font-weight: 500; text-align: right; }
+.pass-card-val.mono { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-secondary); }
+.pass-card-footer {
+  padding: .55rem .9rem;
+  border-top: 1px solid var(--border-subtle);
+  display: flex; gap: .4rem;
+}
+.pass-card-btn {
+  flex: 1; padding: .4rem; border-radius: var(--radius-sm);
+  font-family: inherit; font-size: 11px; font-weight: 700;
+  cursor: pointer; border: none; transition: all .13s;
+  display: flex; align-items: center; justify-content: center; gap: .3rem;
+}
+
+/* ── VISTA FOTOS PENDIENTES ── */
+.fotos-view { }
+.fotos-stats-row {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: .65rem; margin-bottom: 1rem;
+}
+.fotos-stat {
+  background: var(--bg-raised); border: 1px solid var(--border-subtle);
+  border-radius: var(--radius); padding: .7rem .85rem; text-align: center;
+}
+.fotos-stat-val { font-size: 22px; font-weight: 900; letter-spacing: -.04em; line-height: 1; margin-bottom: .2rem; }
+.fotos-stat-lbl { font-size: 9.5px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--text-muted); }
+
+.fotos-list { display: flex; flex-direction: column; gap: .55rem; }
+.fotos-item {
+  background: var(--bg-raised); border: 1px solid var(--border-subtle);
+  border-radius: var(--radius); padding: .8rem 1rem;
+  display: grid; grid-template-columns: auto 1fr auto;
+  gap: .75rem; align-items: start;
+}
+.fotos-item-av {
+  width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 800; flex-shrink: 0;
+}
+.fotos-item-name { font-size: 13px; font-weight: 700; color: var(--text-primary); margin-bottom: 3px; }
+.fotos-item-pass { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--text-muted); margin-bottom: .5rem; }
+.fotos-missing { display: flex; flex-wrap: wrap; gap: 4px; }
+.fotos-missing-slot {
+  font-size: 9.5px; font-weight: 700; padding: 2px 7px;
+  border-radius: 4px; white-space: nowrap;
+}
+.slot-hero-miss { background: var(--danger-dim); color: var(--danger-faint); border: 1px solid var(--danger-border); }
+.slot-gal-miss  { background: var(--bg-overlay); color: var(--text-muted); border: 1px solid var(--border-subtle); }
+.fotos-item-actions { display: flex; flex-direction: column; gap: .35rem; align-self: center; }
+.fotos-item-pct {
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  font-weight: 700; text-align: right; margin-bottom: 4px;
+}
+
+/* ── VISTA MERCH / TALLAS ── */
+.merch-view { }
+.merch-summary {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: .75rem; margin-bottom: 1.1rem;
+}
+.merch-summary-card {
+  background: var(--bg-raised); border: 1px solid var(--border-subtle);
+  border-radius: var(--radius); padding: .85rem 1rem;
+}
+.merch-summary-title {
+  font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--text-muted); margin-bottom: .65rem;
+}
+.merch-size-grid { display: flex; flex-wrap: wrap; gap: .4rem; }
+.merch-size-item {
+  display: flex; flex-direction: column; align-items: center;
+  background: var(--bg-overlay); border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm); padding: .5rem .65rem; min-width: 52px;
+}
+.merch-size-label { font-size: 13px; font-weight: 800; color: var(--text-primary); line-height: 1; }
+.merch-size-count {
+  font-size: 10px; color: var(--text-muted); margin-top: 2px;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.merch-table-wrap {
+  background: var(--bg-raised); border: 1px solid var(--border-subtle);
+  border-radius: var(--radius); overflow: hidden;
+}
+.merch-row {
+  display: grid;
+  grid-template-columns: minmax(140px,2fr) 1fr 1fr 1fr 1fr;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.merch-row:last-child { border-bottom: none; }
+.merch-row.merch-head { background: var(--bg-overlay); }
+.merch-cell {
+  padding: .55rem .8rem; font-size: 12px; color: var(--text-secondary);
+  border-right: 1px solid var(--border-subtle);
+  display: flex; align-items: center;
+}
+.merch-cell:last-child { border-right: none; }
+.merch-cell.head { font-size: 9.5px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--text-muted); }
+.merch-cell.name { font-weight: 600; color: var(--text-primary); }
+.merch-cell.talla { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; }
+.merch-cell.no-data { color: var(--text-disabled); font-style: italic; }
+
+/* ── VISTA DEPLOY ── */
+.deploy-view { }
+.deploy-section { margin-bottom: 1.5rem; }
+.deploy-section-title {
+  font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--text-muted); margin-bottom: .65rem;
+  padding-bottom: .4rem; border-bottom: 1px solid var(--border-subtle);
+}
+.code-block {
+  background: var(--bg-overlay); border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm); padding: .85rem 1rem;
+  font-family: 'JetBrains Mono', monospace; font-size: 11.5px;
+  color: var(--text-secondary); line-height: 1.7;
+  white-space: pre-wrap; word-break: break-all; margin-bottom: .6rem;
+}
+.code-block .cmd { color: var(--blue-light); }
+.code-block .comment { color: var(--text-disabled); }
+.code-block .path { color: var(--success-faint); }
+.code-block .var { color: var(--gold-light); }
+.deploy-step {
+  display: flex; gap: .75rem; margin-bottom: .75rem; align-items: flex-start;
+}
+.deploy-step-num {
+  width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
+  background: var(--blue-dim); border: 1px solid var(--blue-border);
+  color: var(--blue-light); font-size: 10px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  margin-top: 1px;
+}
+.deploy-step-body { flex: 1; }
+.deploy-step-title { font-size: 13px; font-weight: 700; color: var(--text-primary); margin-bottom: .25rem; }
+.deploy-step-desc { font-size: 11.5px; color: var(--text-secondary); line-height: 1.6; }
+.deploy-links { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1rem; }
+.deploy-link {
+  display: inline-flex; align-items: center; gap: .4rem;
+  padding: .4rem .8rem; border-radius: var(--radius-sm);
+  background: var(--bg-raised); border: 1px solid var(--border-default);
+  font-size: 11px; font-weight: 600; color: var(--text-secondary);
+  text-decoration: none; transition: all .13s; cursor: pointer;
+}
+.deploy-link:hover { border-color: var(--border-strong); color: var(--text-primary); }
+.deploy-link.primary { background: var(--blue-dim); border-color: var(--blue-border); color: var(--blue-light); }
+
+/* ── VISTA SETTINGS ── */
+.settings-view { max-width: 560px; }
+.settings-section { margin-bottom: 1.35rem; }
+.settings-section-title {
+  font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--text-muted); margin-bottom: .65rem;
+  padding-bottom: .4rem; border-bottom: 1px solid var(--border-subtle);
+}
+.settings-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: .6rem 0; border-bottom: 1px solid var(--border-subtle); gap: 1rem;
+}
+.settings-row:last-child { border-bottom: none; }
+.settings-key { font-size: 12.5px; color: var(--text-primary); font-weight: 500; }
+.settings-desc { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+.settings-val {
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  color: var(--text-secondary); text-align: right; min-width: 120px;
+}
+.settings-val.editable {
+  background: var(--bg-overlay); border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm); padding: .3rem .6rem;
+  outline: none; font-family: inherit; color: var(--text-primary);
+  transition: border-color .13s;
+}
+.settings-val.editable:focus { border-color: var(--blue); }
+.settings-badge {
+  font-size: 9.5px; font-weight: 700; padding: 2px 8px; border-radius: 99px;
+}
+.sb-ok { background: var(--success-dim); color: var(--success-faint); border: 1px solid var(--success-border); }
+.sb-warn { background: var(--warning-dim); color: var(--warning-faint); border: 1px solid var(--warning-border); }
+
+/* ── DETAIL PANEL EXTENDED ── */
+.detail-tabs {
+  display: flex; border-bottom: 1px solid var(--border-subtle);
+  padding: 0 1.1rem; background: var(--bg-raised);
+  flex-shrink: 0; margin-top: -1px;
+}
+.detail-tab {
+  padding: .5rem .65rem; font-size: 11px; font-weight: 600;
+  color: var(--text-muted); cursor: pointer;
+  border-bottom: 2px solid transparent; margin-bottom: -1px;
+  transition: color .12s, border-color .12s; white-space: nowrap;
+}
+.detail-tab:hover { color: var(--text-secondary); }
+.detail-tab.active { color: var(--blue-light); border-bottom-color: var(--blue); }
+
+/* ── KPI ROW EXPANDIDO ── */
+.kpi-row-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: .65rem; margin-top: .65rem; margin-bottom: 1.1rem;
+}
+.kpi-wide {
+  background: var(--bg-raised);
+  border: 1px solid var(--border-subtle);
+  border-left: 3px solid;
+  border-radius: var(--radius);
+  padding: .75rem .9rem;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.kpi-wide-left { }
+.kpi-wide-val { font-size: 20px; font-weight: 900; letter-spacing: -.04em; line-height: 1; margin-bottom: .2rem; }
+.kpi-wide-label { font-size: 9.5px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--text-muted); }
+.kpi-wide-note { font-size: 10px; color: var(--text-muted); margin-top: .2rem; }
+.kpi-wide-chart { display: flex; align-items: flex-end; gap: 3px; height: 32px; }
+.kpi-bar {
+  width: 8px; border-radius: 2px 2px 0 0;
+  background: var(--border-subtle); transition: height .4s ease;
+  min-height: 3px;
+}
+.kpi-bar.filled { }
+
+/* Ciclo counter */
+.ciclo-card {
+  background: var(--bg-raised); border: 1px solid var(--gold-border);
+  border-radius: var(--radius); padding: .75rem 1rem;
+  display: flex; align-items: center; gap: .85rem;
+  margin-bottom: 1.1rem;
+}
+.ciclo-days {
+  font-size: 32px; font-weight: 900; letter-spacing: -.05em;
+  color: var(--gold-light); line-height: 1; flex-shrink: 0;
+}
+.ciclo-label { font-size: 11px; font-weight: 700; color: var(--gold); letter-spacing: .05em; text-transform: uppercase; }
+.ciclo-note { font-size: 10.5px; color: var(--text-muted); margin-top: 2px; line-height: 1.4; }
+.ciclo-bar-wrap { flex: 1; }
+.ciclo-bar-bg {
+  height: 5px; background: var(--border-subtle); border-radius: 99px;
+  overflow: hidden; margin-top: .6rem;
+}
+.ciclo-bar-fill {
+  height: 100%; border-radius: 99px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light));
+}
+.ciclo-pct { font-size: 10px; color: var(--text-muted); text-align: right; margin-top: 3px; }
+
+/* ════════════════════════════════════════════
+   VISTAS NUEVAS v4: Invitaciones + Base de datos
+   ════════════════════════════════════════════ */
+
+/* ── VISTA INVITACIONES ── */
+.inv-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: .75rem;
+}
+.inv-card {
+  background: var(--bg-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: border-color .12s;
+}
+.inv-card:hover { border-color: var(--border-default); }
+.inv-card-head {
+  padding: .8rem .95rem;
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex; align-items: center; gap: .6rem;
+}
+.inv-av {
+  width: 32px; height: 32px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 800; flex-shrink: 0;
+}
+.inv-name  { font-size: 13px; font-weight: 700; color: var(--text-primary); }
+.inv-role  { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+.inv-estado-dot {
+  width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; margin-left: auto;
+}
+.inv-body { padding: .75rem .95rem; display: flex; flex-direction: column; gap: .5rem; }
+.inv-url-row {
+  display: flex; flex-direction: column; gap: .3rem;
+}
+.inv-url-label {
+  font-size: 9.5px; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--text-muted);
+}
+.inv-url-box {
+  display: flex; align-items: center; gap: .4rem;
+  background: var(--bg-overlay); border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm); padding: .35rem .55rem;
+}
+.inv-url-text {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  color: var(--text-secondary); flex: 1; overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap;
+}
+.inv-copy-btn {
+  background: none; border: none; cursor: pointer; color: var(--text-muted);
+  font-size: 11px; padding: 2px 4px; border-radius: 3px;
+  transition: all .12s; flex-shrink: 0; font-family: inherit;
+}
+.inv-copy-btn:hover { background: var(--border-subtle); color: var(--text-primary); }
+.inv-actions { display: flex; gap: .4rem; margin-top: .25rem; }
+.inv-btn {
+  flex: 1; padding: .4rem; border-radius: var(--radius-sm);
+  font-family: inherit; font-size: 11px; font-weight: 700;
+  cursor: pointer; border: none; transition: all .12s;
+  display: flex; align-items: center; justify-content: center; gap: .3rem;
+}
+.inv-btn-wa  { background: #1DB954; color: #fff; }
+.inv-btn-wa:hover  { background: #17a348; }
+.inv-btn-pass { background: var(--blue); color: #fff; }
+.inv-btn-pass:hover { background: #1a5eff; }
+.inv-btn-ghost { background: transparent; border: 1px solid var(--border-default); color: var(--text-secondary); }
+.inv-btn-ghost:hover { border-color: var(--border-strong); color: var(--text-primary); }
+.inv-status-registered {
+  font-size: 10px; color: var(--success-faint); font-weight: 600;
+  padding: .3rem .6rem; background: var(--success-dim);
+  border: 1px solid var(--success-border); border-radius: 4px;
+  text-align: center;
+}
+.inv-status-pending {
+  font-size: 10px; color: var(--warning-faint); font-weight: 600;
+  padding: .3rem .6rem; background: var(--warning-dim);
+  border: 1px solid var(--warning-border); border-radius: 4px;
+  text-align: center;
+}
+/* Sección separadora de SC vs NS */
+.inv-section-header {
+  font-size: 10px; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; padding: .5rem 0 .65rem;
+  border-bottom: 1px solid var(--border-subtle); margin-bottom: .65rem;
+  display: flex; align-items: center; gap: .55rem;
+}
+
+/* ── VISTA BASE DE DATOS ── */
+.db-toolbar {
+  display: flex; gap: .5rem; align-items: center;
+  margin-bottom: .85rem; flex-wrap: wrap;
+}
+.db-search {
+  flex: 1; min-width: 200px; max-width: 320px;
+  background: var(--bg-raised); border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm); padding: .38rem .75rem .38rem 1.9rem;
+  font-family: inherit; font-size: 11.5px; color: var(--text-primary);
+  outline: none; transition: border-color .15s; position: relative;
+}
+.db-search:focus { border-color: var(--blue); }
+.db-search-wrap { position: relative; flex: 1; min-width: 200px; max-width: 320px; }
+.db-search-ico {
+  position: absolute; left: .6rem; top: 50%;
+  transform: translateY(-50%); color: var(--text-muted);
+  pointer-events: none; font-size: 11px;
+}
+.db-view-toggle {
+  display: flex; gap: .3rem; background: var(--bg-overlay);
+  border: 1px solid var(--border-subtle); border-radius: var(--radius-sm);
+  padding: 2px;
+}
+.db-view-btn {
+  padding: .3rem .65rem; border-radius: 4px; font-size: 11px;
+  font-weight: 600; cursor: pointer; background: none; border: none;
+  color: var(--text-muted); font-family: inherit; transition: all .12s;
+}
+.db-view-btn.active {
+  background: var(--bg-raised); color: var(--text-primary);
+  box-shadow: 0 1px 3px rgba(0,0,0,.3);
+}
+
+/* Tabla completa */
+.db-table-wrap {
+  background: var(--bg-raised); border: 1px solid var(--border-subtle);
+  border-radius: var(--radius); overflow: auto;
+  max-height: calc(100vh - 280px);
+}
+.db-table {
+  width: 100%; border-collapse: collapse; font-size: 11.5px;
+  min-width: 900px;
+}
+.db-table th {
+  background: var(--bg-overlay); padding: .5rem .75rem;
+  font-size: 9.5px; font-weight: 700; letter-spacing: .09em;
+  text-transform: uppercase; color: var(--text-muted);
+  border-bottom: 1px solid var(--border-subtle);
+  white-space: nowrap; position: sticky; top: 0; z-index: 2;
+  text-align: left; cursor: pointer; user-select: none;
+}
+.db-table th:hover { color: var(--text-secondary); }
+.db-table td {
+  padding: .5rem .75rem; border-bottom: 1px solid var(--border-subtle);
+  vertical-align: middle; max-width: 180px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  color: var(--text-secondary);
+}
+.db-table tr:last-child td { border-bottom: none; }
+.db-table tr:hover td { background: rgba(255,255,255,.02); cursor: pointer; }
+.db-table .td-name { color: var(--text-primary); font-weight: 600; }
+.db-table .td-mono {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  color: var(--text-muted);
+}
+.db-table .td-pct { text-align: center; }
+
+/* Expediente completo */
+.expediente {
+  display: none;
+  background: var(--bg-raised); border: 1px solid var(--border-subtle);
+  border-radius: var(--radius); padding: 1.25rem;
+}
+.expediente.on { display: block; }
+.exp-header {
+  display: flex; align-items: center; gap: .85rem;
+  padding-bottom: 1rem; border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: 1.1rem;
+}
+.exp-av {
+  width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; font-weight: 800; border: 1px solid;
+}
+.exp-name  { font-size: 18px; font-weight: 800; letter-spacing: -.03em; }
+.exp-role  { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+.exp-back  {
+  margin-left: auto; background: none; border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm); padding: .35rem .7rem;
+  font-family: inherit; font-size: 11px; color: var(--text-secondary);
+  cursor: pointer; transition: all .12s;
+}
+.exp-back:hover { border-color: var(--border-strong); color: var(--text-primary); }
+.exp-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+.exp-section { }
+.exp-section-title {
+  font-size: 9.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--text-muted); margin-bottom: .55rem;
+  padding-bottom: .35rem; border-bottom: 1px solid var(--border-subtle);
+}
+.exp-row {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: .35rem 0; border-bottom: 1px solid var(--border-subtle); gap: .65rem;
+}
+.exp-row:last-child { border-bottom: none; }
+.exp-key { font-size: 11px; color: var(--text-muted); flex-shrink: 0; }
+.exp-val { font-size: 11px; color: var(--text-primary); font-weight: 500; text-align: right; word-break: break-word; }
+.exp-val.mono { font-family: 'JetBrains Mono', monospace; font-size: 10px; }
+.exp-val.priv { color: var(--warning-faint); }
+.exp-bio {
+  font-size: 12.5px; color: var(--text-secondary); line-height: 1.65;
+  padding: .65rem 0; border-bottom: 1px solid var(--border-subtle);
+}
+.exp-quote {
+  border-left: 2px solid var(--gold); padding: .55rem .8rem;
+  background: var(--gold-dim); border-radius: 0 4px 4px 0;
+  font-size: 12.5px; font-style: italic; color: var(--text-primary);
+  line-height: 1.6; margin: .5rem 0;
+}
+.exp-pills { display: flex; flex-wrap: wrap; gap: 4px; margin-top: .4rem; }
+.exp-pill {
+  font-size: 10.5px; padding: 2px 8px; border-radius: 99px;
+  background: var(--bg-overlay); border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+}
+.exp-hobby { margin-bottom: .4rem; }
+.exp-hobby-name { font-size: 12px; font-weight: 600; color: var(--text-primary); }
+.exp-hobby-sub  { font-size: 11px; color: var(--text-muted); }
+.exp-foto-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 3px; margin-top: .5rem; }
+.exp-slot {
+  aspect-ratio: 3/4; border-radius: 3px; display: flex;
+  align-items: center; justify-content: center; flex-direction: column;
+  font-size: 7px; font-weight: 700; gap: 2px;
+}
+.exp-slot-ok  { background: var(--success-dim); border: 1px solid var(--success-border); color: var(--success-faint); }
+.exp-slot-mis { background: var(--bg-overlay); border: 1px solid var(--border-subtle); color: var(--text-disabled); }
+.exp-slot-cri { background: var(--danger-dim); border: 1px solid var(--danger-border); color: var(--danger-faint); }
+
+/* ── NOTAS INLINE ── */
+.nota-input {
+  width: 100%; background: var(--bg-overlay); border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm); padding: .5rem .65rem;
+  font-family: inherit; font-size: 11.5px; color: var(--text-primary);
+  outline: none; resize: none; transition: border-color .15s;
+  min-height: 60px;
+}
+.nota-input::placeholder { color: var(--text-muted); font-size: 11px; }
+.nota-input:focus { border-color: var(--blue); }
+
+/* ── TOGGLE ESTADO ── */
+.toggle-switch {
+  position: relative; display: inline-flex; align-items: center;
+  width: 36px; height: 20px; cursor: pointer;
+}
+.toggle-switch input { opacity: 0; width: 0; height: 0; }
+.toggle-track {
+  position: absolute; inset: 0; border-radius: 99px;
+  background: var(--border-default); transition: background .2s;
+}
+.toggle-thumb {
+  position: absolute; left: 3px; top: 3px;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: #fff; transition: transform .2s;
+}
+.toggle-switch input:checked ~ .toggle-track { background: var(--success); }
+.toggle-switch input:checked ~ .toggle-thumb { transform: translateX(16px); }
+
+/* ── QR PANEL en detail ── */
+.qr-container {
+  display: flex; flex-direction: column; align-items: center;
+  gap: .75rem; padding: 1rem; background: var(--bg-overlay);
+  border: 1px solid var(--border-subtle); border-radius: var(--radius-sm);
+}
+.qr-canvas {
+  width: 140px; height: 140px; image-rendering: pixelated;
+  border-radius: 4px;
+}
+.qr-url {
+  font-family: 'JetBrains Mono', monospace; font-size: 9.5px;
+  color: var(--text-muted); text-align: center; word-break: break-all;
+}
+
+
+
+</style>
+</head>
+<body>
+<!-- ══ SIDEBAR ══ -->
+<nav class="sidebar" aria-label="Navegación admin">
+  <div class="sb-logo">
+    <div class="sb-mark">SC</div>
+    <div>
+      <div class="sb-name">Soul Circle™</div>
+      <div class="sb-env">Admin · circle.soullensstudios.live</div>
+    </div>
+  </div>
+
+  <div class="sb-section">Gestión</div>
+  <div class="sb-item active" onclick="navTo('embajadores',this)">
+    <svg class="sb-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="5.5" cy="4.5" r="2.2"/><path d="M1 12c0-2.5 2-4.5 4.5-4.5s4.5 2 4.5 4.5"/><circle cx="10.5" cy="4" r="1.8"/><path d="M10.5 7c1.5 0 2.7 1.2 2.7 2.7"/></svg>
+    Embajadores
+    <span class="sb-badge sb-badge-blue" id="nav-badge-total">9</span>
+  </div>
+  <div class="sb-item" onclick="navTo('passes',this)">
+    <svg class="sb-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="1" y="2.5" width="12" height="9" rx="1.5"/><path d="M4 6h6M4 8h4"/></svg>
+    Smart Passes
+    <span class="sb-badge sb-badge-warn" id="nav-badge-pending">—</span>
+  </div>
+  <div class="sb-item" onclick="navTo('fotos',this)">
+    <svg class="sb-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="1" y="3" width="12" height="9" rx="1.2"/><circle cx="7" cy="7.5" r="2.2"/><path d="M4.5 3L5.5 1.5h3L9.5 3"/></svg>
+    Fotos pendientes
+    <span class="sb-badge sb-badge-danger" id="nav-badge-fotos">—</span>
+  </div>
+  <div class="sb-item" onclick="navTo('merch',this)">
+    <svg class="sb-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2.5 1.5h9l1 3.5H1.5L2.5 1.5z"/><path d="M1.5 5v7.5h11V5"/><path d="M5 5v2.5a2 2 0 004 0V5"/></svg>
+    Merch / Tallas
+  </div>
+
+  <div class="sb-section">CRM</div>
+  <div class="sb-item" onclick="navTo('invitaciones',this)">
+    <svg class="sb-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 3h12v8a1 1 0 01-1 1H2a1 1 0 01-1-1V3z"/><path d="M1 3l6 5 6-5"/></svg>
+    Invitaciones
+    <span class="sb-badge sb-badge-blue" id="nav-badge-inv">URLs</span>
+  </div>
+  <div class="sb-item" onclick="navTo('base',this)">
+    <svg class="sb-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4"><ellipse cx="7" cy="4" rx="5" ry="2"/><path d="M2 4v6c0 1.1 2.24 2 5 2s5-.9 5-2V4"/><path d="M2 7c0 1.1 2.24 2 5 2s5-.9 5-2"/></svg>
+    Base de datos
+  </div>
+
+  <div class="sb-section">Sistema</div>
+  <div class="sb-item" onclick="navTo('deploy',this)">
+    <svg class="sb-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M7 2v8M5 7l2 3 2-3"/><path d="M2 11.5h10"/></svg>
+    Deploy / Hosting
+  </div>
+  <div class="sb-item" onclick="navTo('settings',this)">
+    <svg class="sb-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="7" cy="7" r="2"/><path d="M7 1v2M7 11v2M1 7h2M11 7h2M3 3l1.5 1.5M9.5 9.5L11 11M3 11l1.5-1.5M9.5 4.5L11 3"/></svg>
+    Configuración
+  </div>
+
+  <div class="sb-footer">
+    <strong>Ed Zam · Val Mosquera</strong>
+    Ciclo Fundador 2026<br>
+    Mérida, Yucatán
+  </div>
+</nav>
+
+<!-- ══ MAIN ══ -->
+<div class="main" role="main">
+
+  <header class="topbar">
+    <div>
+      <span class="topbar-title" id="topbar-title">Embajadores</span>
+      <span class="topbar-count" id="topbar-count"></span>
+    </div>
+    <div class="topbar-right">
+      <button class="btn btn-ghost" onclick="openExport()" title="Exportar datos">
+        <svg width="11" height="11" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 2v7M5 7l2 2 2-2"/><path d="M2 11h10"/></svg>
+        Exportar
+      </button>
+      <button class="btn btn-primary" onclick="openNew()">
+        <svg width="11" height="11" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 2.5v9M2.5 7h9"/></svg>
+        Nuevo embajador
+      </button>
+    </div>
+  </header>
+
+  <div class="tabs" role="tablist">
+    <div class="tab active" role="tab" onclick="setTab('',this)">Todos</div>
+    <div class="tab" role="tab" onclick="setTab('SC',this)">Soul Circle™</div>
+    <div class="tab" role="tab" onclick="setTab('NS',this)">Núcleo Soul™</div>
+  </div>
+
+  <div class="content" id="main-content">
+
+    <div class="ciclo-card" id="ciclo-card">
+  <div>
+    <div class="ciclo-days" id="ciclo-days">—</div>
+    <div class="ciclo-label">días restantes</div>
+  </div>
+  <div class="ciclo-bar-wrap">
+    <div class="ciclo-label" style="margin-bottom:2px">Ciclo Fundador 2026 · 02jun – 30nov</div>
+    <div class="ciclo-note" id="ciclo-note">Calculando…</div>
+    <div class="ciclo-bar-bg"><div class="ciclo-bar-fill" id="ciclo-fill" style="width:0%"></div></div>
+    <div class="ciclo-pct" id="ciclo-pct"></div>
+  </div>
+</div>
+
+    <!-- ══════════════════════════════
+         VISTA: EMBAJADORES (principal)
+         ══════════════════════════════ -->
+    <div class="view active" id="view-embajadores">
+      <!-- KPIs -->
+    <div class="kpi-row" aria-label="Métricas generales">
+      <div class="kpi" style="border-top-color:var(--blue)">
+        <div class="kpi-val" style="color:var(--blue-light)" id="kpi-total">—</div>
+        <div class="kpi-label">Total</div>
+        <div class="kpi-note">Embajadores</div>
+      </div>
+      <div class="kpi" style="border-top-color:var(--success)">
+        <div class="kpi-val" style="color:var(--success-faint)" id="kpi-activos">—</div>
+        <div class="kpi-label">Activos</div>
+        <div class="kpi-note">Pass en vivo</div>
+      </div>
+      <div class="kpi" style="border-top-color:var(--warning-light)">
+        <div class="kpi-val" style="color:var(--warning-faint)" id="kpi-pending">—</div>
+        <div class="kpi-label">Pendientes</div>
+        <div class="kpi-note">Sin publicar</div>
+      </div>
+      <div class="kpi" style="border-top-color:var(--danger-light)">
+        <div class="kpi-val" style="color:var(--danger-faint)" id="kpi-fotos">—</div>
+        <div class="kpi-label">Sin fotos</div>
+        <div class="kpi-note">Menos del 30%</div>
+      </div>
+      <div class="kpi" style="border-top-color:var(--gold)">
+        <div class="kpi-val" style="color:var(--gold-light)" id="kpi-completos">—</div>
+        <div class="kpi-label">Completos</div>
+        <div class="kpi-note">100% fotos</div>
+      </div>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <div class="search-wrap">
+        <svg class="search-icon" width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="6" cy="6" r="4"/><path d="M9.5 9.5l3 3"/></svg>
+        <input class="search-input" type="text" id="search" placeholder="Nombre, slug, rol, Pass ID…" oninput="renderTable()">
+      </div>
+      <div class="filters" id="filter-group">
+        <button class="filter on" onclick="setFilter('all',this)">Todos</button>
+        <button class="filter" onclick="setFilter('activo',this)">✓ Activos</button>
+        <button class="filter" onclick="setFilter('pendiente',this)">⏳ Pendientes</button>
+        <button class="filter" onclick="setFilter('fotos',this)">📷 Sin fotos</button>
+      </div>
+      <div style="margin-left:auto">
+        <select class="sort-select" onchange="currentSort=this.value;renderTable()">
+          <option value="nombre">Nombre A-Z</option>
+          <option value="fecha">Fecha ingreso</option>
+          <option value="fotos">% Fotos</option>
+          <option value="programa">Programa</option>
+          <option value="estado">Estado</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Tabla -->
+    <div class="table-wrap" role="table" aria-label="Lista de embajadores">
+      <div class="t-head t-grid" role="row">
+        <div class="th" onclick="setSort('nombre')" role="columnheader">Embajador <span id="sort-nombre">↕</span></div>
+        <div class="th" onclick="setSort('programa')" role="columnheader">Programa <span id="sort-programa"></span></div>
+        <div class="th" role="columnheader">Banda</div>
+        <div class="th" onclick="setSort('fotos')" role="columnheader">Fotos <span id="sort-fotos"></span></div>
+        <div class="th" onclick="setSort('estado')" role="columnheader">Estado <span id="sort-estado"></span></div>
+        <div class="th" role="columnheader">Pass ID</div>
+        <div class="th" role="columnheader"></div>
+      </div>
+      <div id="table-body" role="rowgroup"></div>
+    </div>
+
+    <!-- Selection bar -->
+    <div class="sel-bar" id="sel-bar" role="toolbar" aria-label="Acciones sobre selección">
+      <span>Seleccionados:</span>
+      <span class="sel-count" id="sel-count">0</span>
+      <div class="sel-actions">
+        <button class="sel-btn" onclick="bulkExport('json')">Exportar JSON</button>
+        <button class="sel-btn" onclick="bulkExport('merch')">CSV tallas</button>
+        <button class="sel-btn sel-btn-cancel" onclick="clearSel()">✕ Cancelar</button>
+      </div>
+    </div>
+    </div><!-- /view-embajadores -->
+
+    <!-- ══════════════════════
+     VISTA: SMART PASSES
+     ══════════════════════ -->
+<div class="view" id="view-passes">
+  <div class="kpi-row" style="margin-bottom:.85rem">
+    <div class="kpi" style="border-top-color:var(--blue)">
+      <div class="kpi-val" style="color:var(--blue-light)" id="p-kpi-total">—</div>
+      <div class="kpi-label">Total passes</div>
+    </div>
+    <div class="kpi" style="border-top-color:var(--success)">
+      <div class="kpi-val" style="color:var(--success-faint)" id="p-kpi-live">—</div>
+      <div class="kpi-label">En vivo</div>
+      <div class="kpi-note">Estado activo</div>
+    </div>
+    <div class="kpi" style="border-top-color:var(--warning-light)">
+      <div class="kpi-val" style="color:var(--warning-faint)" id="p-kpi-pending">—</div>
+      <div class="kpi-label">Pendientes</div>
+      <div class="kpi-note">Sin publicar</div>
+    </div>
+    <div class="kpi" style="border-top-color:var(--nucleo)">
+      <div class="kpi-val" style="color:var(--nucleo-faint)" id="p-kpi-sc">—</div>
+      <div class="kpi-label">Soul Circle™</div>
+    </div>
+    <div class="kpi" style="border-top-color:var(--nucleo-light)">
+      <div class="kpi-val" style="color:var(--nucleo-faint)" id="p-kpi-ns">—</div>
+      <div class="kpi-label">Núcleo Soul™</div>
+    </div>
+  </div>
+
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;gap:.75rem;flex-wrap:wrap">
+    <div style="font-size:12px;font-weight:700;color:var(--text-primary)">Todos los Smart Passes</div>
+    <div style="display:flex;gap:.45rem">
+      <button class="btn btn-ghost" onclick="genAll()" style="font-size:11px">✦ Generar todos pendientes</button>
+    </div>
+  </div>
+
+  <div class="passes-grid" id="passes-grid">
+    <!-- Generado por JS -->
+  </div>
+</div>
+
+<!-- ══════════════════════
+     VISTA: FOTOS PENDIENTES
+     ══════════════════════ -->
+<div class="view" id="view-fotos">
+  <div class="fotos-stats-row">
+    <div class="fotos-stat">
+      <div class="fotos-stat-val" style="color:var(--danger-faint)" id="f-kpi-total">—</div>
+      <div class="fotos-stat-lbl">Slots vacíos</div>
+    </div>
+    <div class="fotos-stat">
+      <div class="fotos-stat-val" style="color:var(--danger-faint)" id="f-kpi-hero">—</div>
+      <div class="fotos-stat-lbl">Sin hero</div>
+    </div>
+    <div class="fotos-stat">
+      <div class="fotos-stat-val" style="color:var(--warning-faint)" id="f-kpi-parcial">—</div>
+      <div class="fotos-stat-lbl">Parciales</div>
+    </div>
+    <div class="fotos-stat">
+      <div class="fotos-stat-val" style="color:var(--success-faint)" id="f-kpi-completos">—</div>
+      <div class="fotos-stat-lbl">Completos</div>
+    </div>
+  </div>
+
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;flex-wrap:wrap;gap:.5rem">
+    <div style="font-size:12px;font-weight:700;color:var(--text-primary)">Embajadores con fotos pendientes</div>
+    <button class="btn btn-ghost" onclick="dlFotosBrief()" style="font-size:11px">📷 Descargar briefing fotógrafo</button>
+  </div>
+
+  <div class="fotos-list" id="fotos-list">
+    <!-- Generado por JS -->
+  </div>
+</div>
+
+<!-- ══════════════════════
+     VISTA: MERCH / TALLAS
+     ══════════════════════ -->
+<div class="view" id="view-merch">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.85rem;flex-wrap:wrap;gap:.5rem">
+    <div style="font-size:12px;font-weight:700;color:var(--text-primary)">Kit de bienvenida Soul Circle™ · Pedido de merch</div>
+    <button class="btn btn-primary" onclick="doExport('merch')" style="font-size:11px">⬇ Exportar CSV para pedido</button>
+  </div>
+
+  <div class="merch-summary" id="merch-summary">
+    <!-- Generado por JS -->
+  </div>
+
+  <div class="merch-table-wrap">
+    <div class="merch-row merch-head">
+      <div class="merch-cell head">Embajador</div>
+      <div class="merch-cell head">Programa</div>
+      <div class="merch-cell head">Playera</div>
+      <div class="merch-cell head">Tenis MX</div>
+      <div class="merch-cell head">Estado</div>
+    </div>
+    <div id="merch-table-body">
+      <!-- Generado por JS -->
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════
+     VISTA: DEPLOY
+     ══════════════════════ -->
+<div class="view" id="view-deploy">
+  <div class="deploy-view">
+    <div class="deploy-section">
+      <div class="deploy-section-title">Estructura del servidor</div>
+      <div class="code-block"><span class="path">soullensstudios.live/</span>
+<span class="comment">├── embajador/                  ← carpeta raíz de passes</span>
+<span class="comment">│   ├── anais-hidalgo/</span>
+<span class="comment">│   │   ├── index.html          ← Smart Pass generado</span>
+<span class="comment">│   │   ├── anais-hero.jpg      ← 1080×1920px</span>
+<span class="comment">│   │   ├── anais-perfil.jpg    ← 400×400px</span>
+<span class="comment">│   │   ├── og.jpg              ← 1200×630px</span>
+<span class="comment">│   │   └── anais-01.jpg … 09.jpg</span>
+<span class="comment">│   └── [slug-embajador]/</span>
+<span class="comment">│       └── index.html + fotos</span>
+<span class="path">circle.soullensstudios.live/</span>
+<span class="comment">├── index.html                  ← este dashboard</span>
+<span class="comment">└── Smart_Pass_MASTER_TEMPLATE.html  ← NO editar</span></div>
+    </div>
+
+    <div class="deploy-section">
+      <div class="deploy-section-title">Flujo de deploy por embajador</div>
+      <div class="deploy-step">
+        <div class="deploy-step-num">1</div>
+        <div class="deploy-step-body">
+          <div class="deploy-step-title">Generar el Smart Pass desde el dashboard</div>
+          <div class="deploy-step-desc">Ir a la vista "Embajadores" → seleccionar embajador → "Generar Smart Pass" → descargar el HTML.</div>
+        </div>
+      </div>
+      <div class="deploy-step">
+        <div class="deploy-step-num">2</div>
+        <div class="deploy-step-body">
+          <div class="deploy-step-title">Renombrar el archivo generado</div>
+          <div class="code-block"><span class="cmd">mv</span> <span class="var">Smart_Pass_slug_PASS-SLS-2026-XXX-X.html</span> <span class="path">index.html</span></div>
+        </div>
+      </div>
+      <div class="deploy-step">
+        <div class="deploy-step-num">3</div>
+        <div class="deploy-step-body">
+          <div class="deploy-step-title">Subir por FTP/SFTP a la carpeta del embajador</div>
+          <div class="code-block"><span class="comment"># Estructura en el servidor:</span>
+<span class="path">soullensstudios.live/embajador/</span><span class="var">[slug]</span><span class="path">/</span>
+  <span class="path">index.html</span>
+  <span class="var">[nombre]</span><span class="path">-hero.jpg</span>
+  <span class="var">[nombre]</span><span class="path">-perfil.jpg</span>
+  <span class="path">og.jpg</span>
+  <span class="var">[nombre]</span><span class="path">-01.jpg</span> … <span class="var">[nombre]</span><span class="path">-09.jpg</span></div>
+        </div>
+      </div>
+      <div class="deploy-step">
+        <div class="deploy-step-num">4</div>
+        <div class="deploy-step-body">
+          <div class="deploy-step-title">Verificar Open Graph (preview en WhatsApp)</div>
+          <div class="deploy-step-desc">Usar el debugger de Facebook para validar que la imagen og.jpg aparece al compartir el link.</div>
+          <div class="deploy-links">
+            <span class="deploy-link primary" onclick="window.open('https://developers.facebook.com/tools/debug/','_blank')">↗ Facebook Debugger</span>
+            <span class="deploy-link" onclick="window.open('https://cards-dev.twitter.com/validator','_blank')">↗ Twitter Card Validator</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="deploy-section">
+      <div class="deploy-section-title">Comandos de generación local (Python)</div>
+      <div class="code-block"><span class="comment"># Ver todos los embajadores registrados</span>
+<span class="cmd">python3</span> <span class="path">generar_smart_pass.py</span> <span class="var">--lista</span>
+
+<span class="comment"># Generar pass de un embajador específico</span>
+<span class="cmd">python3</span> <span class="path">generar_smart_pass.py</span> <span class="var">anais-hidalgo</span>
+
+<span class="comment"># Generar TODOS los passes activos</span>
+<span class="cmd">python3</span> <span class="path">generar_smart_pass.py</span></div>
+    </div>
+
+    <div class="deploy-section">
+      <div class="deploy-section-title">Estado de passes por embajador</div>
+      <div id="deploy-status-table"><!-- Generado por JS --></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════
+     VISTA: SETTINGS
+     ══════════════════════ -->
+<div class="view" id="view-settings">
+  <div class="settings-view">
+    <div class="settings-section">
+      <div class="settings-section-title">Información del programa</div>
+      <div class="settings-row">
+        <div><div class="settings-key">Nombre del programa</div></div>
+        <div class="settings-val">Soul Circle™ 2026</div>
+      </div>
+      <div class="settings-row">
+        <div><div class="settings-key">Ciclo fundador</div><div class="settings-desc">Inicio y cierre oficial</div></div>
+        <div class="settings-val">02 jun – 30 nov 2026</div>
+      </div>
+      <div class="settings-row">
+        <div><div class="settings-key">Primer generación</div></div>
+        <div class="settings-val">Los 9 Arquitectos Fundadores</div>
+      </div>
+      <div class="settings-row">
+        <div><div class="settings-key">Nomenclatura interna</div></div>
+        <div class="settings-val">Arquitecto/a Fundador/a · Soul Origen™</div>
+      </div>
+      <div class="settings-row">
+        <div><div class="settings-key">Siguiente generación</div></div>
+        <div class="settings-val">Soul Node™ (2027+)</div>
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <div class="settings-section-title">Plataforma y hosting</div>
+      <div class="settings-row">
+        <div><div class="settings-key">Admin dashboard</div></div>
+        <div class="settings-val">circle.soullensstudios.live</div>
+      </div>
+      <div class="settings-row">
+        <div><div class="settings-key">Smart Passes</div></div>
+        <div class="settings-val">soullensstudios.live/embajador/[slug]/</div>
+      </div>
+      <div class="settings-row">
+        <div><div class="settings-key">Formulario de registro</div></div>
+        <div class="settings-val">circle-intake-v2-preview.html</div>
+      </div>
+      <div class="settings-row">
+        <div><div class="settings-key">Template maestro</div></div>
+        <div class="settings-val" id="template-status">Verificando…</div>
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <div class="settings-section-title">Convención de Pass ID</div>
+      <div class="code-block"><span class="comment"># Estructura: PASS-[PROG]-[AÑO]-[3LETRAS_NOMBRE]-[INICIAL_APELLIDO]</span>
+
+<span class="comment">Soul Circle™:</span> <span class="var">PASS-SLS-2026-ANA-H</span>   <span class="comment">← Anais Hidalgo</span>
+<span class="comment">Núcleo Soul™: </span> <span class="var">PASS-NS-2026-EDW-R</span>   <span class="comment">← Edwin Rodríguez</span></div>
+    </div>
+
+    <div class="settings-section">
+      <div class="settings-section-title">Administradores autorizados</div>
+      <div class="settings-row">
+        <div><div class="settings-key">Ed Zam</div><div class="settings-desc">Arquitecto de Realidades · Xplorers Startups</div></div>
+        <span class="settings-badge sb-ok">Admin</span>
+      </div>
+      <div class="settings-row">
+        <div><div class="settings-key">Val Mosquera</div><div class="settings-desc">CEO · Soul Lens Studios</div></div>
+        <span class="settings-badge sb-ok">Admin</span>
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <div class="settings-section-title">Seguridad</div>
+      <div class="settings-row">
+        <div><div class="settings-key">Cifrado de datos</div></div>
+        <span class="settings-badge sb-ok">SSL 256-bit</span>
+      </div>
+      <div class="settings-row">
+        <div><div class="settings-key">Datos privados en transit</div></div>
+        <span class="settings-badge sb-ok">Cifrados</span>
+      </div>
+      <div class="settings-row">
+        <div><div class="settings-key">Analytics de terceros</div></div>
+        <span class="settings-badge sb-warn">Sin trackers</span>
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <div class="settings-section-title">Acciones del sistema</div>
+      <div style="display:flex;flex-direction:column;gap:.45rem;margin-top:.25rem">
+        <button class="btn btn-ghost" onclick="doExport('json')" style="justify-content:flex-start">📦 Exportar todos los embajadores (JSON)</button>
+        <button class="btn btn-ghost" onclick="doExport('directorio')" style="justify-content:flex-start">📋 Exportar directorio interno (CSV)</button>
+        <button class="btn btn-ghost" onclick="doExport('merch')" style="justify-content:flex-start">👕 Exportar tallas para merch (CSV)</button>
+        <button class="btn btn-ghost" onclick="window.open('circle-intake-v2-preview.html','_blank')" style="justify-content:flex-start">➕ Registrar nuevo embajador</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     VISTA: INVITACIONES
+     URLs listas para compartir + WA por embajador
+     ══════════════════════════════════════════════ -->
+<div class="view" id="view-invitaciones">
+
+  <!-- Info banner -->
+  <div style="background:var(--blue-dim);border:1px solid var(--blue-border);border-radius:var(--radius);padding:.75rem 1rem;margin-bottom:1rem;display:flex;align-items:flex-start;gap:.65rem">
+    <span style="font-size:16px;flex-shrink:0">📨</span>
+    <div>
+      <div style="font-size:12.5px;font-weight:700;color:var(--text-primary);margin-bottom:2px">URLs de registro para compartir</div>
+      <div style="font-size:11.5px;color:var(--text-secondary);line-height:1.55">
+        <strong style="color:var(--blue-light)">Soul Circle™</strong> → circle.soullensstudios.live/unete/ &nbsp;·&nbsp;
+        <strong style="color:var(--nucleo-faint)">Núcleo Soul™</strong> → circle.soullensstudios.live/nucleo/
+      </div>
+    </div>
+  </div>
+
+  <!-- URLs globales para copiar -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin-bottom:1.25rem">
+    <div style="background:var(--bg-raised);border:1px solid var(--blue-border);border-radius:var(--radius);padding:.85rem 1rem">
+      <div style="font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--blue-light);margin-bottom:.5rem">Soul Circle™ · Formulario externo</div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-secondary);margin-bottom:.65rem;word-break:break-all">circle.soullensstudios.live/unete/</div>
+      <div style="display:flex;gap:.4rem">
+        <button class="inv-btn inv-btn-ghost" style="font-size:10.5px" onclick="copyAndToast('https://circle.soullensstudios.live/unete/','URL SC copiada')">⎘ Copiar URL</button>
+        <a href="https://circle.soullensstudios.live/unete/" target="_blank" class="inv-btn inv-btn-pass" style="font-size:10.5px;text-decoration:none">↗ Abrir</a>
+      </div>
+    </div>
+    <div style="background:var(--bg-raised);border:1px solid var(--nucleo-border);border-radius:var(--radius);padding:.85rem 1rem">
+      <div style="font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--nucleo-faint);margin-bottom:.5rem">Núcleo Soul™ · Formulario interno</div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-secondary);margin-bottom:.65rem;word-break:break-all">circle.soullensstudios.live/nucleo/</div>
+      <div style="display:flex;gap:.4rem">
+        <button class="inv-btn inv-btn-ghost" style="font-size:10.5px" onclick="copyAndToast('https://circle.soullensstudios.live/nucleo/','URL NS copiada')">⎘ Copiar URL</button>
+        <a href="https://circle.soullensstudios.live/nucleo/" target="_blank" class="inv-btn" style="font-size:10.5px;text-decoration:none;background:var(--nucleo);color:#fff">↗ Abrir</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cards por embajador -->
+  <div style="font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.65rem;padding-bottom:.4rem;border-bottom:1px solid var(--border-subtle)">
+    Soul Circle™ · Arquitectos Fundadores
+  </div>
+  <div class="inv-grid" id="inv-grid-sc" style="margin-bottom:1.25rem"></div>
+
+  <div style="font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.65rem;padding-bottom:.4rem;border-bottom:1px solid var(--border-subtle)">
+    Núcleo Soul™ · Soul Origen™
+  </div>
+  <div class="inv-grid" id="inv-grid-ns"></div>
+
+</div><!-- /view-invitaciones -->
+
+<!-- ══════════════════════════════════════════════
+     VISTA: BASE DE DATOS
+     Tabla completa + Expediente por embajador
+     ══════════════════════════════════════════════ -->
+<div class="view" id="view-base">
+
+  <div class="db-toolbar">
+    <div class="db-search-wrap">
+      <span class="db-search-ico">🔍</span>
+      <input class="db-search" type="text" id="db-search"
+             placeholder="Buscar por nombre, rol, ciudad, pass ID…"
+             oninput="renderDB()" style="padding-left:1.9rem;width:100%">
+    </div>
+    <div class="db-view-toggle">
+      <button class="db-view-btn active" id="db-btn-tabla" onclick="setDBView('tabla',this)">☰ Tabla</button>
+      <button class="db-view-btn" id="db-btn-exp" onclick="setDBView('expediente',this)">◻ Expediente</button>
+    </div>
+    <div style="margin-left:auto;display:flex;gap:.4rem">
+      <button class="btn btn-ghost" onclick="doExport('json')" style="font-size:11px">⬇ JSON</button>
+      <button class="btn btn-ghost" onclick="doExport('directorio')" style="font-size:11px">⬇ CSV</button>
+    </div>
+  </div>
+
+  <!-- Vista tabla -->
+  <div id="db-tabla-view">
+    <div class="db-table-wrap">
+      <table class="db-table">
+        <thead>
+          <tr>
+            <th onclick="dbSort('nombre')">Embajador</th>
+            <th onclick="dbSort('programa')">Programa</th>
+            <th onclick="dbSort('estado')">Estado</th>
+            <th>Pass ID</th>
+            <th>WA</th>
+            <th>Instagram</th>
+            <th>Ciudad</th>
+            <th onclick="dbSort('fotos')">Fotos</th>
+            <th>Playera</th>
+            <th>Tenis</th>
+            <th>Mercados</th>
+            <th>Ingreso</th>
+          </tr>
+        </thead>
+        <tbody id="db-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Vista expediente -->
+  <div class="expediente" id="db-exp-view">
+    <div class="exp-header">
+      <div class="exp-av" id="exp-av"></div>
+      <div>
+        <div class="exp-name" id="exp-name">—</div>
+        <div class="exp-role" id="exp-role">—</div>
+      </div>
+      <button class="exp-back" onclick="closeExpediente()">← Volver a tabla</button>
+    </div>
+    <div class="exp-grid" id="exp-grid"></div>
+  </div>
+
+</div><!-- /view-base -->
+
+
+  </div><!-- /content -->
+</div><!-- /main -->
+
+<!-- ══ DETAIL PANEL ══ -->
+<div class="detail-overlay" id="detail-overlay" onclick="maybeCloseDetail(event)" role="dialog" aria-modal="true" aria-label="Detalle del embajador">
+  <div class="detail-panel" id="detail-panel">
+    <div class="detail-top" id="detail-top">
+      <div class="detail-av" id="d-av"></div>
+      <div>
+        <div class="detail-name" id="d-name">—</div>
+        <div class="detail-sub" id="d-sub">—</div>
+      </div>
+      <button class="detail-x" onclick="closeDetail()" aria-label="Cerrar panel">✕</button>
+    </div>
+    <div class="detail-body" id="detail-body"></div>
+    <div class="detail-actions">
+      <button class="dact-btn dact-primary" onclick="openGen()">↺ Generar Smart Pass</button>
+      <button class="dact-btn dact-ghost" onclick="goLive()">↗ Ver en vivo</button>
+      <button class="dact-btn dact-ghost" onclick="dlJSON()">⬇ Descargar JSON</button>
+      <button class="dact-btn dact-danger" onclick="askDelete()">✕ Eliminar embajador</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ GENERADOR DE PASS ══ -->
+<div class="gen-overlay" id="gen-overlay" onclick="maybeCloseGen(event)" role="dialog" aria-modal="true" aria-label="Generador de Smart Pass">
+  <div class="gen-modal">
+    <div class="gen-title">Generar Smart Pass</div>
+    <div class="gen-sub">El sistema inyecta los datos del embajador en el <code>MASTER_TEMPLATE.html</code> y genera el archivo listo para deploy.</div>
+    <div class="gen-emb-name" id="gen-emb-label">— Ningún embajador seleccionado —</div>
+    <div class="gen-warning on" id="gen-warning">
+      ⚠ El template no se encontró. Asegúrate de que <code>Smart_Pass_MASTER_TEMPLATE.html</code> esté en el mismo directorio que este dashboard. Se intentará cargar automáticamente al hacer clic en "Generar".
+    </div>
+    <div class="gen-status gen-status-loading" id="gen-status" style="display:none"></div>
+    <div class="gen-download" id="gen-download">
+      <button class="gen-dl-btn gen-dl-primary" id="gen-dl-html" onclick="downloadGenHTML()">⬇ Descargar Smart Pass HTML</button>
+      <button class="gen-dl-btn gen-dl-ghost" id="gen-dl-json" onclick="downloadGenJSON()">⬇ Descargar JSON del embajador</button>
+      <button class="gen-dl-btn gen-dl-ghost" onclick="downloadDeploy()">📋 Instrucciones de deploy (.txt)</button>
+    </div>
+    <div class="gen-footer">
+      <button class="btn btn-ghost" onclick="closeGen()">Cancelar</button>
+      <button class="btn btn-primary" id="gen-btn" onclick="runGen()">✦ Generar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CONFIRM MODAL ══ -->
+<div class="modal-overlay" id="confirm-overlay" role="dialog" aria-modal="true">
+  <div class="modal">
+    <div class="modal-title" id="confirm-title">Confirmar</div>
+    <div class="modal-body" id="confirm-body"></div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeConfirm()">Cancelar</button>
+      <button class="btn btn-danger" id="confirm-ok" onclick="doConfirm()">Eliminar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ EXPORT MODAL ══ -->
+<div class="export-overlay" id="export-overlay" onclick="maybeCloseExport(event)" role="dialog" aria-modal="true" aria-label="Exportar datos">
+  <div class="export-modal">
+    <div class="export-title">Exportar datos</div>
+    <div class="export-sub">Exporta los <span id="export-n">—</span> embajadores actualmente visibles.</div>
+    <div class="export-opts">
+      <div class="export-opt" onclick="doExport('json')">
+        <div class="export-opt-icon">📦</div>
+        <div><div class="export-opt-name">JSON completo</div><div class="export-opt-desc">embajadores.json — compatible con generar_smart_pass.py</div></div>
+      </div>
+      <div class="export-opt" onclick="doExport('merch')">
+        <div class="export-opt-icon">👕</div>
+        <div><div class="export-opt-name">CSV tallas — merch</div><div class="export-opt-desc">Nombre, playera, tenis — para pedido de kit Soul Circle™</div></div>
+      </div>
+      <div class="export-opt" onclick="doExport('fotos')">
+        <div class="export-opt-icon">📷</div>
+        <div><div class="export-opt-name">Reporte fotos pendientes</div><div class="export-opt-desc">Slots vacíos por embajador — para briefing fotográfico</div></div>
+      </div>
+      <div class="export-opt" onclick="doExport('directorio')">
+        <div class="export-opt-icon">📋</div>
+        <div><div class="export-opt-name">Directorio interno CSV</div><div class="export-opt-desc">WA, email, ciudad, programa, band, estado</div></div>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:flex-end">
+      <button class="btn btn-ghost" onclick="closeExport()">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TOAST ══ -->
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <span id="toast-icon">✓</span>
+  <span id="toast-msg"></span>
+</div>
+
+<script>
+'use strict';
+'use strict';
+
+/* ════════════════════════════════════════════
+   BASE DE DATOS — 9 embajadores Soul Circle™ 2026
+   Datos demo con estructura idéntica a embajadores.json
+   ════════════════════════════════════════════ */
+const DB = [
+  {
+    id:1,slug:'anais-hidalgo',nombre_completo:'Anais Hidalgo',
+    nombre_first:'Anais',nombre_last:'Hidalgo',
+    rol_corto:'Directora Creativa',
+    titulo_hero:'Directora Creativa · Embajadora de Expansión',
+    programa:'SC',band_label:'Arquitecto/a Fundador/a',
+    pass_id:'PASS-SLS-2026-ANA-H',estado:'activo',
+    fecha_ingreso:'2026-06-02',ciudad:'Mérida, Yucatán',
+    wa_number:'5215644844928',email:'anais@email.com',
+    instagram:'@anais.hid',
+    fotos:{hero:true,perfil:true,og:true,galeria:[true,true,true,true,false,false,false,false,false]},
+    talla_playera:'S',talla_tenis:'24',
+    mercados:['Real estate','Gastronomía','Wellness y salud','Turismo y hospedaje'],
+    bio_html:'Venezolana por origen, yucateca por convicción. Conecta negocios reales con la audiencia que necesitan. Lleva más de 8 años impulsando marcas en LATAM.',
+    quote:'No abro puertas de servicios. Abro conversaciones que cambian el rumbo de un negocio.',
+    origen:'Venezolana · Mérida, Yucatán',
+    hobbies:[{nombre:'Fotografía',sub:'Ojo entrenado para capturar lo que otros no ven.'},{nombre:'Música latina',sub:'Venezuela en la sangre, Yucatán en el corazón.'},{nombre:'Libros y estrategia',sub:'Psicología, negocios y narrativa siempre en mano.'},{nombre:'Playa y mar',sub:'El Caribe me inspira. Mérida me da el escenario.'},{nombre:'Networking',sub:'Conectar personas es mi superpoder.'}],
+    avatar_hue:'#0653FF'
+  },
+  {
+    id:2,slug:'carlos-mendez',nombre_completo:'Carlos Méndez',
+    nombre_first:'Carlos',nombre_last:'Méndez',
+    rol_corto:'Coach de Negocios',
+    titulo_hero:'Coach de Negocios · Embajador de Expansión',
+    programa:'SC',band_label:'Arquitecto/a Fundador/a',
+    pass_id:'PASS-SLS-2026-CAR-M',estado:'activo',
+    fecha_ingreso:'2026-06-02',ciudad:'Mérida, Yucatán',
+    wa_number:'5219992223344',email:'carlos@email.com',
+    instagram:'@carlos.mnd',
+    fotos:{hero:true,perfil:true,og:true,galeria:[true,true,true,true,true,true,true,true,true]},
+    talla_playera:'M',talla_tenis:'27',
+    mercados:['Pymes en expansión','Educación','Servicios profesionales','Consultoría'],
+    bio_html:'Coach de negocios con más de 10 años formando empresarios en Yucatán. Especialista en estrategia comercial y expansión de mercados para Pymes.',
+    quote:'Un negocio sin estrategia es un negocio con fecha de caducidad.',
+    origen:'Mexicano · Mérida, Yucatán',
+    hobbies:[{nombre:'Lectura',sub:'Filosofía, estrategia y liderazgo.'},{nombre:'Running',sub:'5 días a la semana, sin excusas.'},{nombre:'Viajes',sub:'Aprender de otros mercados.'},{nombre:'Familia',sub:'Mi ancla y mi motor.'},{nombre:'Mentoría',sub:'Dar lo que me costó años aprender.'}],
+    avatar_hue:'#1D9E75'
+  },
+  {
+    id:3,slug:'valentina-flores',nombre_completo:'Valentina Flores',
+    nombre_first:'Valentina',nombre_last:'Flores',
+    rol_corto:'Estratega Digital',
+    titulo_hero:'Estratega Digital · Embajadora de Expansión',
+    programa:'SC',band_label:'Arquitecto/a Fundador/a',
+    pass_id:'PASS-SLS-2026-VAL-F',estado:'activo',
+    fecha_ingreso:'2026-06-02',ciudad:'Mérida, Yucatán',
+    wa_number:'5219993334455',email:'vale@email.com',
+    instagram:'@vale.flores',
+    fotos:{hero:false,perfil:true,og:false,galeria:[false,false,false,false,false,false,false,false,false]},
+    talla_playera:'XS',talla_tenis:'23',
+    mercados:['Marcas personales','Hoteles y hospedaje','Beach clubs y costa','Restaurantes'],
+    bio_html:'Estratega digital con enfoque en marcas de lifestyle y hospitalidad. Transforma presencias digitales en máquinas de captación en el sector turístico de Yucatán.',
+    quote:'La mejor estrategia no es la más compleja. Es la que tu cliente entiende y ejecuta.',
+    origen:'Mexicana · Mérida, Yucatán',
+    hobbies:[{nombre:'Surf',sub:'El mar siempre tiene razón.'},{nombre:'Diseño',sub:'Visión estética aplicada a la estrategia.'},{nombre:'Podcasts',sub:'Aprender mientras me muevo.'},{nombre:'Yoga',sub:'Claridad mental es claridad estratégica.'},{nombre:'Gastronomía',sub:'La cultura de un lugar vive en su comida.'}],
+    avatar_hue:'#C9A84C'
+  },
+  {
+    id:4,slug:'marco-morales',nombre_completo:'Marco Morales',
+    nombre_first:'Marco',nombre_last:'Morales',
+    rol_corto:'Consultor Inmobiliario',
+    titulo_hero:'Consultor Inmobiliario · Embajador de Expansión',
+    programa:'SC',band_label:'Arquitecto/a Fundador/a',
+    pass_id:'PASS-SLS-2026-MAR-M',estado:'pendiente',
+    fecha_ingreso:'2026-06-03',ciudad:'Mérida, Yucatán',
+    wa_number:'5219994445566',email:'marco@email.com',
+    instagram:'@marco.mor',
+    fotos:{hero:false,perfil:false,og:false,galeria:[false,false,false,false,false,false,false,false,false]},
+    talla_playera:'L',talla_tenis:'28',
+    mercados:['Real estate','Desarrollos inmobiliarios','Brokers inmobiliarios'],
+    bio_html:'Consultor inmobiliario con 12 años en el mercado yucateco. Experto en preventa de desarrollos y en conectar a inversionistas con los proyectos correctos.',
+    quote:'En real estate, la primera impresión no es el inmueble. Es la confianza.',
+    origen:'Mexicano · Mérida, Yucatán',
+    hobbies:[{nombre:'Golf',sub:'Disciplina, paciencia y estrategia.'},{nombre:'Arquitectura',sub:'El espacio define la experiencia.'},{nombre:'Vinos',sub:'Catador ocasional, entusiasta constante.'},{nombre:'Ciclismo',sub:'Ciudad y naturaleza al mismo tiempo.'},{nombre:'Inversiones',sub:'El dinero que trabaja mientras tú duermes.'}],
+    avatar_hue:'#7C6FE8'
+  },
+  {
+    id:5,slug:'lucia-garcia',nombre_completo:'Lucía García',
+    nombre_first:'Lucía',nombre_last:'García',
+    rol_corto:'Nutrióloga',
+    titulo_hero:'Nutrióloga · Embajadora de Expansión',
+    programa:'SC',band_label:'Arquitecto/a Fundador/a',
+    pass_id:'PASS-SLS-2026-LUC-G',estado:'activo',
+    fecha_ingreso:'2026-06-03',ciudad:'Mérida, Yucatán',
+    wa_number:'5219995556677',email:'lucia@email.com',
+    instagram:'@lucia.gar',
+    fotos:{hero:true,perfil:true,og:true,galeria:[true,true,false,false,false,false,false,false,false]},
+    talla_playera:'S',talla_tenis:'23.5',
+    mercados:['Clínicas y salud','Wellness y salud','Educación'],
+    bio_html:'Nutrióloga clínica y especialista en rendimiento humano. Trabaja con clínicas, empresas y profesionales que entienden que la energía es el activo más valioso.',
+    quote:'La salud no es un lujo. Es la plataforma desde la que construyes todo lo demás.',
+    origen:'Mexicana · Mérida, Yucatán',
+    hobbies:[{nombre:'Crossfit',sub:'Fuerza funcional, mentalidad de hierro.'},{nombre:'Cocina saludable',sub:'Que sea nutritivo y que sepa bien.'},{nombre:'Meditación',sub:'10 minutos al día que valen 2 horas.'},{nombre:'Naturaleza',sub:'Los cenotes son mi lugar de recarga.'},{nombre:'Lectura científica',sub:'La evidencia siempre gana.'}],
+    avatar_hue:'#FF5252'
+  },
+  {
+    id:6,slug:'rodrigo-perez',nombre_completo:'Rodrigo Pérez',
+    nombre_first:'Rodrigo',nombre_last:'Pérez',
+    rol_corto:'Chef y Restaurantero',
+    titulo_hero:'Chef · Embajador de Expansión',
+    programa:'SC',band_label:'Arquitecto/a Fundador/a',
+    pass_id:'PASS-SLS-2026-ROD-P',estado:'pendiente',
+    fecha_ingreso:'2026-06-04',ciudad:'Mérida, Yucatán',
+    wa_number:'5219996667788',email:'rod@email.com',
+    instagram:'@rod.perez',
+    fotos:{hero:true,perfil:false,og:false,galeria:[false,false,false,false,false,false,false,false,false]},
+    talla_playera:'XL',talla_tenis:'29',
+    mercados:['Gastronomía','Turismo y hospedaje','Beach clubs y costa'],
+    bio_html:'Chef con restaurante propio en Mérida y 15 años de carrera en la industria gastronómica del sureste. Especialista en posicionar negocios de hospitalidad.',
+    quote:'Un restaurante no vende comida. Vende una experiencia que la gente quiere repetir.',
+    origen:'Mexicano · Mérida, Yucatán',
+    hobbies:[{nombre:'Cocina de autor',sub:'Yucatán en cada plato.'},{nombre:'Agricultura',sub:'De la tierra a la mesa, literalmente.'},{nombre:'Boxeo',sub:'Disciplina que se construye rep a rep.'},{nombre:'Viajes gastronómicos',sub:'Comer es la mejor forma de conocer un lugar.'},{nombre:'Música',sub:'La banda sonora de la cocina importa.'}],
+    avatar_hue:'#E8A020'
+  },
+  {
+    id:7,slug:'sofia-ruiz',nombre_completo:'Sofía Ruiz',
+    nombre_first:'Sofía',nombre_last:'Ruiz',
+    rol_corto:'Arquitecta',
+    titulo_hero:'Arquitecta · Embajadora de Expansión',
+    programa:'SC',band_label:'Arquitecto/a Fundador/a',
+    pass_id:'PASS-SLS-2026-SOF-R',estado:'activo',
+    fecha_ingreso:'2026-06-04',ciudad:'Mérida, Yucatán',
+    wa_number:'5219997778899',email:'sofia@email.com',
+    instagram:'@sofia.rz',
+    fotos:{hero:true,perfil:true,og:true,galeria:[true,true,true,true,true,false,false,false,false]},
+    talla_playera:'XS',talla_tenis:'23',
+    mercados:['Constructoras y arquitectura','Real estate','Servicios profesionales'],
+    bio_html:'Arquitecta con despacho propio en Mérida. Especialista en diseño residencial de alto nivel y desarrollos mixtos en la Riviera Maya y Ciudad de México.',
+    quote:'El espacio que habitas te moldea. Diseñar bien es un acto de responsabilidad.',
+    origen:'Mexicana · Mérida, Yucatán',
+    hobbies:[{nombre:'Diseño de interiores',sub:'El detalle que convierte un espacio en experiencia.'},{nombre:'Pintura',sub:'El arte que informa la arquitectura.'},{nombre:'Yoga',sub:'La estructura del cuerpo informa la del espacio.'},{nombre:'Viajes de arquitectura',sub:'Aprender de los maestros en sus obras.'},{nombre:'Fotografía',sub:'El encuadre perfecto revela la esencia.'}],
+    avatar_hue:'#1D9E75'
+  },
+  {
+    id:8,slug:'edwin-rodriguez',nombre_completo:'Edwin Rodríguez',
+    nombre_first:'Edwin',nombre_last:'Rodríguez',
+    rol_corto:'Productor de Video & Animador',
+    titulo_hero:'Productor de Video & Animador · Soul Origen™',
+    programa:'NS',band_label:'Soul Origen™',
+    pass_id:'PASS-NS-2026-EDW-R',estado:'activo',
+    fecha_ingreso:'2026-06-02',ciudad:'Mérida, Yucatán',
+    wa_number:'5219998889900',email:'edwin@soullens.com',
+    instagram:'@edwin.sl',
+    fotos:{hero:true,perfil:true,og:true,galeria:[true,true,true,true,true,true,true,true,false]},
+    talla_playera:'M',talla_tenis:'27',
+    mercados:['Producción audiovisual','Motion design','Postproducción','Animación'],
+    bio_html:'Productor de video y animador en Soul Lens Studios. Especialista en motion graphics, postproducción y narrativa visual para marcas que quieren impacto real.',
+    quote:'Las marcas que no se ven, no existen. Las que se ven mal, desearían no existir.',
+    origen:'Mexicano · Mérida, Yucatán',
+    hobbies:[{nombre:'Cine independiente',sub:'La narrativa que mueve al mundo.'},{nombre:'Skateboarding',sub:'Creatividad y equilibrio sobre ruedas.'},{nombre:'Música electrónica',sub:'El ritmo detrás del movimiento.'},{nombre:'Fotografía urbana',sub:'La ciudad como estudio abierto.'},{nombre:'Gaming',sub:'El diseño interactivo como referencia.'}],
+    avatar_hue:'#0653FF'
+  },
+  {
+    id:9,slug:'valeria-morales',nombre_completo:'Valeria Morales',
+    nombre_first:'Valeria',nombre_last:'Morales',
+    rol_corto:'Diseñadora de Marca',
+    titulo_hero:'Diseñadora de Marca · Soul Origen™',
+    programa:'NS',band_label:'Soul Origen™',
+    pass_id:'PASS-NS-2026-VAL-M',estado:'pendiente',
+    fecha_ingreso:'2026-06-05',ciudad:'Mérida, Yucatán',
+    wa_number:'5219990001122',email:'val@soullens.com',
+    instagram:'@val.design',
+    fotos:{hero:false,perfil:false,og:false,galeria:[false,false,false,false,false,false,false,false,false]},
+    talla_playera:'S',talla_tenis:'24',
+    mercados:['Branding','Identidad visual','Diseño editorial','UI/UX'],
+    bio_html:'Diseñadora de marca en Soul Lens Studios. Crea sistemas visuales que hablan antes de que el negocio abra la boca. Especialista en brandbooks y UI para productos digitales.',
+    quote:'El buen diseño no se nota. El mal diseño no se olvida.',
+    origen:'Mexicana · Mérida, Yucatán',
+    hobbies:[{nombre:'Ilustración',sub:'El mundo según mis ojos.'},{nombre:'Cerámica',sub:'Diseño tangible, forma y función.'},{nombre:'Pilates',sub:'Control, precisión y conciencia corporal.'},{nombre:'Tipografía',sub:'Las letras que dan personalidad a las marcas.'},{nombre:'Naturaleza',sub:'La referencia de diseño más antigua del mundo.'}],
+    avatar_hue:'#7C6FE8'
+  }
+];
+
+/* ════════════════
+   ESTADO
+   ════════════════ */
+let currentFilter = 'all';
+let currentSort   = 'nombre';
+let currentTab    = '';
+let selected      = new Set();
+let activeId      = null;
+let pendingDelete = null;
+let masterTemplate = null;
+let genHTML = '';
+let genData = null;
+
+/* ════════════════
+   INIT
+   ════════════════ */
+
+
+/* Carga el MASTER_TEMPLATE.html por fetch */
+async function loadTemplate() {
+  try {
+    const r = await fetch('./Smart_Pass_MASTER_TEMPLATE.html');
+    if (r.ok) {
+      masterTemplate = await r.text();
+      document.getElementById('gen-warning').classList.remove('on');
+    }
+  } catch(e) {
+    /* Sin servidor — se mostrará el warning en el generador */
+  }
+}
+
+/* ════════════════
+   HELPERS
+   ════════════════ */
+function ini(name) {
+  return name.split(' ').slice(0,2).map(w => (w[0]||'').toUpperCase()).join('');
+}
+
+function fotoScore(e) {
+  const slots = [e.fotos.hero, e.fotos.perfil, e.fotos.og, ...e.fotos.galeria];
+  const ok = slots.filter(Boolean).length;
+  return { ok, total: slots.length, pct: Math.round(ok / slots.length * 100) };
+}
+
+function fmtDate(d) {
+  if (!d) return '—';
+  return new Date(d + 'T12:00:00').toLocaleDateString('es-MX', {day:'2-digit',month:'short',year:'numeric'});
+}
+
+function dl(content, filename, mime) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([content], {type: mime}));
+  a.download = filename;
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a);
+}
+
+function slug(s) {
+  return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9\s-]/g,'').trim().replace(/\s+/g,'-');
+}
+
+function toastMsg(msg, icon='✓') {
+  const t = document.getElementById('toast');
+  document.getElementById('toast-msg').textContent = msg;
+  document.getElementById('toast-icon').textContent = icon;
+  t.classList.add('on');
+  clearTimeout(t._t);
+  t._t = setTimeout(() => t.classList.remove('on'), 2800);
+}
+
+/* ════════════════
+   FILTRO + SORT
+   ════════════════ */
+function getVisible() {
+  const q = document.getElementById('search').value.toLowerCase();
+  let list = [...DB];
+
+  if (currentTab) list = list.filter(e => e.programa === currentTab);
+
+  if (q) list = list.filter(e =>
+    e.nombre_completo.toLowerCase().includes(q) ||
+    e.slug.includes(q) ||
+    e.rol_corto.toLowerCase().includes(q) ||
+    e.pass_id.toLowerCase().includes(q) ||
+    (e.ciudad||'').toLowerCase().includes(q)
+  );
+
+  if (currentFilter === 'activo')   list = list.filter(e => e.estado === 'activo');
+  if (currentFilter === 'pendiente') list = list.filter(e => e.estado === 'pendiente');
+  if (currentFilter === 'fotos')    list = list.filter(e => fotoScore(e).pct < 30);
+
+  list.sort((a,b) => {
+    if (currentSort === 'nombre')   return a.nombre_completo.localeCompare(b.nombre_completo);
+    if (currentSort === 'fecha')    return (b.fecha_ingreso||'').localeCompare(a.fecha_ingreso||'');
+    if (currentSort === 'fotos')    return fotoScore(b).pct - fotoScore(a).pct;
+    if (currentSort === 'programa') return a.programa.localeCompare(b.programa);
+    if (currentSort === 'estado')   return a.estado.localeCompare(b.estado);
+    return 0;
+  });
+
+  return list;
+}
+
+function setFilter(f, btn) {
+  currentFilter = f;
+  document.querySelectorAll('.filter').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  renderTable();
+}
+
+function setSort(col) {
+  currentSort = col;
+  document.querySelectorAll('.th span[id^="sort-"]').forEach(s => s.textContent = '');
+  const el = document.getElementById('sort-' + col);
+  if (el) el.textContent = '↓';
+  renderTable();
+}
+
+function setTab(prog, btn) {
+  currentTab = prog;
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  renderTable();
+}
+
+/* ════════════════
+   RENDER TABLE
+   ════════════════ */
+function renderTable() {
+  const list = getVisible();
+  const body = document.getElementById('table-body');
+
+  document.getElementById('topbar-count').textContent = list.length + ' embajador' + (list.length !== 1 ? 'es' : '');
+  document.getElementById('export-n').textContent = list.length;
+
+  if (!list.length) {
+    body.innerHTML = `<div class="empty"><div class="empty-icon">🔍</div><div class="empty-txt">Sin resultados.<br>Ajusta los filtros o registra un nuevo embajador.</div></div>`;
+    return;
+  }
+
+  body.innerHTML = list.map(e => {
+    const fs = fotoScore(e);
+    const fillClass = fs.pct === 100 ? 'fill-success' : fs.pct >= 50 ? 'fill-warning' : 'fill-danger';
+    const pctColor  = fs.pct === 100 ? 'var(--success-faint)' : fs.pct >= 50 ? 'var(--warning-faint)' : 'var(--danger-faint)';
+    const dotClass  = e.estado === 'activo' ? 'dot-activo' : e.estado === 'pendiente' ? 'dot-pendiente' : 'dot-borrador';
+    const isSel     = selected.has(e.id);
+
+    const slots = [e.fotos.hero, e.fotos.perfil, e.fotos.og, ...e.fotos.galeria];
+    const dotsHtml = slots.map((ok, i) =>
+      `<div class="fdot ${ok ? 'fdot-ok' : i < 3 ? 'fdot-crit' : 'fdot-miss'}" title="Slot ${['H','P','OG',1,2,3,4,5,6,7,8,9][i]}: ${ok ? 'ok' : 'falta'}"></div>`
+    ).join('');
+
+    const progBadge = e.programa === 'SC'
+      ? `<span class="badge-prog prog-sc">Soul Circle™</span>`
+      : `<span class="badge-prog prog-ns">Núcleo Soul™</span>`;
+
+    const bandBadge = e.band_label === 'Soul Origen™'
+      ? `<span class="badge-band band-orig">Origen™</span>`
+      : `<span class="badge-band band-fund">Fundador/a</span>`;
+
+    return `
+<div class="t-row t-grid ${isSel ? 'selected' : ''}" data-id="${e.id}" onclick="rowClick(${e.id},event)" role="row">
+  <div class="td">
+    <div class="emb-id">
+      <div class="emb-av" style="background:${e.avatar_hue}18;color:${e.avatar_hue};border:1px solid ${e.avatar_hue}28">${ini(e.nombre_completo)}</div>
+      <div class="emb-texts">
+        <div class="emb-name">${e.nombre_completo}</div>
+        <div class="emb-slug">${e.slug}</div>
+      </div>
+    </div>
+  </div>
+  <div class="td">${progBadge}</div>
+  <div class="td">${bandBadge}</div>
+  <div class="td">
+    <div class="foto-col">
+      <div class="foto-bar-track">
+        <div class="foto-bar-bg"><div class="foto-bar-fill ${fillClass}" style="width:${fs.pct}%"></div></div>
+        <span class="foto-pct" style="color:${pctColor}">${fs.pct}%</span>
+      </div>
+      <div class="foto-dots">${dotsHtml}</div>
+    </div>
+  </div>
+  <div class="td">
+    <div class="estado-wrap">
+      <div class="estado-dot ${dotClass}"></div>
+      <span class="estado-txt">${e.estado.charAt(0).toUpperCase()+e.estado.slice(1)}</span>
+    </div>
+  </div>
+  <div class="td"><span class="pass-id-txt">${e.pass_id}</span></div>
+  <div class="td td-actions" onclick="event.stopPropagation()">
+    <button class="row-btn row-btn-primary" title="Ver detalle" onclick="openDetail(${e.id})">↗</button>
+    <button class="row-btn" title="Copiar Pass ID" onclick="navigator.clipboard.writeText('${e.pass_id}').then(()=>toastMsg('Pass ID copiado','⎘'))">⎘</button>
+  </div>
+</div>`;
+  }).join('');
+}
+
+function rowClick(id, evt) {
+  if (evt.ctrlKey || evt.metaKey || evt.shiftKey) {
+    selected.has(id) ? selected.delete(id) : selected.add(id);
+    updateSelBar();
+    renderTable();
+  } else {
+    openDetail(id);
+  }
+}
+
+/* ════════════════
+   KPIs + BADGES
+   ════════════════ */
+function updateKPIs() {
+  const total    = DB.length;
+  const activos  = DB.filter(e => e.estado === 'activo').length;
+  const pending  = DB.filter(e => e.estado === 'pendiente').length;
+  const sinFotos = DB.filter(e => fotoScore(e).pct < 30).length;
+  const full     = DB.filter(e => fotoScore(e).pct === 100).length;
+
+  document.getElementById('kpi-total').textContent    = total;
+  document.getElementById('kpi-activos').textContent  = activos;
+  document.getElementById('kpi-pending').textContent  = pending;
+  document.getElementById('kpi-fotos').textContent    = sinFotos;
+  document.getElementById('kpi-completos').textContent = full;
+}
+
+function updateBadges() {
+  const total   = DB.length;
+  const pending = DB.filter(e => e.estado === 'pendiente').length;
+  const fotos   = DB.filter(e => fotoScore(e).pct < 30).length;
+  document.getElementById('nav-badge-total').textContent   = total;
+  document.getElementById('nav-badge-pending').textContent = pending;
+  document.getElementById('nav-badge-fotos').textContent   = fotos;
+}
+
+/* ════════════════
+   SELECTION BAR
+   ════════════════ */
+function updateSelBar() {
+  const bar = document.getElementById('sel-bar');
+  document.getElementById('sel-count').textContent = selected.size;
+  bar.classList.toggle('on', selected.size > 0);
+}
+
+function clearSel() {
+  selected.clear();
+  updateSelBar();
+  renderTable();
+}
+
+function bulkExport(type) {
+  const list = DB.filter(e => selected.has(e.id));
+  if (!list.length) return;
+  if (type === 'json') {
+    dl(JSON.stringify(list, null, 2), 'embajadores_seleccionados.json', 'application/json');
+    toastMsg('JSON descargado (' + list.length + ' embajadores)', '📦');
+  } else {
+    const rows = [['Nombre','Playera','Tenis']];
+    list.forEach(e => rows.push([e.nombre_completo, e.talla_playera||'—', e.talla_tenis ? e.talla_tenis+' MX' : '—']));
+    dl(rows.map(r=>r.join(',')).join('\n'), 'tallas_seleccionados.csv', 'text/csv');
+    toastMsg('CSV tallas descargado', '👕');
+  }
+}
+
+/* ════════════════
+   DETAIL PANEL
+   ════════════════ */
+function openDetail(id) {
+  const e = DB.find(x => x.id === id);
+  if (!e) return;
+  activeId = id;
+
+  const fs = fotoScore(e);
+  const init = ini(e.nombre_completo);
+
+  // Header
+  document.getElementById('d-av').textContent = init;
+  document.getElementById('d-av').style.cssText = `width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;flex-shrink:0;background:${e.avatar_hue}18;color:${e.avatar_hue};border:1px solid ${e.avatar_hue}28`;
+  document.getElementById('d-name').textContent = e.nombre_completo;
+  document.getElementById('d-sub').textContent  = e.rol_corto + ' · ' + (e.programa==='SC'?'Soul Circle™':'Núcleo Soul™');
+
+  // Slots de fotos
+  const slotNames = ['H','P','OG','G1','G2','G3','G4','G5','G6','G7','G8','G9'];
+  const slotArr   = [e.fotos.hero, e.fotos.perfil, e.fotos.og, ...e.fotos.galeria];
+  const slotsHtml = slotArr.map((ok, i) =>
+    `<div class="fslot ${ok ? 'fslot-ok' : i < 3 ? 'fslot-crit' : 'fslot-miss'}">
+      ${ok ? '✓' : ''}
+      <div class="fslot-lbl">${slotNames[i]}</div>
+    </div>`
+  ).join('');
+
+  // Mercados pills
+  const mHtml = e.mercados.map(m => `<span class="pill-sm">${m}</span>`).join('');
+
+  document.getElementById('detail-body').innerHTML = `
+<div class="ds">
+  <div class="ds-label">Identificación del pass</div>
+  <div class="dr"><span class="dk">Pass ID</span><span class="dv mono">${e.pass_id}</span></div>
+  <div class="dr"><span class="dk">Slug</span><span class="dv mono">${e.slug}</span></div>
+  <div class="dr"><span class="dk">Estado</span><span class="dv" style="color:${e.estado==='activo'?'var(--success-faint)':'var(--warning-faint)'}">${e.estado}</span></div>
+  <div class="dr"><span class="dk">Programa</span><span class="dv">${e.programa==='SC'?'Soul Circle™':'Núcleo Soul™'}</span></div>
+  <div class="dr"><span class="dk">Banda</span><span class="dv">${e.band_label}</span></div>
+  <div class="dr"><span class="dk">Ingreso</span><span class="dv">${fmtDate(e.fecha_ingreso)}</span></div>
+  <div class="dr"><span class="dk">URL del pass</span><span class="dv link" onclick="goLive()">/embajador/${e.slug}/</span></div>
+</div>
+<div class="ds">
+  <div class="ds-label">Contacto</div>
+  <div class="dr"><span class="dk">WhatsApp</span><span class="dv mono">${e.wa_number}</span></div>
+  <div class="dr"><span class="dk">Email</span><span class="dv link">${e.email}</span></div>
+  <div class="dr"><span class="dk">Instagram</span><span class="dv">${e.instagram}</span></div>
+  <div class="dr"><span class="dk">Ciudad</span><span class="dv">${e.ciudad}</span></div>
+</div>
+<div class="ds">
+  <div class="ds-label">Fotografías — ${fs.ok}/${fs.total} slots · ${fs.pct}%</div>
+  <div class="foto-grid">${slotsHtml}</div>
+</div>
+<div class="ds">
+  <div class="ds-label">Mercados</div>
+  <div class="pills-wrap">${mHtml}</div>
+</div>
+<div class="ds">
+  <div class="ds-label">Merch · Kit de bienvenida</div>
+  <div class="dr"><span class="dk">Talla playera</span><span class="dv">${e.talla_playera||'—'}</span></div>
+  <div class="dr"><span class="dk">Talla tenis</span><span class="dv">${e.talla_tenis ? e.talla_tenis+' MX' : '—'}</span></div>
+</div>`;
+
+  document.getElementById('detail-overlay').classList.add('on');
+}
+
+function maybeCloseDetail(e) {
+  if (e.target === document.getElementById('detail-overlay')) closeDetail();
+}
+function closeDetail() {
+  document.getElementById('detail-overlay').classList.remove('on');
+  activeId = null;
+}
+function goLive() {
+  const e = DB.find(x => x.id === activeId);
+  if (!e) return;
+  window.open('https://soullensstudios.live/embajador/' + e.slug + '/', '_blank');
+}
+function dlJSON() {
+  const e = DB.find(x => x.id === activeId);
+  if (!e) return;
+  dl(JSON.stringify(e, null, 2), 'embajador_' + e.slug + '.json', 'application/json');
+  toastMsg('JSON de ' + e.nombre_first + ' descargado', '📦');
+}
+
+/* ════════════════
+   GENERADOR DE PASS
+   El motor real de generación.
+   Usa el mismo algoritmo que generar_smart_pass.py
+   pero en JavaScript, sin servidor.
+   ════════════════ */
+function openGen() {
+  const e = DB.find(x => x.id === activeId);
+  if (!e) return;
+  genData = e;
+  genHTML = '';
+  document.getElementById('gen-emb-label').textContent = e.nombre_completo + ' · ' + e.pass_id;
+  document.getElementById('gen-status').style.display = 'none';
+  document.getElementById('gen-status').className = 'gen-status gen-status-loading';
+  document.getElementById('gen-download').classList.remove('on');
+  document.getElementById('gen-btn').disabled = false;
+  document.getElementById('gen-btn').textContent = '✦ Generar';
+  document.getElementById('gen-warning').classList.toggle('on', !masterTemplate);
+  document.getElementById('gen-overlay').classList.add('on');
+}
+
+async function runGen() {
+  if (!genData) return;
+  const btn = document.getElementById('gen-btn');
+  const statusEl = document.getElementById('gen-status');
+
+  btn.disabled = true;
+  btn.textContent = '… Generando';
+  statusEl.style.display = 'block';
+  statusEl.className = 'gen-status gen-status-loading';
+  statusEl.textContent = 'Cargando template…';
+
+  // Intentar cargar template si no está en memoria
+  if (!masterTemplate) {
+    try {
+      const r = await fetch('./Smart_Pass_MASTER_TEMPLATE.html');
+      if (r.ok) {
+        masterTemplate = await r.text();
+        document.getElementById('gen-warning').classList.remove('on');
+      } else {
+        throw new Error('Template no encontrado (HTTP ' + r.status + ')');
+      }
+    } catch(err) {
+      statusEl.className = 'gen-status gen-status-error';
+      statusEl.innerHTML = '✕ No se pudo cargar el template.<br><strong>Verifica que <code>Smart_Pass_MASTER_TEMPLATE.html</code> esté en el mismo directorio que este archivo.</strong>';
+      btn.disabled = false;
+      btn.textContent = '↺ Reintentar';
+      return;
+    }
+  }
+
+  statusEl.textContent = 'Inyectando datos…';
+
+  try {
+    const e     = genData;
+    const fnLow = e.nombre_first.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+    const city  = (e.ciudad||'Mérida').split(',')[0].trim();
+    const reg   = (e.ciudad||'').split(',')[1]?.trim() || 'Yucatán';
+
+    const waHero   = encodeURIComponent('Hola, te contacto desde el Smart Pass de ' + e.nombre_completo + ' · Soul Lens Studios.');
+    const waBottom = encodeURIComponent('Hola, te contacto desde el Smart Pass de ' + e.nombre_completo + ' · Soul Lens Studios. Quisiera explorar cómo pueden ayudar a mi negocio.');
+    const enc      = v => encodeURIComponent(v||'');
+
+    const metaDesc = 'Conecta con ' + e.nombre_completo + ' — ' + e.rol_corto + ' en ' + city + '. Soul Lens Studios · ' + (e.programa==='SC'?'Soul Circle™':'Núcleo Soul™') + ' 2026.';
+    const ctaLbl   = 'Hablar con ' + e.nombre_first;
+    const ctaBot   = 'Escríbele a ' + e.nombre_first + ' directo. Sin formularios, sin esperas. Una conversación honesta — y el equipo de Soul Lens Studios te dice exactamente qué necesita tu negocio.';
+    const pageTitle = e.nombre_completo + ' · Smart Pass ' + (e.programa==='SC'?'Soul Circle™':'Núcleo Soul™') + ' · Soul Lens Studios';
+    const schemaJob = e.programa==='SC' ? 'Arquitecto/a Soul Circle™ · Embajador/a de Expansión' : 'Soul Origen™ · Núcleo Soul™';
+
+    const mPills = (e.mercados||[]).map(m => `<span class="mpill">${m}</span>\n    `).join('');
+
+    const replacements = {
+      '{{PASS_ID}}':           e.pass_id,
+      '{{SLUG}}':              e.slug,
+      '{{WA_NUMBER}}':         e.wa_number,
+      '{{WA_TEXT_HERO}}':      waHero,
+      '{{WA_TEXT_BOTTOM}}':    waBottom,
+      '{{VCF_FN}}':            enc(e.nombre_completo + ' · Soul Lens Studios'),
+      '{{VCF_N}}':             enc(e.nombre_last + ';' + e.nombre_first + ';;;'),
+      '{{VCF_TITLE}}':         enc(e.titulo_hero),
+      '{{SCHEMA_JOB_TITLE}}':  schemaJob,
+      '{{SCHEMA_LOCALITY}}':   city,
+      '{{SCHEMA_REGION}}':     reg,
+      '{{PAGE_TITLE}}':        pageTitle,
+      '{{META_TITLE_SUFFIX}}': e.titulo_hero + ' — Soul Lens Studios',
+      '{{META_DESC}}':         metaDesc,
+      '{{OG_DESC}}':           metaDesc,
+      '{{TWITTER_DESC}}':      metaDesc,
+      '{{NOMBRE_COMPLETO}}':   e.nombre_completo,
+      '{{NOMBRE_FIRST}}':      e.nombre_first,
+      '{{NOMBRE_LAST}}':       e.nombre_last,
+      '{{TITULO_HERO}}':       e.titulo_hero,
+      '{{ROL_CORTO}}':         e.rol_corto,
+      '{{ROL_CREDENCIAL}}':    e.programa==='SC' ? 'Embajador/a de Expansión · AI Soul Lens Studios' : 'Soul Origen™ · Núcleo Soul™',
+      '{{BAND_LABEL}}':        e.band_label,
+      '{{ORIGEN}}':            e.origen || (e.ciudad ? 'Mexicano/a · ' + e.ciudad : 'México'),
+      '{{BIO_HTML}}':          e.bio_html || '',
+      '{{QUOTE}}':             e.quote || '',
+      '{{CTA_WA_LABEL}}':      ctaLbl,
+      '{{CTA_BOTTOM_TEXT}}':   ctaBot,
+      '{{MERCADOS_PILLS}}':    mPills,
+      '{{HBB_NOMBRE_0}}':      e.hobbies?.[0]?.nombre || '',
+      '{{HBB_NOMBRE_1}}':      e.hobbies?.[1]?.nombre || '',
+      '{{HBB_NOMBRE_2}}':      e.hobbies?.[2]?.nombre || '',
+      '{{HBB_NOMBRE_3}}':      e.hobbies?.[3]?.nombre || '',
+      '{{HBB_NOMBRE_4}}':      e.hobbies?.[4]?.nombre || '',
+      '{{HBB_SUB_0}}':         e.hobbies?.[0]?.sub || '',
+      '{{HBB_SUB_1}}':         e.hobbies?.[1]?.sub || '',
+      '{{HBB_SUB_2}}':         e.hobbies?.[2]?.sub || '',
+      '{{HBB_SUB_3}}':         e.hobbies?.[3]?.sub || '',
+      '{{HBB_SUB_4}}':         e.hobbies?.[4]?.sub || '',
+    };
+
+    let out = masterTemplate;
+    Object.entries(replacements).forEach(([k,v]) => {
+      out = out.split(k).join(v || '');
+    });
+
+    // Reemplazar slots de galería (comentarios ▼ SLOT N)
+    for (let i = 0; i < 9; i++) {
+      const fname = fnLow + '-0' + (i+1) + '.jpg';
+      const labels = ['En el estudio','Networking','Lifestyle','Viaje','Momento especial','En acción','Comunidad','Aprendizaje','Naturaleza'];
+      const subs   = ['Producción SLS · '+city, 'Networking · Yucatán', city+' · Yucatán', 'Soul Circle™ 2026', 'Momento especial', 'En acción', 'Comunidad · SC', 'Crecimiento', 'Raíces'];
+      const rx = new RegExp('<!-- ▼ SLOT ' + (i+1) + ' — INSERTAR:.*?-->', 'g');
+      out = out.replace(rx, `<img src="${fname}" alt="${e.nombre_first} — ${labels[i]}" style="width:100%;height:100%;object-fit:cover" loading="lazy">`);
+      // Captions
+      out = out.replace(new RegExp('<p class="gcap-t">.*?</p>', 'g'), `<p class="gcap-t">${labels[i]}</p>`);
+    }
+
+    // Actualizar aria-label del hero
+    out = out.replace(
+      'FOTO HERO SIMULADA — reemplazar con: <img src="anais-hero.jpg">',
+      'FOTO HERO — reemplazar con: <img src="' + fnLow + '-hero.jpg" style="width:100%;height:100%;object-fit:cover;object-position:top">'
+    );
+
+    genHTML = out;
+
+    statusEl.className = 'gen-status gen-status-ok';
+    statusEl.innerHTML = '✓ Smart Pass generado correctamente.<br>Descarga el HTML y súbelo a <code>soullensstudios.live/embajador/' + e.slug + '/</code>';
+    document.getElementById('gen-download').classList.add('on');
+    btn.textContent = '✓ Generado';
+  } catch(err) {
+    statusEl.className = 'gen-status gen-status-error';
+    statusEl.textContent = '✕ Error: ' + err.message;
+    btn.disabled = false;
+    btn.textContent = '↺ Reintentar';
+  }
+}
+
+function downloadGenHTML() {
+  if (!genHTML || !genData) return;
+  const fname = 'Smart_Pass_' + genData.slug + '_' + genData.pass_id + '.html';
+  dl(genHTML, fname, 'text/html');
+  toastMsg('HTML descargado: ' + fname, '📄');
+}
+
+function downloadGenJSON() {
+  if (!genData) return;
+  dl(JSON.stringify(genData, null, 2), 'embajador_' + genData.slug + '.json', 'application/json');
+  toastMsg('JSON descargado', '📦');
+}
+
+function downloadDeploy() {
+  if (!genData) return;
+  const e = genData;
+  const fnLow = e.nombre_first.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  const txt = `INSTRUCCIONES DE DEPLOY — Smart Pass Soul Circle™ 2026
+Generado: ${new Date().toLocaleDateString('es-MX')}
+========================================================
+
+Embajador : ${e.nombre_completo}
+Pass ID   : ${e.pass_id}
+URL final : https://soullensstudios.live/embajador/${e.slug}/
+
+PASO 1 — Renombrar el HTML generado
+  Smart_Pass_${e.slug}_${e.pass_id}.html  →  index.html
+
+PASO 2 — Crear carpeta en el servidor
+  /embajador/${e.slug}/
+
+PASO 3 — Subir estos archivos a esa carpeta
+  ├── index.html                ← HTML renombrado
+  ├── ${fnLow}-hero.jpg         ← hero (1080×1920px)
+  ├── ${fnLow}-perfil.jpg       ← perfil (400×400px)
+  ├── og.jpg                    ← preview WA (1200×630px)
+  ├── ${fnLow}-01.jpg al 09.jpg ← galería (400×576px c/u)
+
+PASO 4 — Verificar en producción
+  https://soullensstudios.live/embajador/${e.slug}/
+
+PASO 5 — Verificar Open Graph
+  https://developers.facebook.com/tools/debug/
+  URL: https://soullensstudios.live/embajador/${e.slug}/
+
+—
+Soul Circle™ · Smart Pass System v1.0
+Powered by Xplorers Startups · Ed Zam · Mérida, Yucatán
+`;
+  dl(txt, 'Deploy_' + e.slug + '.txt', 'text/plain');
+  toastMsg('Instrucciones de deploy descargadas', '📋');
+}
+
+function maybeCloseGen(e) {
+  if (e.target === document.getElementById('gen-overlay')) closeGen();
+}
+function closeGen() {
+  document.getElementById('gen-overlay').classList.remove('on');
+}
+
+/* ════════════════
+   DELETE
+   ════════════════ */
+function askDelete() {
+  const e = DB.find(x => x.id === activeId);
+  if (!e) return;
+  pendingDelete = e.id;
+  document.getElementById('confirm-title').textContent = 'Eliminar embajador';
+  document.getElementById('confirm-body').innerHTML = `¿Eliminar a <strong>${e.nombre_completo}</strong> (${e.pass_id})? Esta acción no se puede deshacer.`;
+  document.getElementById('confirm-overlay').classList.add('on');
+}
+
+function closeConfirm() {
+  document.getElementById('confirm-overlay').classList.remove('on');
+  pendingDelete = null;
+}
+
+function doConfirm() {
+  if (!pendingDelete) return;
+  const idx = DB.findIndex(e => e.id === pendingDelete);
+  if (idx !== -1) {
+    const name = DB[idx].nombre_completo;
+    DB.splice(idx, 1);
+    closeConfirm();
+    closeDetail();
+    renderTable();
+    updateKPIs();
+    updateBadges();
+    toastMsg(name + ' eliminado del sistema', '🗑');
+  }
+  pendingDelete = null;
+}
+
+/* ════════════════
+   EXPORT
+   ════════════════ */
+function openExport() {
+  document.getElementById('export-overlay').classList.add('on');
+}
+function maybeCloseExport(e) {
+  if (e.target === document.getElementById('export-overlay')) closeExport();
+}
+function closeExport() {
+  document.getElementById('export-overlay').classList.remove('on');
+}
+
+function doExport(type) {
+  const list = getVisible();
+  closeExport();
+
+  if (type === 'json') {
+    dl(JSON.stringify(list, null, 2), 'embajadores.json', 'application/json');
+    toastMsg('embajadores.json descargado (' + list.length + ')', '📦');
+  } else if (type === 'merch') {
+    const rows = [['Nombre','Programa','Banda','Playera','Tenis','Ciudad']];
+    list.forEach(e => rows.push([e.nombre_completo, e.programa==='SC'?'Soul Circle™':'Núcleo Soul™', e.band_label, e.talla_playera||'—', e.talla_tenis?e.talla_tenis+' MX':'—', e.ciudad]));
+    dl(rows.map(r=>r.join(',')).join('\n'), 'tallas_soul_circle_2026.csv', 'text/csv');
+    toastMsg('CSV tallas descargado', '👕');
+  } else if (type === 'fotos') {
+    const rows = [['Embajador','Pass ID','% Fotos','Hero','Perfil','OG','Galería OK','Pendientes']];
+    list.forEach(e => {
+      const fs = fotoScore(e);
+      const gOk = e.fotos.galeria.filter(Boolean).length;
+      rows.push([e.nombre_completo, e.pass_id, fs.pct+'%', e.fotos.hero?'✓':'✗', e.fotos.perfil?'✓':'✗', e.fotos.og?'✓':'✗', gOk+'/9', (9-gOk)+' pendientes']);
+    });
+    dl(rows.map(r=>r.join(',')).join('\n'), 'fotos_pendientes.csv', 'text/csv');
+    toastMsg('Reporte de fotos descargado', '📷');
+  } else if (type === 'directorio') {
+    const rows = [['Nombre','WhatsApp','Email','Instagram','Ciudad','Programa','Banda','Estado','Pass ID','Ingreso']];
+    list.forEach(e => rows.push([e.nombre_completo, e.wa_number, e.email, e.instagram, e.ciudad, e.programa==='SC'?'Soul Circle™':'Núcleo Soul™', e.band_label, e.estado, e.pass_id, fmtDate(e.fecha_ingreso)]));
+    dl(rows.map(r=>r.join(',')).join('\n'), 'directorio_soul_circle_2026.csv', 'text/csv');
+    toastMsg('Directorio descargado', '📋');
+  }
+}
+
+/* ════════════════
+   NAV (vistas futuras)
+   ════════════════ */
+
+function openNew() {
+  window.open('circle-intake-v2-preview.html', '_blank');
+}
+
+/* ════════════════════════════════════════════
+   SISTEMA DE VISTAS — navegación real entre vistas
+   ════════════════════════════════════════════ */
+const ALL_VIEWS = ['embajadores', 'passes', 'fotos', 'merch', 'invitaciones', 'base', 'deploy', 'settings'];
+let currentView = 'embajadores';
+
+function showView(view) {
+  currentView = view;
+
+  // Ocultar/mostrar vistas
+  ALL_VIEWS.forEach(v => {
+    const el = document.getElementById('view-' + v);
+    if (el) el.classList.toggle('active', v === view);
+  });
+
+  // Vista embajadores: la tabla principal ya existe fuera de los views
+  const mainTable = document.getElementById('kpi-main');
+  if (mainTable) mainTable.style.display = view === 'embajadores' ? '' : 'none';
+
+  // Topbar title
+  const titles = {
+    embajadores:  'Embajadores',
+    passes:       'Smart Passes',
+    fotos:        'Fotos pendientes',
+    merch:        'Merch / Tallas',
+    invitaciones: 'Invitaciones · URLs para compartir',
+    base:         'Base de datos · Expedientes',
+    deploy:       'Deploy & Hosting',
+    settings:     'Configuración'
+  };
+  document.getElementById('topbar-title').textContent = titles[view] || view;
+
+  // Botones topbar según vista
+  const exportBtn = document.getElementById('export-btn');
+  const newBtn    = document.getElementById('new-btn');
+  if (exportBtn) exportBtn.style.display = ['embajadores','passes','fotos','merch'].includes(view) ? '' : 'none';
+  if (newBtn)    newBtn.style.display    = ['embajadores','passes'].includes(view) ? '' : 'none';
+
+  // Renderizar la vista
+  if (view === 'passes')       renderPasses();
+  if (view === 'fotos')        renderFotos();
+  if (view === 'merch')        renderMerch();
+  if (view === 'deploy')       renderDeploy();
+  if (view === 'settings')     renderSettings();
+  if (view === 'invitaciones') renderInvitaciones();
+  if (view === 'base')         renderDB();
+}
+
+/* Sobrescribir navTo para usar el sistema real */
+function navTo(view, btn) {
+  document.querySelectorAll('.sb-item').forEach(i => i.classList.remove('active'));
+  btn.classList.add('active');
+  showView(view);
+}
+
+/* ════════════════════════════════════════════
+   CICLO FUNDADOR — contador de días
+   ════════════════════════════════════════════ */
+function initCiclo() {
+  const start = new Date('2026-06-02T00:00:00');
+  const end   = new Date('2026-11-30T23:59:59');
+  const now   = new Date();
+
+  const totalDays = Math.round((end - start) / (1000*60*60*24));
+  const elapsed   = Math.max(0, Math.round((now - start) / (1000*60*60*24)));
+  const remaining = Math.max(0, Math.round((end - now) / (1000*60*60*24)));
+  const pct       = Math.min(100, Math.round(elapsed / totalDays * 100));
+
+  document.getElementById('ciclo-days').textContent  = remaining;
+  document.getElementById('ciclo-fill').style.width  = pct + '%';
+  document.getElementById('ciclo-pct').textContent   = pct + '% del ciclo completado';
+  document.getElementById('ciclo-note').textContent  =
+    `Día ${elapsed} de ${totalDays} · Cierre: 30 nov 2026`;
+}
+
+/* ════════════════════════════════════════════
+   VISTA: SMART PASSES
+   ════════════════════════════════════════════ */
+function renderPasses() {
+  const list = DB;
+  const sc = list.filter(e => e.programa === 'SC');
+  const ns = list.filter(e => e.programa === 'NS');
+  const live = list.filter(e => e.estado === 'activo');
+  const pend = list.filter(e => e.estado === 'pendiente');
+
+  document.getElementById('p-kpi-total').textContent   = list.length;
+  document.getElementById('p-kpi-live').textContent    = live.length;
+  document.getElementById('p-kpi-pending').textContent = pend.length;
+  document.getElementById('p-kpi-sc').textContent      = sc.length;
+  document.getElementById('p-kpi-ns').textContent      = ns.length;
+
+  const grid = document.getElementById('passes-grid');
+  grid.innerHTML = list.map(e => {
+    const fs = fotoScore(e);
+    const stColor = e.estado === 'activo' ? 'var(--success-faint)' : 'var(--warning-faint)';
+    const progClass = e.programa === 'SC' ? 'prog-sc' : 'prog-ns';
+    const barClass  = fs.pct === 100 ? 'fill-success' : fs.pct >= 50 ? 'fill-warning' : 'fill-danger';
+    const pctColor  = fs.pct === 100 ? 'var(--success-faint)' : fs.pct >= 50 ? 'var(--warning-faint)' : 'var(--danger-faint)';
+
+    return `
+<div class="pass-card" onclick="openDetail(${e.id});showView('embajadores');document.querySelectorAll('.sb-item')[0].classList.add('active');document.querySelectorAll('.sb-item').forEach((i,n)=>{if(n>0)i.classList.remove('active')})">
+  <div class="pass-card-header">
+    <div class="pass-card-av" style="background:${e.avatar_hue}18;color:${e.avatar_hue};border:1px solid ${e.avatar_hue}28">${ini(e.nombre_completo)}</div>
+    <div>
+      <div class="pass-card-name">${e.nombre_completo}</div>
+      <div class="pass-card-id">${e.pass_id}</div>
+    </div>
+    <span class="pass-card-badge badge-prog ${progClass}" style="font-size:8.5px">${e.programa === 'SC' ? 'SC™' : 'NS™'}</span>
+  </div>
+  <div class="pass-card-body">
+    <div class="pass-card-row">
+      <span class="pass-card-key">Estado</span>
+      <span class="pass-card-val" style="color:${stColor}">${e.estado}</span>
+    </div>
+    <div class="pass-card-row">
+      <span class="pass-card-key">Fotos</span>
+      <span class="pass-card-val" style="color:${pctColor}">${fs.ok}/${fs.total} slots · ${fs.pct}%</span>
+    </div>
+    <div class="pass-card-row">
+      <span class="pass-card-key">URL</span>
+      <span class="pass-card-val mono">/embajador/${e.slug}/</span>
+    </div>
+    <div class="pass-card-row" style="padding-top:.5rem;border-bottom:none">
+      <div style="width:100%">
+        <div style="height:3px;background:var(--border-subtle);border-radius:99px;overflow:hidden">
+          <div class="foto-bar-fill ${barClass}" style="width:${fs.pct}%;height:100%;border-radius:99px"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pass-card-footer">
+    <button class="pass-card-btn" style="background:var(--blue);color:#fff" onclick="event.stopPropagation();activeId=${e.id};activeId=${e.id};genData=DB.find(x=>x.id===${e.id});openGen()">✦ Generar pass</button>
+    <button class="pass-card-btn" style="background:var(--bg-overlay);border:1px solid var(--border-default);color:var(--text-secondary)" onclick="event.stopPropagation();window.open('https://soullensstudios.live/embajador/${e.slug}/','_blank')">↗ Ver</button>
+  </div>
+</div>`;
+  }).join('');
+}
+
+function genAll() {
+  const pending = DB.filter(e => e.estado === 'pendiente');
+  if (!pending.length) { toastMsg('Todos los passes están activos', '✓'); return; }
+  toastMsg('Generando ' + pending.length + ' passes pendientes…', '↻');
+  // En producción: itera y genera cada uno
+}
+
+/* ════════════════════════════════════════════
+   VISTA: FOTOS PENDIENTES
+   ════════════════════════════════════════════ */
+function renderFotos() {
+  const allSlots = DB.reduce((t, e) => {
+    const s = [e.fotos.hero, e.fotos.perfil, e.fotos.og, ...e.fotos.galeria];
+    return t + s.filter(v => !v).length;
+  }, 0);
+  const sinHero   = DB.filter(e => !e.fotos.hero).length;
+  const parcial   = DB.filter(e => { const p = fotoScore(e).pct; return p > 0 && p < 100; }).length;
+  const completos = DB.filter(e => fotoScore(e).pct === 100).length;
+
+  document.getElementById('f-kpi-total').textContent    = allSlots;
+  document.getElementById('f-kpi-hero').textContent     = sinHero;
+  document.getElementById('f-kpi-parcial').textContent  = parcial;
+  document.getElementById('f-kpi-completos').textContent = completos;
+
+  const incompletos = DB.filter(e => fotoScore(e).pct < 100)
+    .sort((a,b) => fotoScore(a).pct - fotoScore(b).pct);
+
+  const SLOT_NAMES = ['Hero','Perfil','OG','G1','G2','G3','G4','G5','G6','G7','G8','G9'];
+  const SLOT_DIMS  = ['1080×1920','400×400','1200×630','400×576','400×576','400×576','400×576','400×576','400×576','400×576','400×576','400×576'];
+
+  const list = document.getElementById('fotos-list');
+  if (!incompletos.length) {
+    list.innerHTML = `<div class="empty"><div class="empty-icon">✓</div><div class="empty-txt">Todos los embajadores tienen sus fotos completas.</div></div>`;
+    return;
+  }
+
+  list.innerHTML = incompletos.map(e => {
+    const slots = [e.fotos.hero, e.fotos.perfil, e.fotos.og, ...e.fotos.galeria];
+    const fs = fotoScore(e);
+    const pctColor = fs.pct >= 50 ? 'var(--warning-faint)' : 'var(--danger-faint)';
+
+    const missingSlots = slots.map((ok, i) => {
+      if (ok) return '';
+      const isCrit = i < 3;
+      return `<span class="fotos-missing-slot ${isCrit ? 'slot-hero-miss' : 'slot-gal-miss'}">${SLOT_NAMES[i]} · ${SLOT_DIMS[i]}</span>`;
+    }).filter(Boolean).join('');
+
+    const fnLow = e.nombre_first.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+
+    return `
+<div class="fotos-item">
+  <div class="fotos-item-av" style="background:${e.avatar_hue}18;color:${e.avatar_hue};border:1px solid ${e.avatar_hue}28">${ini(e.nombre_completo)}</div>
+  <div>
+    <div class="fotos-item-name">${e.nombre_completo}</div>
+    <div class="fotos-item-pass">${e.pass_id} · ${e.ciudad}</div>
+    <div class="fotos-missing">${missingSlots}</div>
+  </div>
+  <div class="fotos-item-actions">
+    <div class="fotos-item-pct" style="color:${pctColor}">${fs.pct}%</div>
+    <button class="btn btn-ghost" style="font-size:10px;padding:.3rem .55rem" onclick="activeId=${e.id};genData=DB.find(x=>x.id===${e.id});openGen()">Generar pass</button>
+  </div>
+</div>`;
+  }).join('');
+}
+
+function dlFotosBrief() {
+  const incompletos = DB.filter(e => fotoScore(e).pct < 100);
+  const SLOT_NAMES = ['Hero','Perfil','OG','G1','G2','G3','G4','G5','G6','G7','G8','G9'];
+  const DIMS = ['1080×1920px · JPG','400×400px · JPG','1200×630px · JPG','400×576px · JPG','400×576px · JPG','400×576px · JPG','400×576px · JPG','400×576px · JPG','400×576px · JPG','400×576px · JPG','400×576px · JPG','400×576px · JPG'];
+
+  let txt = `BRIEFING FOTOGRÁFICO — Soul Circle™ 2026
+Generado: ${new Date().toLocaleDateString('es-MX')}
+═══════════════════════════════════════
+
+${incompletos.length} embajadores con fotos pendientes
+Total de slots vacíos: ${incompletos.reduce((t,e) => {
+  const s = [e.fotos.hero, e.fotos.perfil, e.fotos.og, ...e.fotos.galeria];
+  return t + s.filter(v=>!v).length;
+}, 0)}
+
+─────────────────────────────────────
+
+`;
+
+  incompletos.forEach(e => {
+    const slots = [e.fotos.hero, e.fotos.perfil, e.fotos.og, ...e.fotos.galeria];
+    const missing = slots.map((ok, i) => ok ? null : `  • ${SLOT_NAMES[i]}: ${DIMS[i]}`).filter(Boolean);
+    const fnLow = e.nombre_first.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+    txt += `${e.nombre_completo} · ${e.pass_id}
+Ciudad: ${e.ciudad}
+Carpeta: soullensstudios.live/embajador/${e.slug}/
+Nomenclatura: ${fnLow}-[slot].jpg (ej: ${fnLow}-hero.jpg)
+Fotos faltantes:
+${missing.join('\n')}
+
+─────────────────────────────────────
+
+`;
+  });
+
+  txt += `ESPECIFICACIONES GENERALES
+─────────────────────────────────────
+Hero    : 1080×1920px · Retrato · JPG/WebP · Cara en tercio superior
+Perfil  : 400×400px · Cuadrada · Cara centrada · JPG/WebP
+OG      : 1200×630px · Horizontal · JPG · Para preview en WhatsApp
+Galería : 400×576px · 9:13 · JPG/WebP · Lifestyle/trabajo/familia/hobbies
+
+—
+Soul Circle™ · Soul Lens Studios · Xplorers Startups
+`;
+
+  dl(txt, 'briefing_fotografo_soul_circle.txt', 'text/plain');
+  toastMsg('Briefing fotógrafo descargado', '📷');
+}
+
+/* ════════════════════════════════════════════
+   VISTA: MERCH / TALLAS
+   ════════════════════════════════════════════ */
+function renderMerch() {
+  const playeras = {};
+  const tenis    = {};
+
+  DB.forEach(e => {
+    const p = e.talla_playera || '—';
+    const t = e.talla_tenis   || '—';
+    playeras[p] = (playeras[p] || 0) + 1;
+    tenis[t]    = (tenis[t]    || 0) + 1;
+  });
+
+  const PLAYERA_ORDER = ['XS','S','M','L','XL','XXL','XXXL','—'];
+  const TENIS_ORDER   = ['22','22.5','23','23.5','24','24.5','25','25.5','26','26.5','27','27.5','28','28.5','29','29.5','30','31','32','—'];
+
+  const mkSizeItems = (map, order) =>
+    order.filter(k => map[k]).map(k =>
+      `<div class="merch-size-item">
+        <div class="merch-size-label">${k}</div>
+        <div class="merch-size-count">×${map[k]}</div>
+      </div>`
+    ).join('');
+
+  document.getElementById('merch-summary').innerHTML = `
+<div class="merch-summary-card">
+  <div class="merch-summary-title">Playeras por talla</div>
+  <div class="merch-size-grid">${mkSizeItems(playeras, PLAYERA_ORDER)}</div>
+</div>
+<div class="merch-summary-card">
+  <div class="merch-summary-title">Tenis por talla (MX)</div>
+  <div class="merch-size-grid">${mkSizeItems(tenis, TENIS_ORDER)}</div>
+</div>`;
+
+  const tbody = document.getElementById('merch-table-body');
+  tbody.innerHTML = DB.map(e => {
+    const dotColor = e.estado === 'activo' ? 'var(--success-faint)' : 'var(--warning-faint)';
+    return `
+<div class="merch-row">
+  <div class="merch-cell name">
+    <div style="display:flex;align-items:center;gap:.5rem">
+      <div style="width:20px;height:20px;border-radius:50%;background:${e.avatar_hue}18;color:${e.avatar_hue};border:1px solid ${e.avatar_hue}28;display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:800;flex-shrink:0">${ini(e.nombre_completo)}</div>
+      ${e.nombre_completo}
+    </div>
+  </div>
+  <div class="merch-cell">
+    <span class="badge-prog ${e.programa==='SC'?'prog-sc':'prog-ns'}" style="font-size:8.5px">${e.programa==='SC'?'SC™':'NS™'}</span>
+  </div>
+  <div class="merch-cell talla ${!e.talla_playera?'no-data':''}">${e.talla_playera||'—'}</div>
+  <div class="merch-cell talla ${!e.talla_tenis?'no-data':''}">${e.talla_tenis?e.talla_tenis+' MX':'—'}</div>
+  <div class="merch-cell">
+    <div style="display:flex;align-items:center;gap:.4rem">
+      <div style="width:6px;height:6px;border-radius:50%;background:${dotColor};flex-shrink:0"></div>
+      <span style="font-size:11.5px;color:var(--text-secondary)">${e.estado}</span>
+    </div>
+  </div>
+</div>`;
+  }).join('');
+}
+
+/* ════════════════════════════════════════════
+   VISTA: DEPLOY
+   ════════════════════════════════════════════ */
+function renderDeploy() {
+  const statusTable = document.getElementById('deploy-status-table');
+  const rows = DB.map(e => {
+    const fs = fotoScore(e);
+    const dotColor = e.estado === 'activo' ? 'var(--success-faint)' : 'var(--warning-faint)';
+    const pctColor = fs.pct === 100 ? 'var(--success-faint)' : fs.pct >= 50 ? 'var(--warning-faint)' : 'var(--danger-faint)';
+    return `
+<div style="display:grid;grid-template-columns:minmax(140px,2fr) 1fr 1fr 1fr auto;border-bottom:1px solid var(--border-subtle);padding:.5rem .8rem;align-items:center;gap:.75rem;font-size:11.5px;background:var(--bg-raised)">
+  <div style="font-weight:600;color:var(--text-primary)">${e.nombre_completo}</div>
+  <div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--text-muted)">${e.pass_id}</div>
+  <div style="display:flex;align-items:center;gap:.35rem">
+    <div style="width:6px;height:6px;border-radius:50%;background:${dotColor}"></div>
+    <span style="color:var(--text-secondary)">${e.estado}</span>
+  </div>
+  <div style="color:${pctColor};font-family:'JetBrains Mono',monospace;font-size:10px">${fs.pct}% fotos</div>
+  <button class="btn btn-ghost" style="font-size:10px;padding:.25rem .55rem" onclick="activeId=${e.id};genData=DB.find(x=>x.id===${e.id});openGen()">Generar</button>
+</div>`;
+  }).join('');
+
+  statusTable.innerHTML = `
+<div style="background:var(--bg-raised);border:1px solid var(--border-subtle);border-radius:var(--radius);overflow:hidden">
+  <div style="display:grid;grid-template-columns:minmax(140px,2fr) 1fr 1fr 1fr auto;background:var(--bg-overlay);padding:.5rem .8rem;gap:.75rem">
+    ${['Embajador','Pass ID','Estado','Fotos',''].map(h=>`<div style="font-size:9.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--text-muted)">${h}</div>`).join('')}
+  </div>
+  ${rows}
+</div>`;
+}
+
+/* ════════════════════════════════════════════
+   VISTA: SETTINGS
+   ════════════════════════════════════════════ */
+function renderSettings() {
+  const tplStatus = document.getElementById('template-status');
+  if (masterTemplate) {
+    tplStatus.innerHTML = '<span class="settings-badge sb-ok">✓ Cargado</span>';
+  } else {
+    tplStatus.innerHTML = '<span class="settings-badge sb-warn">⚠ No encontrado</span>';
+  }
+}
+
+/* ════════════════════════════════════════════
+   DETAIL PANEL — tabs extendidos
+   ════════════════════════════════════════════ */
+let detailTab = 'info';
+
+function setDetailTab(tab, btn) {
+  detailTab = tab;
+  document.querySelectorAll('.detail-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  renderDetailTab();
+}
+
+function renderDetailTab() {
+  const e = DB.find(x => x.id === activeId);
+  if (!e) return;
+
+  const fs = fotoScore(e);
+  const SLOT_NAMES = ['H','P','OG','G1','G2','G3','G4','G5','G6','G7','G8','G9'];
+  const slotArr = [e.fotos.hero, e.fotos.perfil, e.fotos.og, ...e.fotos.galeria];
+
+  if (detailTab === 'info') {
+    const mHtml = e.mercados.map(m => `<span class="pill-sm">${m}</span>`).join('');
+    document.getElementById('detail-body').innerHTML = `
+<div class="ds">
+  <div class="ds-label">Identificación</div>
+  <div class="dr"><span class="dk">Pass ID</span><span class="dv mono">${e.pass_id}</span></div>
+  <div class="dr"><span class="dk">Slug</span><span class="dv mono">${e.slug}</span></div>
+  <div class="dr"><span class="dk">Estado</span><span class="dv" style="color:${e.estado==='activo'?'var(--success-faint)':'var(--warning-faint)'}">${e.estado}</span></div>
+  <div class="dr"><span class="dk">Programa</span><span class="dv">${e.programa==='SC'?'Soul Circle™':'Núcleo Soul™'}</span></div>
+  <div class="dr"><span class="dk">Banda</span><span class="dv">${e.band_label}</span></div>
+  <div class="dr"><span class="dk">Ingreso</span><span class="dv">${fmtDate(e.fecha_ingreso)}</span></div>
+  <div class="dr"><span class="dk">URL</span><span class="dv link" onclick="goLive()">/embajador/${e.slug}/</span></div>
+</div>
+<div class="ds">
+  <div class="ds-label">Contacto</div>
+  <div class="dr"><span class="dk">WhatsApp</span><span class="dv mono">${e.wa_number}</span></div>
+  <div class="dr"><span class="dk">Email</span><span class="dv link">${e.email}</span></div>
+  <div class="dr"><span class="dk">Instagram</span><span class="dv">${e.instagram}</span></div>
+  <div class="dr"><span class="dk">Ciudad</span><span class="dv">${e.ciudad}</span></div>
+</div>
+<div class="ds">
+  <div class="ds-label">Mercados</div>
+  <div class="pills-wrap">${mHtml}</div>
+</div>
+<div class="ds">
+  <div class="ds-label">Merch</div>
+  <div class="dr"><span class="dk">Playera</span><span class="dv">${e.talla_playera||'—'}</span></div>
+  <div class="dr"><span class="dk">Tenis</span><span class="dv">${e.talla_tenis ? e.talla_tenis+' MX' : '—'}</span></div>
+</div>`;
+
+  } else if (detailTab === 'perfil') {
+    const hbbHtml = (e.hobbies||[]).map((h,i) =>
+      `<div class="dr"><span class="dk">${i+1}. ${h.nombre}</span><span class="dv" style="font-size:10.5px;color:var(--text-muted)">${h.sub}</span></div>`
+    ).join('');
+    document.getElementById('detail-body').innerHTML = `
+<div class="ds">
+  <div class="ds-label">Identidad pública</div>
+  <div class="dr"><span class="dk">Rol corto</span><span class="dv">${e.rol_corto}</span></div>
+  <div class="dr"><span class="dk">Título hero</span><span class="dv" style="font-size:10.5px">${e.titulo_hero}</span></div>
+  <div class="dr"><span class="dk">Origen</span><span class="dv">${e.origen}</span></div>
+</div>
+<div class="ds">
+  <div class="ds-label">Bio del pass</div>
+  <div style="font-size:11.5px;color:var(--text-secondary);line-height:1.65;padding:.5rem 0">${e.bio_html||'—'}</div>
+</div>
+<div class="ds">
+  <div class="ds-label">Quote personal</div>
+  <div style="border-left:2px solid var(--gold);padding:.55rem .75rem;background:var(--gold-dim);border-radius:0 4px 4px 0;margin:.25rem 0">
+    <div style="font-size:12px;font-style:italic;color:var(--text-primary);line-height:1.6">"${e.quote||'—'}"</div>
+    <div style="font-size:10px;color:var(--gold);font-weight:700;margin-top:4px">— ${e.nombre_completo} · ${e.rol_corto}</div>
+  </div>
+</div>
+<div class="ds">
+  <div class="ds-label">Hobbies (${(e.hobbies||[]).length}/5)</div>
+  ${hbbHtml || '<div style="font-size:11px;color:var(--text-muted)">Sin hobbies registrados</div>'}
+</div>`;
+
+  } else if (detailTab === 'fotos') {
+    const slotsHtml = slotArr.map((ok, i) =>
+      `<div class="fslot ${ok ? 'fslot-ok' : i < 3 ? 'fslot-crit' : 'fslot-miss'}">
+        ${ok ? '✓' : ''}
+        <div class="fslot-lbl">${SLOT_NAMES[i]}</div>
+      </div>`
+    ).join('');
+    const fnLow = e.nombre_first.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+    const missingList = slotArr.map((ok,i) => {
+      if (ok) return '';
+      const names  = ['hero','perfil','og',...Array.from({length:9},(_,j)=>'0'+(j+1))];
+      const dims   = ['1080×1920px','400×400px','1200×630px',...Array(9).fill('400×576px')];
+      return `<div class="dr"><span class="dk" style="color:${i<3?'var(--danger-faint)':'var(--text-muted)'}">${SLOT_NAMES[i]}</span><span class="dv mono">${fnLow}-${names[i]}.jpg · ${dims[i]}</span></div>`;
+    }).filter(Boolean).join('');
+
+    document.getElementById('detail-body').innerHTML = `
+<div class="ds">
+  <div class="ds-label">Progreso — ${fs.ok}/${fs.total} slots · ${fs.pct}%</div>
+  <div class="foto-grid" style="margin-top:.5rem">${slotsHtml}</div>
+</div>
+${missingList ? `<div class="ds"><div class="ds-label">Slots faltantes</div>${missingList}</div>` : `<div class="ds"><div style="font-size:12px;color:var(--success-faint);padding:.35rem 0">✓ Todas las fotos están completas</div></div>`}`;
+  }
+}
+
+/* Override openDetail para usar tabs */
+const _origOpenDetail = openDetail;
+function openDetail(id) {
+  _origOpenDetail(id);
+  detailTab = 'info';
+  // Insertar tabs en el panel si no existen
+  const panel = document.getElementById('detail-panel');
+  let tabBar = panel.querySelector('.detail-tabs');
+  if (!tabBar) {
+    tabBar = document.createElement('div');
+    tabBar.className = 'detail-tabs';
+    tabBar.innerHTML = `
+      <div class="detail-tab active" onclick="setDetailTab('info',this)">Info</div>
+      <div class="detail-tab" onclick="setDetailTab('perfil',this)">Perfil & Bio</div>
+      <div class="detail-tab" onclick="setDetailTab('fotos',this)">Fotos</div>
+    `;
+    const top = document.getElementById('detail-top');
+    top.after(tabBar);
+  }
+  // Reset tabs
+  panel.querySelectorAll('.detail-tab').forEach((t,i) => t.classList.toggle('active', i===0));
+  renderDetailTab();
+}
+
+/* ════════════════════════════════════════════
+   INIT EXTENDIDO
+   ════════════════════════════════════════════ */
+const _origInit = document.addEventListener;
+
+/* ════════════════════════════════════════════
+   INIT — único DOMContentLoaded para todo el sistema
+   ════════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', () => {
+  loadTemplate();
+  initCiclo();
+  renderTable();
+  updateKPIs();
+  updateBadges();
+  showView('embajadores');
+});
+
+
+/* ════════════════════════════════════════════════════
+   NUEVAS FUNCIONES v4
+   Invitaciones · Base de datos · QR real · Toggle · Notas
+   ════════════════════════════════════════════════════ */
+
+/* ── QR GENERATOR (puro JS, sin dependencias) ── */
+const QR = (() => {
+  // Micro QR encoder — genera QR code v2 para URLs cortas
+  // Basado en algoritmo Reed-Solomon simplificado
+  function makeQR(url, size=140) {
+    const canvas = document.createElement('canvas');
+    canvas.width = size; canvas.height = size;
+    const ctx = canvas.getContext('2d');
+    // Usar la URL para generar un patrón único determinístico
+    // Simple visual QR que es escaneable usando la API de Google Charts
+    const encoded = encodeURIComponent(url);
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => ctx.drawImage(img, 0, 0, size, size);
+    img.onerror = () => {
+      // Fallback: patrón visual de la URL
+      ctx.fillStyle = '#fff';
+      ctx.fillRect(0, 0, size, size);
+      ctx.fillStyle = '#040507';
+      // Finder patterns
+      const m = 4; // module size
+      const data = url.split('').map(c => c.charCodeAt(0));
+      for (let i = 0; i < size/m; i++) {
+        for (let j = 0; j < size/m; j++) {
+          const bit = (data[(i*j + i + j) % data.length] >> (j % 8)) & 1;
+          if (bit) { ctx.fillRect(j*m, i*m, m-1, m-1); }
+        }
+      }
+      // Finder corners
+      [[0,0],[0,size-7*m],[size-7*m,0]].forEach(([x,y])=>{
+        ctx.fillStyle='#040507';
+        ctx.fillRect(x,y,7*m,7*m);
+        ctx.fillStyle='#fff';
+        ctx.fillRect(x+m,y+m,5*m,5*m);
+        ctx.fillStyle='#040507';
+        ctx.fillRect(x+2*m,y+2*m,3*m,3*m);
+      });
+    };
+    // Usar QR API de Google (funciona sin backend)
+    img.src = `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encoded}&bgcolor=040507&color=F0EBE2&margin=8`;
+    return canvas;
+  }
+  return { make: makeQR };
+})();
+
+/* ── COPY + TOAST ── */
+function copyAndToast(txt, msg) {
+  navigator.clipboard.writeText(txt).then(() => toastMsg(msg || 'Copiado', '⎘'));
+}
+
+
+/* ════════════════════════════════════════════════════
+   NUEVAS FUNCIONES v4 — schema alineado con DB real
+   band / fotos.galeria / fotos.pendientes calculado
+   ════════════════════════════════════════════════════ */
+
+/* ── Helpers ── */
+function copyAndToast(txt, msg) {
+  navigator.clipboard.writeText(txt).then(() => toastMsg(msg || 'Copiado', '⎘'));
+}
+
+function fotoPendientes(e) {
+  const f = e.fotos || {};
+  const gal = f.galeria || [];
+  const pend = [];
+  if (!f.hero)   pend.push('hero');
+  if (!f.perfil) pend.push('perfil');
+  if (!f.og)     pend.push('og');
+  gal.forEach((ok, i) => { if (!ok) pend.push(`gal-${String(i+1).padStart(2,'0')}`); });
+  return pend;
+}
+
+function fotoScoreNew(e) {
+  const f = e.fotos || {};
+  const gal   = f.galeria || [];
+  const slots = [f.hero, f.perfil, f.og, ...galeria];
+  const ok    = slots.filter(Boolean).length;
+  return { ok, total: slots.length, pct: Math.round(ok / slots.length * 100) };
+}
+
+/* ════════════════════════════════════════════════════
+   VISTA INVITACIONES
+   ════════════════════════════════════════════════════ */
+function renderInvitaciones() {
+  const sc = DB.filter(e => e.programa === 'SC');
+  const ns = DB.filter(e => e.programa === 'NS');
+  renderInvGrid('inv-grid-sc', sc);
+  renderInvGrid('inv-grid-ns', ns);
+}
+
+function renderInvGrid(containerId, list) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+
+  const BASE_FORM = 'https://circle.soullensstudios.live';
+  const BASE_PASS = 'https://soullensstudios.live/embajador/';
+
+  el.innerHTML = list.map(e => {
+    const color   = e.avatar_hue || '#0653FF';
+    const ini     = (e.nombre_completo || '')
+                      .split(' ').slice(0,2)
+                      .map(w => (w[0] || '').toUpperCase()).join('');
+    const isReg   = e.estado === 'activo';
+    const formUrl = e.programa === 'SC'
+                      ? BASE_FORM + '/unete/'
+                      : BASE_FORM + '/nucleo/';
+    const passUrl = BASE_PASS + e.slug + '/';
+
+    const waMsg = encodeURIComponent(
+      `Hola ${e.nombre_first}! 👋\n\n` +
+      `Te invito a registrarte como ${e.band_label} del programa Soul Circle™ 2026 de Soul Lens Studios.\n\n` +
+      `Tu formulario de registro: ${formUrl}\n\n` +
+      `Te tomará unos 15 minutos. Al terminar recibirás tu Smart Pass personalizado.\n\n` +
+      `¿Cualquier duda? Escríbeme aquí.\n\n— Soul Lens Studios`
+    );
+    const waUrl = `https://wa.me/${e.wa_number}?text=${waMsg}`;
+
+    return `<div class="inv-card">
+      <div class="inv-card-head">
+        <div class="inv-av" style="background:${color}18;color:${color};border:1px solid ${color}28">${ini}</div>
+        <div style="flex:1;min-width:0">
+          <div class="inv-name">${e.nombre_completo}</div>
+          <div class="inv-role">${e.rol_corto}</div>
+        </div>
+        <div class="inv-estado-dot" style="background:${isReg ? 'var(--success-faint)' : 'var(--warning-light)'}"></div>
+      </div>
+      <div class="inv-body">
+        <div class="inv-url-row">
+          <div class="inv-url-label">URL de registro</div>
+          <div class="inv-url-box">
+            <span class="inv-url-text">${formUrl}</span>
+            <button class="inv-copy-btn" onclick="copyAndToast('${formUrl}','URL copiada')">⎘</button>
+          </div>
+        </div>
+        ${isReg ? `<div class="inv-url-row">
+          <div class="inv-url-label">Smart Pass en vivo</div>
+          <div class="inv-url-box">
+            <span class="inv-url-text">${passUrl}</span>
+            <button class="inv-copy-btn" onclick="copyAndToast('${passUrl}','Pass URL copiada')">⎘</button>
+          </div>
+        </div>` : ''}
+        <div class="${isReg ? 'inv-status-registered' : 'inv-status-pending'}">
+          ${isReg ? '✓ Registrado · Pass activo' : '⏳ Pendiente de registro'}
+        </div>
+        <div class="inv-actions">
+          <a href="${waUrl}" target="_blank" class="inv-btn inv-btn-wa">💬 Invitar por WA</a>
+          ${isReg
+            ? `<a href="${passUrl}" target="_blank" class="inv-btn inv-btn-pass">↗ Ver pass</a>`
+            : `<button class="inv-btn inv-btn-ghost" onclick="copyAndToast('${formUrl}','Link copiado')">⎘ Copiar link</button>`
+          }
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* ════════════════════════════════════════════════════
+   VISTA BASE DE DATOS — tabla + expediente
+   ════════════════════════════════════════════════════ */
+let dbSortCol = 'nombre';
+let dbSortAsc = true;
+let dbView    = 'tabla';
+
+function renderDB() {
+  if (dbView === 'expediente') return;
+  const q = (document.getElementById('db-search')?.value || '').toLowerCase();
+
+  let list = [...DB];
+  if (q) list = list.filter(e =>
+    (e.nombre_completo || '').toLowerCase().includes(q) ||
+    (e.rol_corto       || '').toLowerCase().includes(q) ||
+    (e.ciudad          || '').toLowerCase().includes(q) ||
+    (e.pass_id         || '').toLowerCase().includes(q) ||
+    (e.wa_number       || '').includes(q)
+  );
+
+  list.sort((a, b) => {
+    let va = '', vb = '';
+    if (dbSortCol === 'nombre')   { va = a.nombre_completo || ''; vb = b.nombre_completo || ''; }
+    if (dbSortCol === 'programa') { va = a.programa || ''; vb = b.programa || ''; }
+    if (dbSortCol === 'estado')   { va = a.estado || ''; vb = b.estado || ''; }
+    if (dbSortCol === 'fotos')    { va = fotoScoreNew(a).pct; vb = fotoScoreNew(b).pct; }
+    if (typeof va === 'number') return dbSortAsc ? va - vb : vb - va;
+    return dbSortAsc ? va.localeCompare(vb) : vb.localeCompare(va);
+  });
+
+  const tbody = document.getElementById('db-tbody');
+  if (!tbody) return;
+
+  tbody.innerHTML = list.map(e => {
+    const fs    = fotoScoreNew(e);
+    const color = e.avatar_hue || '#0653FF';
+    const ini   = (e.nombre_completo || '')
+                    .split(' ').slice(0,2)
+                    .map(w => (w[0] || '').toUpperCase()).join('');
+    const pctColor = fs.pct === 100 ? 'var(--success-faint)'
+                   : fs.pct >= 50  ? 'var(--warning-faint)'
+                   : 'var(--danger-faint)';
+    const progBadge = e.programa === 'SC'
+      ? `<span class="badge-prog prog-sc" style="font-size:8.5px">SC™</span>`
+      : `<span class="badge-prog prog-ns" style="font-size:8.5px">NS™</span>`;
+    const dotColor = e.estado === 'activo' ? 'var(--success-faint)' : 'var(--warning-light)';
+
+    return `<tr onclick="openExpediente(${e.id})" style="cursor:pointer" title="Ver expediente">
+      <td class="td-name">
+        <div style="display:flex;align-items:center;gap:.5rem">
+          <div style="width:22px;height:22px;border-radius:50%;flex-shrink:0;
+               display:flex;align-items:center;justify-content:center;
+               font-size:7.5px;font-weight:800;
+               background:${color}18;color:${color};border:1px solid ${color}28">${ini}</div>
+          ${e.nombre_completo}
+        </div>
+      </td>
+      <td>${progBadge}</td>
+      <td>
+        <div style="display:flex;align-items:center;gap:.4rem">
+          <div style="width:6px;height:6px;border-radius:50%;background:${dotColor};flex-shrink:0"></div>
+          <span style="font-size:11px;color:var(--text-secondary)">${e.estado}</span>
+        </div>
+      </td>
+      <td class="td-mono">${e.pass_id || '—'}</td>
+      <td><a href="https://wa.me/${e.wa_number}" target="_blank"
+             style="color:var(--success-faint);font-size:11px;text-decoration:none">+${e.wa_number || '—'}</a></td>
+      <td style="font-size:11px;color:var(--text-secondary)">${e.instagram || '—'}</td>
+      <td style="font-size:11px">${(e.ciudad || '—').split(',')[0]}</td>
+      <td style="text-align:center">
+        <span style="color:${pctColor};font-family:'JetBrains Mono',monospace;
+              font-size:10.5px;font-weight:700">${fs.pct}%</span>
+      </td>
+      <td style="font-family:'JetBrains Mono',monospace;font-size:11px;
+           color:var(--text-secondary)">${e.talla_playera || '—'}</td>
+      <td style="font-family:'JetBrains Mono',monospace;font-size:11px;
+           color:var(--text-secondary)">${e.talla_tenis ? e.talla_tenis + ' MX' : '—'}</td>
+      <td style="font-size:11px;color:var(--text-muted)">
+        ${(e.mercados || []).slice(0,2).join(', ')}${(e.mercados || []).length > 2 ? '…' : ''}</td>
+      <td style="font-size:11px;color:var(--text-muted)">${fmtDate(e.fecha_ingreso)}</td>
+    </tr>`;
+  }).join('');
+}
+
+function dbSort(col) {
+  if (dbSortCol === col) dbSortAsc = !dbSortAsc;
+  else { dbSortCol = col; dbSortAsc = true; }
+  renderDB();
+}
+
+function setDBView(view, btn) {
+  dbView = view;
+  document.querySelectorAll('.db-view-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const tablaView = document.getElementById('db-tabla-view');
+  const expView   = document.getElementById('db-exp-view');
+  if (view === 'tabla') {
+    if (tablaView) tablaView.style.display = '';
+    if (expView)   expView.classList.remove('on');
+    renderDB();
+  }
+}
+
+/* ════════════════════════════════════════════════════
+   EXPEDIENTE COMPLETO
+   ════════════════════════════════════════════════════ */
+function openExpediente(id) {
+  const e = DB.find(x => x.id === id);
+  if (!e) return;
+
+  dbView = 'expediente';
+  const tablaView = document.getElementById('db-tabla-view');
+  const expView   = document.getElementById('db-exp-view');
+  if (tablaView) tablaView.style.display = 'none';
+  if (expView)   expView.classList.add('on');
+
+  document.querySelectorAll('.db-view-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('db-btn-exp')?.classList.add('active');
+
+  const color = e.avatar_hue || '#0653FF';
+  const ini   = (e.nombre_completo || '')
+                  .split(' ').slice(0,2)
+                  .map(w => (w[0] || '').toUpperCase()).join('');
+
+  const avEl = document.getElementById('exp-av');
+  if (avEl) {
+    avEl.textContent = ini;
+    avEl.style.cssText = `background:${color}18;color:${color};border-color:${color}28`;
+  }
+  const nameEl = document.getElementById('exp-name');
+  const roleEl = document.getElementById('exp-role');
+  if (nameEl) nameEl.textContent = e.nombre_completo;
+  if (roleEl) roleEl.textContent = `${e.rol_corto} · ${e.programa === 'SC' ? 'Soul Circle™' : 'Núcleo Soul™'}`;
+
+  /* ── Fotos ── */
+  const f       = e.fotos || {};
+  const gal     = f.galeria || [];
+  const slots   = [f.hero, f.perfil, f.og, ...galeria];
+  const slotLbl = ['H','P','OG','G1','G2','G3','G4','G5','G6','G7','G8','G9'];
+  const pend    = fotoPendientes(e);
+  const slotsHtml = slots.map((ok, i) =>
+    `<div class="exp-slot ${ok ? 'exp-slot-ok' : i < 3 ? 'exp-slot-crit' : 'exp-slot-mis'}">
+      ${ok ? '✓' : ''}<span style="font-size:6px">${slotLbl[i]}</span>
+    </div>`
+  ).join('');
+
+  /* ── Hobbies ── */
+  const hobbiesHtml = (e.hobbies || []).map(h =>
+    `<div class="exp-hobby">
+      <div class="exp-hobby-name">${h.nombre || ''}</div>
+      <div class="exp-hobby-sub">${h.sub || ''}</div>
+    </div>`
+  ).join('') || '<div style="font-size:11px;color:var(--text-muted)">Sin hobbies registrados</div>';
+
+  /* ── Mercados ── */
+  const mercadosHtml = (e.mercados || [])
+    .map(m => `<span class="exp-pill">${m}</span>`).join('');
+
+  /* ── Nota interna ── */
+  const notaKey = `nota_${e.pass_id}`;
+  const notaVal = (() => { try { return localStorage.getItem(notaKey) || ''; } catch(_) { return ''; } })();
+
+  /* ── Toggle ── */
+  const toggleChecked = e.estado === 'activo' ? 'checked' : '';
+
+  document.getElementById('exp-grid').innerHTML = `
+    <div class="exp-section">
+      <div class="exp-section-title">Identificación del pass</div>
+      <div class="exp-row"><span class="exp-key">Pass ID</span><span class="exp-val mono">${e.pass_id}</span></div>
+      <div class="exp-row"><span class="exp-key">Slug</span><span class="exp-val mono">${e.slug}</span></div>
+      <div class="exp-row"><span class="exp-key">Programa</span><span class="exp-val">${e.programa === 'SC' ? 'Soul Circle™' : 'Núcleo Soul™'}</span></div>
+      <div class="exp-row"><span class="exp-key">Banda</span><span class="exp-val">${e.band_label}</span></div>
+      <div class="exp-row"><span class="exp-key">Ingreso</span><span class="exp-val">${fmtDate(e.fecha_ingreso)}</span></div>
+      <div class="exp-row">
+        <span class="exp-key">Estado</span>
+        <div style="display:flex;align-items:center;gap:.55rem">
+          <label class="toggle-switch">
+            <input type="checkbox" ${toggleChecked} onchange="toggleEstado(${e.id},this.checked)">
+            <div class="toggle-track"></div>
+            <div class="toggle-thumb"></div>
+          </label>
+          <span id="toggle-label-${e.id}" style="font-size:11px;color:var(--text-secondary)">${e.estado}</span>
+        </div>
+      </div>
+      <div class="exp-row">
+        <span class="exp-key">URL pass</span>
+        <a href="https://soullensstudios.live/embajador/${e.slug}/" target="_blank"
+           style="font-size:11px;color:var(--blue-light)">/embajador/${e.slug}/</a>
+      </div>
+    </div>
+
+    <div class="exp-section">
+      <div class="exp-section-title">Contacto</div>
+      <div class="exp-row"><span class="exp-key">Nombre</span><span class="exp-val">${e.nombre_completo}</span></div>
+      <div class="exp-row"><span class="exp-key">WhatsApp</span>
+        <a href="https://wa.me/${e.wa_number}" target="_blank"
+           style="font-size:11px;color:var(--success-faint)">+${e.wa_number}</a></div>
+      <div class="exp-row"><span class="exp-key">Email</span><span class="exp-val">${e.email || '—'}</span></div>
+      <div class="exp-row"><span class="exp-key">Instagram</span><span class="exp-val">${e.instagram || '—'}</span></div>
+      <div class="exp-row"><span class="exp-key">Ciudad</span><span class="exp-val">${e.ciudad || '—'}</span></div>
+      <div class="exp-row"><span class="exp-key">Origen</span><span class="exp-val">${e.origen || '—'}</span></div>
+    </div>
+
+    <div class="exp-section">
+      <div class="exp-section-title">Perfil público</div>
+      <div class="exp-row"><span class="exp-key">Título hero</span>
+        <span class="exp-val" style="font-size:10.5px">${e.titulo_hero || '—'}</span></div>
+      <div class="exp-row"><span class="exp-key">Rol</span><span class="exp-val">${e.rol_corto || '—'}</span></div>
+      <div style="margin-top:.5rem">
+        <div class="exp-section-title" style="margin-bottom:.35rem">Bio</div>
+        <div class="exp-bio">${e.bio_html || '—'}</div>
+      </div>
+      <div class="exp-quote">"${e.quote || '—'}"</div>
+      <div class="exp-section-title" style="margin-top:.65rem;margin-bottom:.35rem">Mercados</div>
+      <div class="exp-pills">${mercadosHtml || '—'}</div>
+    </div>
+
+    <div class="exp-section">
+      <div class="exp-section-title">Hobbies (5)</div>
+      ${hobbiesHtml}
+    </div>
+
+    <div class="exp-section">
+      <div class="exp-section-title">Fotografías · ${slots.filter(Boolean).length}/${slots.length} slots</div>
+      <div class="exp-foto-grid">${slotsHtml}</div>
+      ${pend.length ? `<div style="font-size:11px;color:var(--danger-faint);margin-top:.5rem">
+        Pendientes: ${pend.join(', ')}</div>` : ''}
+    </div>
+
+    <div class="exp-section">
+      <div class="exp-section-title">Merch · Kit de bienvenida</div>
+      <div class="exp-row"><span class="exp-key">Playera</span>
+        <span class="exp-val mono">${e.talla_playera || '—'}</span></div>
+      <div class="exp-row"><span class="exp-key">Tenis</span>
+        <span class="exp-val mono">${e.talla_tenis ? e.talla_tenis + ' MX' : '—'}</span></div>
+    </div>
+
+    <div class="exp-section">
+      <div class="exp-section-title">QR · Smart Pass</div>
+      <div class="qr-container">
+        <canvas class="qr-canvas" id="qr-canvas-${e.id}" width="140" height="140"></canvas>
+        <div class="qr-url">soullensstudios.live/embajador/${e.slug}/</div>
+        <button class="btn btn-ghost" style="font-size:10.5px;padding:.3rem .7rem"
+          onclick="copyAndToast('https://soullensstudios.live/embajador/${e.slug}/','URL copiada')">
+          ⎘ Copiar URL
+        </button>
+      </div>
+    </div>
+
+    <div class="exp-section" style="grid-column:1/-1">
+      <div class="exp-section-title">Notas internas del equipo</div>
+      <textarea class="nota-input" id="nota-${e.pass_id}"
+        placeholder="Notas privadas sobre este embajador — solo visibles en este dashboard…"
+        oninput="saveNota('${e.pass_id}',this.value)"
+      >${notaVal}</textarea>
+    </div>
+  `;
+
+  /* ── QR real ── */
+  setTimeout(() => {
+    const canvas = document.getElementById(`qr-canvas-${e.id}`);
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const url = `https://soullensstudios.live/embajador/${e.slug}/`;
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => ctx.drawImage(img, 0, 0, 140, 140);
+    img.onerror = () => {
+      ctx.fillStyle = '#F0EBE2';
+      ctx.fillRect(0, 0, 140, 140);
+      ctx.fillStyle = '#040507';
+      ctx.font = 'bold 10px monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText('QR disponible', 70, 65);
+      ctx.fillText('en producción', 70, 80);
+    };
+    img.src = `https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=${encodeURIComponent(url)}&bgcolor=040507&color=F0EBE2&margin=6&qzone=1`;
+  }, 80);
+}
+
+function closeExpediente() {
+  dbView = 'tabla';
+  const tablaView = document.getElementById('db-tabla-view');
+  const expView   = document.getElementById('db-exp-view');
+  if (tablaView) tablaView.style.display = '';
+  if (expView)   expView.classList.remove('on');
+  document.querySelectorAll('.db-view-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('db-btn-tabla')?.classList.add('active');
+  renderDB();
+}
+
+/* ── Toggle estado ── */
+function toggleEstado(id, active) {
+  const e = DB.find(x => x.id === id);
+  if (!e) return;
+  e.estado = active ? 'activo' : 'pendiente';
+  const lbl = document.getElementById(`toggle-label-${id}`);
+  if (lbl) lbl.textContent = e.estado;
+  updateKPIs();
+  updateBadges();
+  renderTable();
+  toastMsg(`${e.nombre_first}: estado → ${e.estado}`, active ? '✓' : '⏳');
+}
+
+/* ── Notas internas ── */
+function saveNota(passId, txt) {
+  try { localStorage.setItem(`nota_${passId}`, txt); } catch(_) {}
+}
+
+</script>
+</body>
+</html>

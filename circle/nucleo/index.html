@@ -1,0 +1,3358 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
+<title>Núcleo Soul™ · Registro Soul Origen™</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="Registro · Núcleo Soul™ · Soul Origen™ — Soul Lens Studios · Mérida, Yucatán.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#040507;--panel:#0d1117;--panel2:#141924;--panel3:#1c2438;
+  --border:rgba(255,255,255,0.06);--bmd:rgba(255,255,255,0.11);--bhi:rgba(255,255,255,0.22);
+  --t1:#F5F0E8;--t2:#B8B3AC;--t3:#7A7570;
+  --gold:#C9A84C;--gold-lt:#EDD070;--gdim:rgba(201,168,76,0.12);
+  --blue:#0E8060;--blue-dim:rgba(14,128,96,0.14);
+  --green:#8FF0B5;--green-dim:rgba(143,240,181,0.1);
+  --red:#FF5252;--red-dim:rgba(255,82,82,0.1);
+  --r:12px;--rsm:8px;
+  --fs-xs:11px;--fs-sm:13px;--fs-base:14px;--fs-md:16px;--fs-lg:20px;--fs-xl:28px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:var(--bg);color:var(--t1);
+  min-height:100dvh;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+/* ── LAYOUT ── */
+.app{display:flex;min-height:100dvh}
+.sidebar{
+  width:280px;flex-shrink:0;
+  background:var(--panel);
+  border-right:1px solid var(--border);
+  padding:2rem 1.5rem;
+  position:sticky;top:0;height:100dvh;
+  overflow-y:auto;
+  display:flex;flex-direction:column;gap:1.5rem;
+}
+.main{flex:1;padding:2.5rem 2rem;max-width:720px}
+
+@media(max-width:768px){
+  .app{flex-direction:column}
+  .sidebar{width:100%;height:auto;position:static;padding:1.25rem 1rem}
+  .main{padding:1.5rem 1rem}
+}
+
+/* ── LOGO / MARCA ── */
+.brand{display:flex;align-items:center;gap:10px;margin-bottom:.5rem}
+.brand-mark{
+  width:36px;height:36px;background:var(--blue);
+  border-radius:8px;display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:800;color:#fff;letter-spacing:-.02em;flex-shrink:0;
+}
+.brand-name{font-size:14px;font-weight:700;color:var(--t1);line-height:1.2}
+.brand-sub{font-size:10px;color:var(--t3);letter-spacing:.06em;text-transform:uppercase;margin-top:1px}
+
+/* ── PROG SELECTOR ── */
+.prog-cards{display:flex;flex-direction:column;gap:8px}
+.prog-card{
+  border:1px solid var(--border);border-radius:var(--rsm);
+  padding:.75rem 1rem;cursor:pointer;transition:all .18s;
+  display:flex;align-items:center;gap:10px;
+}
+.prog-card:hover{border-color:var(--bmd);background:var(--panel2)}
+.prog-card.active{border-color:var(--blue);background:var(--blue-dim)}
+.prog-dot{
+  width:8px;height:8px;border-radius:50%;flex-shrink:0;
+  background:var(--border);transition:background .18s;
+}
+.prog-card.active .prog-dot{background:var(--blue)}
+.prog-card-name{font-size:13px;font-weight:600;color:var(--t1)}
+.prog-card-sub{font-size:11px;color:var(--t3);margin-top:1px}
+
+/* ── NAV STEPS ── */
+.nav-label{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);margin-bottom:.5rem}
+.steps{display:flex;flex-direction:column;gap:3px}
+.step{
+  display:flex;align-items:center;gap:10px;
+  padding:.5rem .65rem;border-radius:var(--rsm);cursor:pointer;
+  transition:background .15s;
+}
+.step:hover{background:var(--panel2)}
+.step.active{background:var(--panel3)}
+.step-num{
+  width:20px;height:20px;border-radius:50%;
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;font-weight:700;color:var(--t3);
+  flex-shrink:0;transition:all .18s;
+}
+.step.active .step-num{background:var(--blue);border-color:var(--blue);color:#fff}
+.step.done .step-num{background:var(--green-dim);border-color:var(--green);color:var(--green)}
+.step-label{font-size:12px;color:var(--t2);transition:color .15s}
+.step.active .step-label{color:var(--t1);font-weight:500}
+.step.done .step-label{color:var(--green)}
+
+/* ── PROGRESS ── */
+.progress-wrap{margin-top:auto;padding-top:1rem;border-top:1px solid var(--border)}
+.progress-bar-bg{height:3px;background:var(--border);border-radius:99px;overflow:hidden;margin:.5rem 0}
+.progress-bar-fill{height:100%;background:var(--blue);border-radius:99px;transition:width .4s cubic-bezier(.16,1,.3,1)}
+.progress-text{font-size:11px;color:var(--t3);display:flex;justify-content:space-between}
+
+/* ── SECURITY BANNER ── */
+.security-banner{
+  background:linear-gradient(135deg,rgba(6,83,255,.08),rgba(143,240,181,.05));
+  border:1px solid rgba(6,83,255,.2);
+  border-radius:var(--r);padding:.85rem 1rem;margin-bottom:2rem;
+  display:flex;align-items:flex-start;gap:10px;
+}
+.security-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+.security-text{font-size:12px;color:var(--t2);line-height:1.6}
+.security-text strong{color:var(--t1);font-weight:600}
+.security-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:.5rem}
+.security-tag{
+  font-size:10px;padding:2px 8px;border-radius:99px;
+  background:rgba(6,83,255,.12);border:1px solid rgba(6,83,255,.25);
+  color:#7fb4ff;font-weight:500;
+}
+
+/* ── SECTION ── */
+.section{display:none}
+.section.active{display:block}
+.section-head{margin-bottom:1.75rem}
+.section-eyebrow{
+  font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--blue);margin-bottom:.4rem;
+}
+.section-title{font-size:var(--fs-xl);font-weight:800;color:var(--t1);line-height:1.15;margin-bottom:.4rem}
+.section-sub{font-size:var(--fs-sm);color:var(--t2);line-height:1.6}
+
+/* ── PRIVATE SECTION ── */
+.private-section{
+  border:1px solid rgba(201,168,76,.2);
+  border-radius:var(--r);overflow:hidden;margin-bottom:1.5rem;
+}
+.private-header{
+  background:rgba(201,168,76,.06);
+  padding:.75rem 1rem;display:flex;align-items:center;gap:8px;
+  cursor:pointer;user-select:none;
+}
+.private-lock{font-size:14px}
+.private-title{font-size:13px;font-weight:600;color:var(--gold)}
+.private-sub{font-size:11px;color:var(--t3);margin-top:1px}
+.private-toggle{margin-left:auto;font-size:11px;color:var(--t3)}
+.private-body{padding:1rem;display:none}
+.private-body.open{display:block}
+.private-notice{
+  font-size:11px;color:var(--t3);
+  background:var(--gdim);border-radius:var(--rsm);
+  padding:.5rem .75rem;margin-bottom:1rem;line-height:1.5;
+}
+
+/* ── FIELDS ── */
+.fields-grid{display:grid;gap:1rem;margin-bottom:1.5rem}
+.fields-grid.cols-2{grid-template-columns:1fr 1fr}
+@media(max-width:520px){.fields-grid.cols-2{grid-template-columns:1fr}}
+
+.field-group{display:flex;flex-direction:column;gap:.4rem}
+.field-label{
+  font-size:var(--fs-xs);font-weight:600;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--t3);
+  display:flex;align-items:center;gap:5px;
+}
+.field-label .req{color:var(--gold);font-size:10px}
+.field-label .opt{color:var(--t3);font-weight:400;text-transform:none;letter-spacing:0;font-size:10px}
+.field-hint{font-size:11px;color:var(--t3);line-height:1.45;margin-top:-2px}
+
+input[type=text],input[type=email],input[type=tel],input[type=date],input[type=number],input[type=url],select,textarea{
+  width:100%;
+  background:var(--panel2);
+  border:1px solid var(--border);
+  border-radius:var(--rsm);
+  color:var(--t1);
+  font-family:inherit;
+  font-size:var(--fs-base);
+  padding:.65rem .85rem;
+  outline:none;
+  transition:border-color .15s,background .15s;
+  -webkit-appearance:none;
+  appearance:none;
+}
+input[type=text]::placeholder,input[type=email]::placeholder,
+input[type=tel]::placeholder,input[type=url]::placeholder,textarea::placeholder{color:var(--t3)}
+input:focus,select:focus,textarea:focus{
+  border-color:var(--blue);
+  background:rgba(6,83,255,.05);
+}
+input.error,select.error,textarea.error{border-color:var(--red)}
+textarea{resize:vertical;min-height:88px;line-height:1.55}
+select{cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237A7570' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .85rem center;padding-right:2.2rem}
+select option{background:var(--panel2);color:var(--t1)}
+
+/* ── CHAR COUNTER ── */
+.char-wrap{position:relative}
+.char-count{
+  position:absolute;right:.65rem;bottom:.55rem;
+  font-size:10px;color:var(--t3);pointer-events:none;
+  transition:color .15s;
+}
+.char-count.warn{color:var(--gold)}
+.char-count.over{color:var(--red)}
+
+/* ── AUTO FIELD ── */
+.auto-field{
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:var(--rsm);padding:.6rem .85rem;
+  font-size:var(--fs-base);color:var(--t2);
+  display:flex;align-items:center;gap:8px;
+}
+.auto-badge{
+  font-size:10px;padding:1px 7px;border-radius:99px;
+  background:var(--blue-dim);border:1px solid rgba(6,83,255,.3);
+  color:#7fb4ff;font-weight:600;flex-shrink:0;
+}
+
+/* ── MULTI SELECT PILLS ── */
+.pill-grid{display:flex;flex-wrap:wrap;gap:7px}
+.pill-opt{
+  padding:.4rem .85rem;border-radius:99px;
+  border:1px solid var(--border);
+  font-size:var(--fs-sm);color:var(--t2);cursor:pointer;
+  transition:all .15s;user-select:none;
+}
+.pill-opt:hover{border-color:var(--bmd);color:var(--t1)}
+.pill-opt.selected{
+  background:var(--blue-dim);border-color:var(--blue);
+  color:var(--t1);font-weight:500;
+}
+.pill-count{font-size:11px;color:var(--t3);margin-top:.4rem}
+
+/* ── HOBBY ROWS ── */
+.hobby-row{
+  display:grid;grid-template-columns:1fr 1.6fr;gap:10px;
+  align-items:start;
+  background:var(--panel2);border:1px solid var(--border);
+  border-radius:var(--rsm);padding:.75rem;
+}
+.hobby-num{
+  font-size:10px;font-weight:700;color:var(--t3);
+  letter-spacing:.08em;text-transform:uppercase;
+  margin-bottom:.4rem;
+}
+
+/* ── FOTO SLOTS ── */
+.foto-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-bottom:1rem}
+.foto-slot{
+  aspect-ratio:9/13;border:1.5px dashed var(--border);
+  border-radius:var(--rsm);overflow:hidden;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:6px;cursor:pointer;transition:border-color .15s;
+  position:relative;background:var(--panel2);
+}
+.foto-slot:hover{border-color:var(--bmd)}
+.foto-slot.filled{border-style:solid;border-color:var(--blue)}
+.foto-slot-preview{
+  position:absolute;inset:0;
+  background-size:cover;background-position:center;
+  opacity:.85;
+}
+.foto-slot-label{
+  font-size:10px;color:var(--t3);text-align:center;line-height:1.4;
+  position:relative;z-index:1;padding:.5rem;
+}
+.foto-slot.filled .foto-slot-label{
+  position:absolute;bottom:0;left:0;right:0;
+  background:rgba(4,5,7,.7);color:var(--t2);z-index:2;
+}
+.foto-slot-icon{font-size:18px;color:var(--t3);position:relative;z-index:1}
+.foto-slot.filled .foto-slot-icon{display:none}
+.foto-hero-slot{
+  aspect-ratio:9/16;max-width:180px;margin:0 auto 1rem;
+}
+.foto-perfil-slot{
+  aspect-ratio:1/1;width:100px;height:100px;border-radius:50%;margin:0 auto 1rem;
+}
+.foto-og-slot{
+  aspect-ratio:1200/630;max-width:340px;margin:0 auto 1rem;
+}
+.foto-slot input[type=file]{
+  position:absolute;inset:0;opacity:0;cursor:pointer;z-index:3;
+}
+.foto-info{
+  font-size:11px;color:var(--t3);text-align:center;
+  background:var(--panel2);border-radius:var(--rsm);
+  padding:.5rem .75rem;margin-bottom:.5rem;line-height:1.5;
+}
+
+/* ── QUOTE PREVIEW ── */
+.quote-preview{
+  border-left:2px solid var(--gold);
+  padding:.75rem 1rem;margin-top:.5rem;
+  background:var(--gdim);border-radius:0 var(--rsm) var(--rsm) 0;
+  font-size:var(--fs-sm);font-style:italic;color:var(--t2);
+  display:none;line-height:1.6;
+}
+.quote-preview.visible{display:block}
+
+/* ── BUTTONS ── */
+.btn-row{display:flex;gap:10px;justify-content:flex-end;margin-top:2rem;flex-wrap:wrap}
+.btn{
+  padding:.7rem 1.4rem;border-radius:var(--rsm);
+  font-family:inherit;font-size:var(--fs-base);font-weight:600;
+  cursor:pointer;transition:all .18s;border:none;
+  display:inline-flex;align-items:center;gap:7px;
+}
+.btn-ghost{
+  background:transparent;border:1px solid var(--border);color:var(--t2);
+}
+.btn-ghost:hover{border-color:var(--bmd);color:var(--t1)}
+.btn-primary{
+  background:var(--blue);color:#fff;
+}
+.btn-primary:hover{background:#1a6bff;transform:translateY(-1px)}
+.btn-primary:active{transform:none}
+.btn-generate{
+  background:linear-gradient(135deg,var(--gold),#b8923e);
+  color:#1a1200;font-size:15px;padding:.85rem 1.75rem;
+}
+.btn-generate:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.btn-sm{padding:.45rem .85rem;font-size:12px}
+
+/* ── SUCCESS ── */
+.success-screen{
+  display:none;text-align:center;
+  padding:3rem 1rem;
+}
+.success-screen.active{display:block}
+.success-icon{font-size:48px;margin-bottom:1rem}
+.success-title{font-size:24px;font-weight:800;color:var(--t1);margin-bottom:.5rem}
+.success-sub{font-size:14px;color:var(--t2);line-height:1.65;margin-bottom:2rem;max-width:480px;margin-inline:auto}
+.download-cards{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:2rem}
+.download-card{
+  background:var(--panel2);border:1px solid var(--border);
+  border-radius:var(--r);padding:1.25rem 1.5rem;
+  text-align:left;width:220px;cursor:pointer;transition:all .18s;
+}
+.download-card:hover{border-color:var(--bmd);background:var(--panel3)}
+.download-card-icon{font-size:24px;margin-bottom:.5rem}
+.download-card-title{font-size:14px;font-weight:700;color:var(--t1);margin-bottom:2px}
+.download-card-sub{font-size:11px;color:var(--t3)}
+
+/* ── FOTO SECTION HERO ── */
+.foto-hero-wrap{display:grid;grid-template-columns:1fr 1fr;gap:1rem;align-items:start}
+@media(max-width:520px){.foto-hero-wrap{grid-template-columns:1fr}}
+
+/* ── VALIDATION ── */
+.error-msg{font-size:11px;color:var(--red);margin-top:3px;display:none}
+.error-msg.visible{display:block}
+
+/* ── MERCADOS CUSTOM ── */
+.mercados-custom{display:flex;gap:8px;margin-top:.65rem}
+.mercados-custom input{flex:1}
+
+/* ── SLUG PREVIEW ── */
+.slug-preview{
+  font-size:11px;color:var(--t3);margin-top:.3rem;
+  font-family:monospace;
+}
+.slug-preview span{color:var(--blue)}
+
+/* ── SECTION DIVIDER ── */
+.divider{
+  border:none;border-top:1px solid var(--border);
+  margin:1.5rem 0;
+}
+
+/* ── TAG ── */
+.field-tag{
+  display:inline-block;font-size:10px;padding:1px 7px;
+  border-radius:99px;font-weight:600;margin-left:4px;
+  vertical-align:middle;
+}
+.tag-pass{background:rgba(6,83,255,.15);color:#7fb4ff;border:1px solid rgba(6,83,255,.25)}
+.tag-future{background:rgba(201,168,76,.1);color:var(--gold);border:1px solid rgba(201,168,76,.2)}
+.tag-priv{background:rgba(255,82,82,.1);color:#ff8a8a;border:1px solid rgba(255,82,82,.2)}
+
+/* ══════════════════════════════════════════
+   PREVIEW PANEL — Live Smart Pass Preview
+   ══════════════════════════════════════════ */
+
+/* Layout update: 3-column on desktop */
+.app {
+  display: grid;
+  grid-template-columns: 280px 1fr 360px;
+  min-height: 100dvh;
+}
+
+@media(max-width: 1100px) {
+  .app {
+    grid-template-columns: 240px 1fr;
+  }
+  .preview-panel { display: none; }
+  .preview-fab { display: flex !important; }
+}
+
+@media(max-width: 768px) {
+  .app {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+  }
+  .sidebar { display: none; }
+}
+
+/* Preview panel */
+.preview-panel {
+  background: #0a0d14;
+  border-left: 1px solid rgba(255,255,255,0.06);
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.preview-header {
+  padding: .85rem 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.preview-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #7A7570;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.preview-live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #8FF0B5;
+  animation: livePulse 2s ease-in-out infinite;
+}
+
+@keyframes livePulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: .5; transform: scale(.8); }
+}
+
+.preview-device {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem .75rem;
+  overflow: hidden;
+}
+
+/* Phone frame */
+.phone-frame {
+  width: 200px;
+  background: #111318;
+  border-radius: 28px;
+  border: 2px solid rgba(255,255,255,0.1);
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 24px 48px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.08);
+  height: 100%;
+  max-height: 430px;
+}
+
+.phone-notch {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 5px;
+  background: rgba(0,0,0,.8);
+  border-radius: 99px;
+  z-index: 10;
+}
+
+.phone-screen {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  background: #040507;
+  scroll-behavior: smooth;
+}
+
+.phone-screen::-webkit-scrollbar { display: none; }
+
+/* ── PASS PREVIEW CONTENT ── */
+.pv-hero {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 12px;
+  background: #040507;
+  flex-shrink: 0;
+}
+
+.pv-hero-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center top;
+  opacity: .7;
+  transition: opacity .3s;
+}
+
+.pv-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(4,5,7,1) 0%, rgba(4,5,7,.6) 50%, rgba(4,5,7,.1) 100%);
+}
+
+.pv-hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+.pv-eyebrow {
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #C9A84C;
+  margin-bottom: 3px;
+  opacity: .8;
+}
+
+.pv-name {
+  font-size: 18px;
+  font-weight: 900;
+  color: #F5F0E8;
+  line-height: 1.1;
+  margin-bottom: 3px;
+  letter-spacing: -.02em;
+}
+
+.pv-name span {
+  color: rgba(245,240,232,.55);
+  font-weight: 300;
+  display: block;
+  font-size: 14px;
+  letter-spacing: 0;
+}
+
+.pv-role {
+  font-size: 8px;
+  color: #B8B3AC;
+  letter-spacing: .06em;
+}
+
+.pv-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 8px;
+  background: #0653ff;
+  color: #fff;
+  font-size: 8px;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 6px;
+  letter-spacing: .04em;
+}
+
+/* About section */
+.pv-section {
+  padding: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.pv-section-label {
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #7A7570;
+  margin-bottom: 8px;
+}
+
+.pv-about-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.pv-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #1c2438;
+  border: 1.5px solid rgba(201,168,76,.3);
+  flex-shrink: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #C9A84C;
+}
+
+.pv-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.pv-about-name {
+  font-size: 9px;
+  font-weight: 700;
+  color: #F5F0E8;
+}
+
+.pv-about-role {
+  font-size: 7px;
+  color: #C9A84C;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+
+.pv-bio {
+  font-size: 7.5px;
+  color: #B8B3AC;
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
+.pv-quote {
+  border-left: 2px solid #C9A84C;
+  padding: 5px 7px;
+  background: rgba(201,168,76,.04);
+  border-radius: 0 4px 4px 0;
+  font-size: 7px;
+  font-style: italic;
+  color: #B8B3AC;
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+
+.pv-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+}
+
+.pv-pill {
+  font-size: 7px;
+  padding: 2px 6px;
+  border-radius: 99px;
+  background: rgba(255,255,255,.05);
+  border: .5px solid rgba(255,255,255,.1);
+  color: #B8B3AC;
+}
+
+/* Hobbies */
+.pv-hobbies {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+}
+
+.pv-hbb {
+  background: #0d1117;
+  border-radius: 5px;
+  padding: 5px 6px;
+  border: .5px solid rgba(255,255,255,.06);
+}
+
+.pv-hbb-name {
+  font-size: 7.5px;
+  font-weight: 700;
+  color: #F5F0E8;
+  margin-bottom: 1px;
+}
+
+.pv-hbb-sub {
+  font-size: 6.5px;
+  color: #7A7570;
+  line-height: 1.4;
+}
+
+/* Credencial */
+.pv-credencial {
+  background: linear-gradient(135deg, #141924, #0d1117);
+  border: .5px solid rgba(201,168,76,.15);
+  border-radius: 8px;
+  padding: 10px;
+  margin: 4px 0;
+}
+
+.pv-cred-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.pv-cred-av {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #1c2438;
+  border: 1px solid rgba(201,168,76,.3);
+  flex-shrink: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 700;
+  color: #C9A84C;
+}
+
+.pv-cred-av img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.pv-cred-name { font-size: 8.5px; font-weight: 700; color: #F5F0E8; }
+.pv-cred-role { font-size: 6.5px; color: #B8B3AC; }
+.pv-cred-st   { font-size: 6px; color: #7A7570; margin-top: 1px; }
+
+.pv-cred-band {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  margin-top: 4px;
+}
+
+.pv-band-inner {
+  font-size: 6px;
+  font-weight: 700;
+  color: rgba(143,240,181,.85);
+  background: rgba(143,240,181,.08);
+  border: .5px solid rgba(143,240,181,.2);
+  padding: 2px 6px;
+  border-radius: 99px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.pv-cred-footer {
+  border-top: .5px solid rgba(255,255,255,.06);
+  padding-top: 6px;
+  margin-top: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pv-pass-id {
+  font-size: 6px;
+  color: #7A7570;
+  font-family: monospace;
+  letter-spacing: .05em;
+}
+
+/* Empty state */
+.pv-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 8px;
+  text-align: center;
+  padding: 1rem;
+  opacity: .5;
+}
+
+.pv-empty-icon { font-size: 28px; }
+.pv-empty-text { font-size: 11px; color: #7A7570; line-height: 1.5; }
+
+/* FAB — mobile preview button */
+.preview-fab {
+  display: none;
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 100;
+  background: #0653ff;
+  color: #fff;
+  border: none;
+  border-radius: 99px;
+  padding: .7rem 1.25rem;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 8px 24px rgba(6,83,255,.4);
+}
+
+/* Mobile preview sheet */
+.preview-sheet {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(4,5,7,.85);
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.preview-sheet.open { display: flex; }
+
+.preview-sheet-inner {
+  width: 100%;
+  max-width: 380px;
+  background: #0a0d14;
+  border-radius: 20px 20px 0 0;
+  border-top: 1px solid rgba(255,255,255,.08);
+  padding: 1rem;
+  max-height: 80dvh;
+  overflow-y: auto;
+}
+
+.preview-sheet-handle {
+  width: 36px;
+  height: 4px;
+  background: rgba(255,255,255,.15);
+  border-radius: 99px;
+  margin: 0 auto 1rem;
+}
+
+/* Transition */
+.pv-field-updated {
+  animation: pvFlash .4s ease-out;
+}
+
+@keyframes pvFlash {
+  0% { opacity: .4; }
+  100% { opacity: 1; }
+}
+
+
+
+/* ════════════════════════════════════════════════════
+   EXPERIENCE LAYERS — Pantallas previas al formulario
+   Pantalla 0: Bienvenida · Pantalla 1: Calibración
+   Pantalla 2: Carta (solo SC) · Pantalla F: Final
+   ════════════════════════════════════════════════════ */
+
+/* ── SISTEMA DE PANTALLAS ── */
+.screen {
+  display: none;
+  min-height: 100dvh;
+  position: relative;
+  overflow: hidden;
+}
+.screen.active { display: flex; flex-direction: column; }
+
+/* El formulario principal ahora es una pantalla más */
+.app.screen { flex-direction: row; }
+.app.screen.active { display: grid; }
+
+/* ── AMBIENT CANVAS ── */
+.ambient-canvas {
+  position: fixed; inset: 0; z-index: 0;
+  pointer-events: none; overflow: hidden;
+}
+.orb {
+  position: absolute; border-radius: 50%;
+  filter: blur(80px); opacity: .18;
+  animation: orbFloat 12s ease-in-out infinite;
+}
+.orb-1 { width: 400px; height: 400px; top: -100px; right: -100px; }
+.orb-2 { width: 300px; height: 300px; bottom: 10%; left: -80px; animation-delay: -4s; }
+.orb-3 { width: 200px; height: 200px; top: 40%; right: 15%; animation-delay: -8s; opacity: .1; }
+@keyframes orbFloat {
+  0%,100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-24px) scale(1.04); }
+}
+
+/* Grid subtle */
+.screen-grid {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent);
+}
+
+/* ══════════════════════════════════════════
+   PANTALLA 0 — BIENVENIDA
+   ══════════════════════════════════════════ */
+.screen-welcome {
+  align-items: center; justify-content: center;
+  text-align: center; padding: 2rem 1.5rem;
+}
+
+.welcome-inner { position: relative; z-index: 1; max-width: 520px; width: 100%; }
+
+.welcome-eyebrow {
+  font-size: 11px; font-weight: 700; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 2.5rem;
+  opacity: 0; transform: translateY(10px);
+  animation: fadeUp .6s ease forwards .2s;
+}
+
+.welcome-headline {
+  margin-bottom: 1.75rem;
+}
+
+.welcome-line {
+  display: block;
+  font-size: clamp(40px, 8vw, 64px);
+  font-weight: 900; letter-spacing: -.04em; line-height: .95;
+  color: var(--t1);
+  opacity: 0; transform: translateY(20px);
+}
+.welcome-line:nth-child(1) { animation: fadeUp .7s cubic-bezier(.16,1,.3,1) forwards .4s; }
+.welcome-line:nth-child(2) { animation: fadeUp .7s cubic-bezier(.16,1,.3,1) forwards .55s; }
+.welcome-line:nth-child(3) {
+  animation: fadeUp .7s cubic-bezier(.16,1,.3,1) forwards .7s;
+  background: linear-gradient(135deg, var(--gold-lt), var(--gold));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+
+.welcome-sub {
+  font-size: 16px; color: var(--t2); line-height: 1.7;
+  white-space: pre-line; margin-bottom: 2.5rem;
+  opacity: 0; animation: fadeUp .6s ease forwards 1s;
+}
+
+.welcome-cta-wrap {
+  display: flex; flex-direction: column; align-items: center; gap: .85rem;
+  opacity: 0; animation: fadeUp .6s ease forwards 1.2s;
+}
+
+.btn-welcome {
+  display: inline-flex; align-items: center; gap: .65rem;
+  padding: 1rem 2.25rem; border-radius: 99px;
+  background: var(--blue); color: #fff;
+  font-family: inherit; font-size: 16px; font-weight: 700;
+  border: none; cursor: pointer; letter-spacing: -.01em;
+  transition: transform .18s, box-shadow .18s;
+  box-shadow: 0 0 0 0 rgba(6,83,255,.4);
+}
+.btn-welcome:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(6,83,255,.35);
+}
+.btn-welcome .arrow {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: rgba(255,255,255,.2); font-size: 13px;
+  transition: transform .18s;
+}
+.btn-welcome:hover .arrow { transform: translateX(3px); }
+
+.btn-skip {
+  font-size: 12px; color: var(--t3); background: none; border: none;
+  cursor: pointer; font-family: inherit; letter-spacing: .04em;
+  padding: .35rem; transition: color .15s;
+  text-decoration: underline; text-underline-offset: 3px;
+}
+.btn-skip:hover { color: var(--t2); }
+
+/* Scan line animado */
+.scan-line {
+  position: fixed; top: 0; left: 0; right: 0; height: 1px; z-index: 2;
+  background: linear-gradient(90deg, transparent, var(--blue) 40%, transparent);
+  animation: scanDown 2s ease-out forwards .3s;
+  opacity: 0;
+}
+@keyframes scanDown {
+  0% { top: 0; opacity: 0; }
+  10% { opacity: .6; }
+  90% { opacity: .2; }
+  100% { top: 100%; opacity: 0; }
+}
+
+/* ══════════════════════════════════════════
+   PANTALLA 1 — CALIBRACIÓN
+   ══════════════════════════════════════════ */
+.screen-cal {
+  padding: 0;
+  flex-direction: column;
+}
+
+.cal-header {
+  padding: 1.75rem 1.5rem 1.25rem;
+  position: sticky; top: 0; z-index: 10;
+  background: rgba(4,5,7,.85);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+}
+
+.cal-brand { display: flex; align-items: center; gap: .6rem; }
+.cal-brand-mark {
+  width: 24px; height: 24px; border-radius: 5px;
+  background: var(--blue); display: flex; align-items: center;
+  justify-content: center; font-size: 9px; font-weight: 900; color: #fff;
+  flex-shrink: 0;
+}
+.cal-brand-name { font-size: 12px; font-weight: 700; color: var(--t1); }
+
+.cal-progress-pill {
+  font-size: 11px; font-weight: 700; color: var(--t3);
+  background: var(--panel); border: 1px solid var(--border);
+  padding: .3rem .75rem; border-radius: 99px;
+  transition: all .3s;
+}
+
+.cal-body {
+  flex: 1; overflow-y: auto; padding: 2rem 1.5rem 3rem;
+  max-width: 640px; margin: 0 auto; width: 100%;
+}
+
+.cal-intro {
+  margin-bottom: 2.5rem;
+}
+.cal-eyebrow-txt {
+  font-size: 10px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: .75rem;
+}
+.cal-title-txt {
+  font-size: clamp(28px, 5vw, 38px); font-weight: 900;
+  letter-spacing: -.035em; line-height: 1.05;
+  color: var(--t1); white-space: pre-line; margin-bottom: .85rem;
+}
+.cal-sub-txt { font-size: 15px; color: var(--t2); line-height: 1.65; white-space: pre-line; }
+
+/* Preguntas */
+.cal-questions { display: flex; flex-direction: column; gap: 2rem; }
+
+.cal-q-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 1.5rem;
+  transition: border-color .2s;
+  position: relative;
+}
+.cal-q-card:focus-within { border-color: var(--bmd); }
+
+.cal-q-num {
+  font-size: 10px; font-weight: 800; letter-spacing: .15em;
+  color: var(--blue); margin-bottom: .75rem;
+  font-family: 'Courier New', monospace;
+}
+.cal-q-text {
+  font-size: 17px; font-weight: 700; color: var(--t1);
+  line-height: 1.35; margin-bottom: .5rem; letter-spacing: -.02em;
+}
+.cal-q-sub {
+  font-size: 13px; color: var(--t3); line-height: 1.55; margin-bottom: 1rem;
+}
+.cal-q-textarea {
+  width: 100%; background: var(--panel2);
+  border: 1px solid var(--border); border-radius: var(--rsm);
+  padding: .85rem 1rem; font-family: inherit;
+  font-size: 14px; color: var(--t1); line-height: 1.6;
+  resize: vertical; min-height: 90px; outline: none;
+  transition: border-color .15s;
+}
+.cal-q-textarea::placeholder { color: var(--t3); font-size: 13px; }
+.cal-q-textarea:focus { border-color: var(--bmd); }
+
+.cal-q-filled {
+  position: absolute; top: 1rem; right: 1rem;
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--green-dim); border: 1px solid var(--green);
+  display: none; align-items: center; justify-content: center;
+  font-size: 10px; color: var(--green);
+}
+.cal-q-card.has-text .cal-q-filled { display: flex; }
+
+.cal-footer {
+  padding: 1.25rem 1.5rem 2rem;
+  background: rgba(4,5,7,.9);
+  backdrop-filter: blur(16px);
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem; flex-wrap: wrap;
+}
+.cal-chars-hint { font-size: 11px; color: var(--t3); }
+.cal-chars-hint span { color: var(--t2); font-weight: 600; }
+.btn-cal-continue {
+  background: var(--blue); color: #fff;
+  border: none; border-radius: var(--rsm);
+  padding: .75rem 1.75rem; font-family: inherit;
+  font-size: 14px; font-weight: 700; cursor: pointer;
+  transition: transform .15s, background .15s;
+  display: flex; align-items: center; gap: .5rem;
+}
+.btn-cal-continue:hover { background: #1a5eff; transform: translateY(-1px); }
+
+/* ══════════════════════════════════════════
+   PANTALLA 2 — CARTA DE INTENCIÓN (solo SC)
+   ══════════════════════════════════════════ */
+.screen-carta {
+  align-items: center; justify-content: center;
+  padding: 2rem 1.5rem;
+}
+.carta-inner {
+  position: relative; z-index: 1;
+  max-width: 580px; width: 100%;
+}
+.carta-eyebrow {
+  font-size: 10px; font-weight: 700; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 1.25rem;
+}
+.carta-title {
+  font-size: clamp(32px, 6vw, 48px); font-weight: 900;
+  letter-spacing: -.04em; line-height: 1; color: var(--t1);
+  margin-bottom: .75rem;
+}
+.carta-sub {
+  font-size: 15px; color: var(--t2); line-height: 1.7;
+  white-space: pre-line; margin-bottom: 1.75rem;
+}
+.carta-textarea {
+  width: 100%; min-height: 180px;
+  background: var(--panel); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 1.25rem 1.35rem;
+  font-family: inherit; font-size: 15px; color: var(--t1);
+  line-height: 1.7; resize: none; outline: none;
+  transition: border-color .2s;
+}
+.carta-textarea::placeholder { color: var(--t3); font-size: 14px; line-height: 1.65; }
+.carta-textarea:focus { border-color: var(--bmd); }
+.carta-meta {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-top: .65rem; margin-bottom: 1.5rem;
+}
+.carta-hint { font-size: 11px; color: var(--t3); }
+.carta-count { font-size: 11px; font-family: 'Courier New', monospace; }
+.carta-count.ok { color: var(--green); }
+.carta-count.low { color: var(--t3); }
+.btn-carta-cta {
+  width: 100%; padding: .9rem; border-radius: var(--rsm);
+  background: var(--blue); color: #fff;
+  border: none; font-family: inherit; font-size: 15px; font-weight: 700;
+  cursor: pointer; transition: background .15s, transform .15s;
+}
+.btn-carta-cta:hover { background: #1a5eff; transform: translateY(-1px); }
+.btn-carta-cta:disabled { opacity: .45; cursor: not-allowed; transform: none; }
+
+/* ══════════════════════════════════════════
+   PANTALLA FINAL
+   ══════════════════════════════════════════ */
+.screen-final {
+  align-items: center; justify-content: center;
+  text-align: center; padding: 2rem 1.5rem;
+}
+.final-inner {
+  position: relative; z-index: 1; max-width: 520px; width: 100%;
+}
+.final-check {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: rgba(143,240,181,.08); border: 1px solid rgba(143,240,181,.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; margin: 0 auto 1.75rem;
+  animation: scaleIn .5s cubic-bezier(.34,1.56,.64,1) forwards;
+}
+@keyframes scaleIn {
+  from { transform: scale(0); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.final-eyebrow {
+  font-size: 10px; font-weight: 700; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 1rem;
+}
+.final-title {
+  font-size: clamp(34px, 7vw, 52px); font-weight: 900;
+  letter-spacing: -.04em; line-height: 1.0;
+  white-space: pre-line; color: var(--t1); margin-bottom: 1rem;
+}
+.final-sub {
+  font-size: 14px; color: var(--t2); line-height: 1.7; margin-bottom: 2rem;
+}
+.final-items {
+  text-align: left; margin-bottom: 2rem;
+  background: var(--panel); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 1.25rem 1.35rem;
+  display: flex; flex-direction: column; gap: .75rem;
+}
+.final-item { font-size: 13px; color: var(--t2); line-height: 1.5; }
+.final-actions { display: flex; flex-direction: column; gap: .65rem; }
+.btn-final-primary {
+  width: 100%; padding: .85rem; border-radius: var(--rsm);
+  background: var(--blue); color: #fff; border: none;
+  font-family: inherit; font-size: 14px; font-weight: 700;
+  cursor: pointer; transition: background .15s;
+  display: flex; align-items: center; justify-content: center; gap: .5rem;
+}
+.btn-final-primary:hover { background: #1a5eff; }
+.btn-final-ghost {
+  width: 100%; padding: .75rem; border-radius: var(--rsm);
+  background: transparent; color: var(--t2);
+  border: 1px solid var(--border);
+  font-family: inherit; font-size: 13px; font-weight: 600;
+  cursor: pointer; transition: all .15s;
+  display: flex; align-items: center; justify-content: center; gap: .5rem;
+}
+.btn-final-ghost:hover { border-color: var(--bmd); color: var(--t1); }
+
+/* ── ANIMACIONES COMPARTIDAS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width: 480px) {
+  .welcome-sub { font-size: 14px; }
+  .btn-welcome { padding: .9rem 1.75rem; font-size: 15px; }
+  .cal-q-text { font-size: 16px; }
+  .cal-body { padding: 1.5rem 1rem 4rem; }
+  .carta-textarea { min-height: 160px; }
+}
+
+/* ── FIX: un solo mensaje de seguridad ── */
+/* Eliminar el banner redundante cuando ya existe la screen */
+.screen-active .security-banner { display: none; }
+
+</style>
+</head>
+<body>
+
+<div class="screen screen-welcome" data-screen="welcome">
+  <div class="ambient-canvas"><div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div></div>
+  <div class="screen-grid"></div><div class="scan-line"></div>
+  <div class="welcome-inner">
+    <div class="welcome-eyebrow">Núcleo Soul™ · Soul Origen™ · Ciclo 2026</div>
+    <div class="welcome-headline">
+      <span class="welcome-line">Esto no es un trabajo.</span>
+      <span class="welcome-line">Es el lugar desde donde</span>
+      <span class="welcome-line">construyes lo que importa.</span>
+    </div>
+    <p class="welcome-sub">Bienvenido/a al equipo fundador de Soul Lens Studios.
+Este proceso configura tu identidad dentro del ecosistema.</p>
+    <div class="welcome-cta-wrap">
+      <button class="btn-welcome" onclick="welcomeContinue()">Comenzar <span class="arrow">→</span></button>
+      <button class="btn-skip" onclick="welcomeSkip()">Ir directo al registro</button>
+    </div>
+  </div>
+</div>
+
+<div class="screen screen-cal" data-screen="cal">
+  <div class="ambient-canvas"><div class="orb orb-1"></div><div class="orb orb-2"></div></div>
+  <div class="cal-header">
+    <div class="cal-brand"><div class="cal-brand-mark" style="background:#0E8060">NS</div><div class="cal-brand-name">Núcleo Soul™</div></div>
+    <div class="cal-progress-pill" id="cal-progress-pill">0 / 5 respondidas</div>
+  </div>
+  <div class="cal-body">
+    <div class="cal-intro">
+      <div class="cal-eyebrow-txt">Antes de empezar</div>
+      <div class="cal-title-txt">Cinco preguntas.
+Solo para el equipo.</div>
+      <div class="cal-sub-txt">Respuestas internas. Solo las leen Ed y Val.
+No hay respuesta correcta — solo la honesta.</div>
+    </div>
+    <div class="cal-questions">      <div class="cal-q-card" id="cal-card-0">
+        <div class="cal-q-num">01</div>
+        <div class="cal-q-text">¿En qué área de Soul Lens Studios quieres tener el mayor impacto en los próximos 12 meses?</div>
+        <div class="cal-q-sub">Producción, diseño, estrategia, comunidad, tecnología — o algo que aún no existe.</div>
+        <textarea class="cal-q-textarea" id="cal-q-0" placeholder="Sé específico/a. Esto nos ayuda a asignarte los proyectos correctos." rows="4" oninput="onCalInput(0,this)"></textarea>
+        <div class="cal-q-filled">✓</div>
+      </div>
+      <div class="cal-q-card" id="cal-card-1">
+        <div class="cal-q-num">02</div>
+        <div class="cal-q-text">¿Qué habilidad quieres dominar este año que hoy solo practicas?</div>
+        <div class="cal-q-sub">La que, si la dominaras, cambiaría todo lo que produces.</div>
+        <textarea class="cal-q-textarea" id="cal-q-1" placeholder="Ej: Motion graphics. Copywriting. Dirección de arte. Ventas consultivas…" rows="4" oninput="onCalInput(1,this)"></textarea>
+        <div class="cal-q-filled">✓</div>
+      </div>
+      <div class="cal-q-card" id="cal-card-2">
+        <div class="cal-q-num">03</div>
+        <div class="cal-q-text">¿Cuál es la forma en que trabajas que más orgullo te da? ¿Y cuál la que más quieres cambiar?</div>
+        <div class="cal-q-sub">Honestidad radical. Es lo que construye equipos que duran.</div>
+        <textarea class="cal-q-textarea" id="cal-q-2" placeholder="Lo que haces bien y lo que sabes que debes mejorar…" rows="4" oninput="onCalInput(2,this)"></textarea>
+        <div class="cal-q-filled">✓</div>
+      </div>
+      <div class="cal-q-card" id="cal-card-3">
+        <div class="cal-q-num">04</div>
+        <div class="cal-q-text">¿Qué tipo de proyecto te haría levantarte antes del despertador?</div>
+        <div class="cal-q-sub">Describe el trabajo que te hace perder la noción del tiempo.</div>
+        <textarea class="cal-q-textarea" id="cal-q-3" placeholder="Ej: Un documental de marca. Una campaña desde cero. Un producto digital propio…" rows="4" oninput="onCalInput(3,this)"></textarea>
+        <div class="cal-q-filled">✓</div>
+      </div>
+      <div class="cal-q-card" id="cal-card-4">
+        <div class="cal-q-num">05</div>
+        <div class="cal-q-text">¿Qué necesitas de Soul Lens Studios para dar lo mejor de ti?</div>
+        <div class="cal-q-sub">Esto va directo a Ed y Val. Habla sin filtro.</div>
+        <textarea class="cal-q-textarea" id="cal-q-4" placeholder="Ej: Más autonomía en mis proyectos. Retroalimentación constante. Acceso a ciertos recursos…" rows="4" oninput="onCalInput(4,this)"></textarea>
+        <div class="cal-q-filled">✓</div>
+      </div></div>
+  </div>
+  <div class="cal-footer">
+    <div class="cal-chars-hint">No hay respuesta incorrecta — <span>solo la honesta</span></div>
+    <button class="btn-cal-continue" onclick="calContinue()">Continuar al registro → <span>→</span></button>
+  </div>
+</div>
+
+<div class="screen screen-final" data-screen="final">
+  <div class="ambient-canvas"><div class="orb orb-1"></div><div class="orb orb-2"></div></div>
+  <div class="screen-grid"></div>
+  <div class="final-inner">
+    <div class="final-check">✦</div>
+    <div class="final-eyebrow">Soul Origen™ · Núcleo Soul™ · Ciclo 2026</div>
+    <div class="final-title">Tu perfil está
+configurado.</div>
+    <p class="final-sub">Tu Smart Pass Soul Origen™ está listo. Compártelo con Ed o Val para su activación y publicación oficial.</p>
+    <div class="final-items">
+      <div class="final-item">✦  Descarga tu Smart Pass HTML — listo para publicarse</div>
+      <div class="final-item">✦  Guarda tu JSON — es tu expediente en el sistema</div>
+      <div class="final-item">✦  Confirma con Ed o Val para entrar al canal interno del equipo</div>
+    </div>
+    <div class="final-actions">
+      <button class="btn-final-primary" id="final-btn-html" onclick="downloadFinalHTML()">⬇ Descargar Smart Pass HTML</button>
+      <button class="btn-final-ghost" id="final-btn-json" onclick="downloadFinalJSON()">⬇ Descargar JSON</button>
+      <button class="btn-final-ghost" onclick="downloadFinalDeploy()">📋 Instrucciones de activación</button>
+    </div>
+  </div>
+</div>
+
+
+<div class="screen app" data-screen="form">
+
+<!-- ── SIDEBAR ── -->
+<aside class="sidebar">
+  <div>
+    <div class="brand">
+      <div class="brand-mark" style="background:#0E8060">NS</div>
+      <div><div class="brand-name">Núcleo Soul™</div><div class="brand-sub">SOUL ORIGEN™ · 2026</div></div>
+    </div>
+    <div style="margin-bottom:1.25rem;background:rgba(14,128,96,0.14);border:1px solid #0E806050;border-radius:10px;padding:.75rem 1rem;display:flex;align-items:center;gap:10px">
+      <div style="width:8px;height:8px;border-radius:50%;background:#0E8060;flex-shrink:0"></div>
+      <div><div style="font-size:13px;font-weight:700;color:var(--t1)">Núcleo Soul™</div><div style="font-size:11px;color:var(--t3);margin-top:1px">Soul Origen™</div></div>
+    </div>
+    <div>
+      <div class="nav-label">Bloques</div>
+      <nav class="steps" id="steps-nav">
+        <div class="step active" onclick="goTo(0)"><div class="step-num">1</div><div class="step-label">Tu identidad interna</div></div>
+        <div class="step" onclick="goTo(1)"><div class="step-num">2</div><div class="step-label">Contacto y emergencias</div></div>
+        <div class="step" onclick="goTo(2)"><div class="step-num">3</div><div class="step-label">Tu rol en el equipo</div></div>
+        <div class="step" onclick="goTo(3)"><div class="step-num">4</div><div class="step-label">Tu voz, tu historia</div></div>
+        <div class="step" onclick="goTo(4)"><div class="step-num">5</div><div class="step-label">Hobbies</div></div>
+        <div class="step" onclick="goTo(5)"><div class="step-num">6</div><div class="step-label">Familia y mascotas</div></div>
+        <div class="step" onclick="goTo(6)"><div class="step-num">7</div><div class="step-label">Redes sociales</div></div>
+        <div class="step" onclick="goTo(7)"><div class="step-num">8</div><div class="step-label">Fotografías</div></div>
+        <div class="step" onclick="goTo(8)"><div class="step-num">9</div><div class="step-label">Tu kit y tu visión</div></div>
+      </nav>
+    </div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-fill" style="width:11%"></div></div>
+    <div class="progress-text"><span id="progress-label">Bloque 1 de 9</span><span id="progress-pct">11%</span></div>
+  </div>
+</aside>
+
+<!-- ── MAIN ── -->
+<main class="main">
+
+  <!-- Security banner -->
+  <div class="security-banner">
+    <div class="security-icon">🔒</div>
+    <div class="security-text">
+      🔒 Formulario exclusivo del equipo de Soul Lens Studios. Cifrado SSL de 256 bits. Solo acceden Ed Zam y Val Mosquera.
+      <div class="security-tags">
+        <span class="security-tag">SSL 256-bit</span>
+        <span class="security-tag">Datos cifrados</span>
+        <span class="security-tag">Solo admin ve info privada</span>
+        <span class="security-tag">Sin terceros</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════ -->
+  <!-- BLOQUE 1 — IDENTIDAD PERSONAL  -->
+  <!-- ═══════════════════════════════ -->
+  <section class="section active" id="sec-0">
+    <div class="section-head">
+      <div class="section-eyebrow">Bloque 1 de 9</div>
+      <h1 class="section-title">Tu identidad interna</h1>
+      <p class="section-sub">Tu nombre y ciudad aparecerán en tu Smart Pass oficial como miembro del Núcleo Soul™.</p>
+    </div>
+
+    <div class="fields-grid cols-2">
+      <div class="field-group" style="grid-column:1/-1">
+        <label class="field-label" for="nombre_completo">Nombre completo <span class="req">*</span> <span class="tag-pass field-tag">Smart Pass</span></label>
+        <input type="text" id="nombre_completo" placeholder="Ej: Anais Hidalgo" oninput="syncNombre();autoSlug()" required>
+        <div class="slug-preview" id="slug-preview">URL: circle.soullensstudios.live/embajador/<span id="slug-val">—</span></div>
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="nombre_first">Primer nombre <span class="req">*</span></label>
+        <input type="text" id="nombre_first" placeholder="Anais">
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="nombre_last">Apellido <span class="req">*</span></label>
+        <input type="text" id="nombre_last" placeholder="Hidalgo">
+      </div>
+    </div>
+
+    <div class="fields-grid cols-2">
+      <div class="field-group">
+        <label class="field-label" for="fecha_nacimiento">Fecha de nacimiento <span class="req">*</span></label>
+        <input type="date" id="fecha_nacimiento">
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="genero">Género <span class="req">*</span></label>
+        <select id="genero">
+          <option value="">Seleccionar…</option>
+          <option>Mujer</option>
+          <option>Hombre</option>
+          <option>No binario</option>
+          <option>Prefiero no decir</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="nacionalidad">Nacionalidad <span class="req">*</span> <span class="tag-pass field-tag">Smart Pass</span></label>
+        <input type="text" id="nacionalidad" placeholder="Ej: Mexicana">
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="ciudad_estado">Ciudad y estado <span class="req">*</span> <span class="tag-pass field-tag">Smart Pass</span></label>
+        <input type="text" id="ciudad_estado" placeholder="Ej: Mérida, Yucatán">
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="idiomas">Idiomas que habla</label>
+        <input type="text" id="idiomas" placeholder="Ej: Español, Inglés">
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="pronombres">Pronombres <span class="opt">(opcional)</span></label>
+        <select id="pronombres">
+          <option value="">Seleccionar…</option>
+          <option>Ella/Her</option>
+          <option>Él/Him</option>
+          <option>Elle/They</option>
+          <option>Prefiero no decir</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- PRIVADO -->
+    <div class="private-section">
+      <div class="private-header" onclick="togglePrivate('priv-1')">
+        <span class="private-lock">🔐</span>
+        <div>
+          <div class="private-title">Datos privados — solo admin</div>
+          <div class="private-sub">Cifrados · No aparecen en el Smart Pass · Solo acceso interno</div>
+        </div>
+        <span class="private-toggle" id="priv-1-toggle">Ver ▼</span>
+      </div>
+      <div class="private-body" id="priv-1">
+        <div class="private-notice">🔒 Esta información está cifrada y solo es visible para el equipo administrativo de Soul Lens Studios. Nunca aparece en tu Smart Pass público.</div>
+        <div class="fields-grid cols-2">
+          <div class="field-group">
+            <label class="field-label" for="tipo_sangre">Tipo de sangre <span class="tag-priv field-tag">Privado</span></label>
+            <select id="tipo_sangre">
+              <option value="">Seleccionar…</option>
+              <option>A+</option><option>A-</option>
+              <option>B+</option><option>B-</option>
+              <option>O+</option><option>O-</option>
+              <option>AB+</option><option>AB-</option>
+              <option>No sé</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="curp">CURP / ID nacional <span class="tag-priv field-tag">Privado</span></label>
+            <input type="text" id="curp" placeholder="CURP o número de ID">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="nextSection(0)">Continuar →</button>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════ -->
+  <!-- BLOQUE 2 — CONTACTO Y EMERGENCIAS  -->
+  <!-- ═══════════════════════════════════ -->
+  <section class="section" id="sec-1">
+    <div class="section-head">
+      <div class="section-eyebrow">Bloque 2 de 9</div>
+      <h1 class="section-title">Contacto y emergencias</h1>
+      <p class="section-sub">Tu número de WhatsApp irá en tu Smart Pass. Los datos de emergencia son estrictamente privados y solo los verá el equipo de Soul Lens en caso necesario.</p>
+    </div>
+
+    <div class="fields-grid cols-2">
+      <div class="field-group">
+        <label class="field-label" for="wa_number">WhatsApp <span class="req">*</span> <span class="tag-pass field-tag">Smart Pass</span></label>
+        <input type="tel" id="wa_number" placeholder="5219991234567" oninput="cleanPhone(this)">
+        <div class="field-hint">Solo números, sin + ni espacios. Incluye lada del país.</div>
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="email_personal">Email personal <span class="req">*</span></label>
+        <input type="email" id="email_personal" placeholder="nombre@email.com">
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="private-section">
+      <div class="private-header" onclick="togglePrivate('priv-2')">
+        <span class="private-lock">🔐</span>
+        <div>
+          <div class="private-title">Contacto de emergencia — solo admin</div>
+          <div class="private-sub">Solo se usa en situaciones de urgencia durante eventos Soul Circle™</div>
+        </div>
+        <span class="private-toggle" id="priv-2-toggle">Ver ▼</span>
+      </div>
+      <div class="private-body" id="priv-2">
+        <div class="private-notice">🔒 Cifrado. Solo acceso administrativo.</div>
+        <div class="fields-grid cols-2">
+          <div class="field-group">
+            <label class="field-label" for="emg_nombre">Nombre del contacto <span class="tag-priv field-tag">Privado</span></label>
+            <input type="text" id="emg_nombre" placeholder="Nombre completo">
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="emg_relacion">Relación <span class="tag-priv field-tag">Privado</span></label>
+            <input type="text" id="emg_relacion" placeholder="Mamá / Papá / Pareja…">
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="emg_telefono">Teléfono <span class="tag-priv field-tag">Privado</span></label>
+            <input type="tel" id="emg_telefono" placeholder="Número con lada">
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="condicion_medica">Condición médica relevante <span class="opt">(opcional)</span> <span class="tag-priv field-tag">Privado</span></label>
+            <input type="text" id="condicion_medica" placeholder="Diabetes, epilepsia…">
+          </div>
+          <div class="field-group" style="grid-column:1/-1">
+            <label class="field-label" for="alergias">Alergias conocidas <span class="opt">(opcional)</span> <span class="tag-priv field-tag">Privado</span></label>
+            <input type="text" id="alergias" placeholder="Penicilina, nueces, látex…">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="prevSection(1)">← Atrás</button>
+      <button class="btn btn-primary" onclick="nextSection(1)">Continuar →</button>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════ -->
+  <!-- BLOQUE 3 — ROL EN EL ECOSISTEMA   -->
+  <!-- ══════════════════════════════════ -->
+  <section class="section" id="sec-2">
+    <div class="section-head">
+      <div class="section-eyebrow">Bloque 3 de 9</div>
+      <h1 class="section-title">Tu rol en el ecosistema</h1>
+      <p class="section-sub">Define cómo te presentas al mundo. Algunos campos se generan automáticamente según tu programa.</p>
+    </div>
+
+    <div class="fields-grid">
+      <div class="field-group">
+        <label class="field-label">Programa <span class="tag-pass field-tag">Smart Pass</span></label>
+        <div class="auto-field"><span class="auto-badge">Auto</span><span id="prog-display">Soul Circle™ · Arquitecto/a Fundador/a</span></div>
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="titulo_hero">Título hero <span class="req">*</span> <span class="tag-pass field-tag">Smart Pass</span></label>
+        <input type="text" id="titulo_hero" placeholder="Ej: Coach de Negocios · Embajadora de Expansión">
+        <div class="field-hint">Aparece debajo de tu nombre en el hero. Máx. 60 caracteres.</div>
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="rol_corto">Rol corto <span class="req">*</span> <span class="tag-pass field-tag">Smart Pass</span></label>
+        <input type="text" id="rol_corto" placeholder="Ej: Coach de Negocios">
+        <div class="field-hint">Solo tu profesión o especialidad, sin mencionar Soul Lens.</div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Rol credencial <span class="tag-pass field-tag">Smart Pass</span></label>
+        <div class="auto-field"><span class="auto-badge">Auto</span><span id="rol-cred-display">Embajador/a de Expansión · AI Soul Lens Studios</span></div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Band label <span class="tag-pass field-tag">Smart Pass</span></label>
+        <div class="auto-field"><span class="auto-badge">Auto</span><span id="band-display">Arquitecto/a Fundador/a</span></div>
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="fecha_ingreso">Fecha de ingreso</label>
+        <input type="date" id="fecha_ingreso">
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="prevSection(2)">← Atrás</button>
+      <button class="btn btn-primary" onclick="nextSection(2)">Continuar →</button>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════ -->
+  <!-- BLOQUE 4 — BIO Y QUOTE         -->
+  <!-- ══════════════════════════════ -->
+  <section class="section" id="sec-3">
+    <div class="section-head">
+      <div class="section-eyebrow">Bloque 4 de 9</div>
+      <h1 class="section-title">Bio, quote y mercados</h1>
+      <p class="section-sub">Tu historia en tus propias palabras. Esto es lo que la gente leerá en tu Smart Pass.</p>
+    </div>
+
+    <div class="fields-grid">
+      <div class="field-group">
+        <label class="field-label" for="bio_html">Bio personal <span class="req">*</span> <span class="tag-pass field-tag">Smart Pass</span></label>
+        <div class="char-wrap">
+          <textarea id="bio_html" placeholder="Escribe en primera persona. 2-4 oraciones que cuenten quién eres, de dónde vienes y qué haces en Soul Circle™." maxlength="400" oninput="charCount(this,'bio-count',400)"></textarea>
+          <span class="char-count" id="bio-count">0/400</span>
+        </div>
+        <div class="field-hint">Puedes usar &lt;strong&gt;texto en negritas&lt;/strong&gt; para énfasis.</div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label" for="quote">Tu quote personal <span class="req">*</span> <span class="tag-pass field-tag">Smart Pass</span></label>
+        <input type="text" id="quote" placeholder="Ej: El negocio que no se posiciona, no existe." oninput="updateQuotePreview('quote-prev1',this.value,'quote_autor','')">
+        <div class="field-hint">Tu voz, tu filosofía. Sin comillas externas.</div>
+        <div class="quote-preview" id="quote-prev1"></div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label" for="frase_favorita">Frase favorita <span class="opt">(de otro autor)</span> <span class="tag-pass field-tag">Smart Pass</span></label>
+        <input type="text" id="frase_favorita" placeholder="Ej: El único límite de tus mañanas será tus dudas de hoy." oninput="updateQuotePreview('quote-prev2',this.value,document.getElementById('frase_autor').value,'frase_autor')">
+        <div class="field-hint">La frase que más te inspira, de alguien que admires.</div>
+        <input type="text" id="frase_autor" placeholder="— Steve Jobs, Bill Gates, Maya Angelou…" style="margin-top:6px" oninput="updateQuotePreview('quote-prev2',document.getElementById('frase_favorita').value,this.value,'frase_autor')">
+        <div class="quote-preview" id="quote-prev2"></div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Mercados que atiendes <span class="req">*</span> <span class="tag-pass field-tag">Smart Pass</span></label>
+        <div class="field-hint" style="margin-bottom:.5rem">Elige mínimo 4, máximo 8.</div>
+        <div class="pill-grid" id="mercados-pills">
+          <!-- generadas por JS -->
+        </div>
+        <div class="pill-count" id="mercados-count">0 seleccionados (mínimo 4)</div>
+        <div class="mercados-custom">
+          <input type="text" id="mercado-custom" placeholder="Agregar otro mercado…">
+          <button class="btn btn-ghost btn-sm" onclick="addMercadoCustom()">+ Añadir</button>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label" for="meta_description">Meta description <span class="tag-pass field-tag">Smart Pass</span></label>
+        <div class="char-wrap">
+          <textarea id="meta_description" style="min-height:64px" placeholder="Descripción para Google y WhatsApp. Ej: Ana conecta marcas de Mérida con el estudio más completo de Yucatán." maxlength="155" oninput="charCount(this,'meta-count',155)"></textarea>
+          <span class="char-count" id="meta-count">0/155</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="prevSection(3)">← Atrás</button>
+      <button class="btn btn-primary" onclick="nextSection(3)">Continuar →</button>
+    </div>
+  </section>
+
+  <!-- ══════════════════════ -->
+  <!-- BLOQUE 5 — HOBBIES    -->
+  <!-- ══════════════════════ -->
+  <section class="section" id="sec-4">
+    <div class="section-head">
+      <div class="section-eyebrow">Bloque 5 de 9</div>
+      <h1 class="section-title">Hobbies y personalidad</h1>
+      <p class="section-sub">Lo que te hace humano. Estos 5 hobbies aparecen en tu Smart Pass y conectan con el cliente antes de que diga una palabra.</p>
+    </div>
+
+    <div class="fields-grid" id="hobbies-wrap">
+      <!-- generadas por JS -->
+    </div>
+
+    <hr class="divider">
+
+    <div class="fields-grid cols-2">
+      <div class="field-group">
+        <label class="field-label" for="deporte">Deporte que practicas <span class="opt">(opcional)</span> <span class="tag-future field-tag">Futuro</span></label>
+        <input type="text" id="deporte" placeholder="Ej: CrossFit, natación, futbol">
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="musica_favorita">Música favorita <span class="opt">(opcional)</span> <span class="tag-future field-tag">Futuro</span></label>
+        <input type="text" id="musica_favorita" placeholder="Ej: Reggaetón, jazz, banda">
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="comida_favorita">Comida favorita <span class="opt">(opcional)</span> <span class="tag-future field-tag">Futuro</span></label>
+        <input type="text" id="comida_favorita" placeholder="Ej: Tacos de cochinita, sushi">
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="prevSection(4)">← Atrás</button>
+      <button class="btn btn-primary" onclick="nextSection(4)">Continuar →</button>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════ -->
+  <!-- BLOQUE 6 — FAMILIA        -->
+  <!-- ══════════════════════════ -->
+  <section class="section" id="sec-5">
+    <div class="section-head">
+      <div class="section-eyebrow">Bloque 6 de 9</div>
+      <h1 class="section-title">Familia y mascotas</h1>
+      <p class="section-sub">Para el directorio interno y para que te conozcamos mejor como persona.</p>
+    </div>
+
+    <div class="fields-grid cols-2">
+      <div class="field-group">
+        <label class="field-label" for="estado_civil">Estado civil <span class="tag-future field-tag">Futuro</span></label>
+        <select id="estado_civil">
+          <option value="">Seleccionar…</option>
+          <option>Soltero/a</option>
+          <option>En pareja</option>
+          <option>Casado/a</option>
+          <option>Divorciado/a</option>
+          <option>Prefiero no decir</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="num_hijos">Hijos <span class="opt">(cantidad)</span> <span class="tag-future field-tag">Futuro</span></label>
+        <input type="number" id="num_hijos" placeholder="0" min="0" max="20">
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="mascota_nombre">Mascota — nombre <span class="opt">(opcional)</span> <span class="tag-future field-tag">Futuro</span></label>
+        <input type="text" id="mascota_nombre" placeholder="Ej: Luna, Max…">
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="mascota_tipo">Mascota — tipo <span class="opt">(opcional)</span> <span class="tag-future field-tag">Futuro</span></label>
+        <input type="text" id="mascota_tipo" placeholder="Perro, gato, conejo…">
+      </div>
+      <div class="field-group" style="grid-column:1/-1">
+        <label class="field-label" for="frase_familia">Frase sobre tu familia <span class="opt">(opcional)</span> <span class="tag-future field-tag">Futuro</span></label>
+        <input type="text" id="frase_familia" placeholder="Ej: Mi familia es mi motor.">
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="prevSection(5)">← Atrás</button>
+      <button class="btn btn-primary" onclick="nextSection(5)">Continuar →</button>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════ -->
+  <!-- BLOQUE 7 — REDES          -->
+  <!-- ══════════════════════════ -->
+  <section class="section" id="sec-6">
+    <div class="section-head">
+      <div class="section-eyebrow">Bloque 7 de 9</div>
+      <h1 class="section-title">Redes sociales</h1>
+      <p class="section-sub">Tu presencia digital. Instagram aparecerá en tu Smart Pass. Las demás estarán en el directorio interno.</p>
+    </div>
+
+    <div class="fields-grid cols-2">
+      <div class="field-group">
+        <label class="field-label" for="instagram">Instagram <span class="tag-pass field-tag">Smart Pass</span></label>
+        <input type="text" id="instagram" placeholder="@tuusuario">
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="tiktok">TikTok <span class="tag-future field-tag">Futuro</span></label>
+        <input type="text" id="tiktok" placeholder="@tuusuario">
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="linkedin">LinkedIn <span class="tag-future field-tag">Futuro</span></label>
+        <input type="url" id="linkedin" placeholder="linkedin.com/in/tuusuario">
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="facebook">Facebook <span class="opt">(opcional)</span> <span class="tag-future field-tag">Futuro</span></label>
+        <input type="text" id="facebook" placeholder="facebook.com/tuusuario">
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="youtube">YouTube <span class="opt">(opcional)</span> <span class="tag-future field-tag">Futuro</span></label>
+        <input type="url" id="youtube" placeholder="youtube.com/@tucanal">
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="sitio_web">Sitio web <span class="opt">(opcional)</span> <span class="tag-future field-tag">Futuro</span></label>
+        <input type="url" id="sitio_web" placeholder="https://tusitio.com">
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="prevSection(6)">← Atrás</button>
+      <button class="btn btn-primary" onclick="nextSection(6)">Continuar →</button>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════ -->
+  <!-- BLOQUE 8 — FOTOGRAFÍAS    -->
+  <!-- ══════════════════════════ -->
+  <section class="section" id="sec-7">
+    <div class="section-head">
+      <div class="section-eyebrow">Bloque 8 de 9</div>
+      <h1 class="section-title">Tus fotografías</h1>
+      <p class="section-sub">Las fotos hacen que tu Smart Pass sea único. Sube imágenes que te representen — en el trabajo, con tu familia, en tus hobbies, en tu mundo.</p>
+    </div>
+
+    <!-- HERO -->
+    <div style="margin-bottom:1.5rem">
+      <div class="section-eyebrow" style="margin-bottom:.5rem">Foto principal (hero)</div>
+      <div class="foto-info">📐 Formato vertical · 1080×1920px mínimo · JPG o WebP · Esta foto será el fondo de tu Smart Pass</div>
+      <div class="foto-hero-slot foto-slot" id="slot-hero" onclick="triggerUpload('upload-hero')">
+        <div class="foto-slot-preview" id="prev-hero"></div>
+        <div class="foto-slot-icon">📸</div>
+        <div class="foto-slot-label">Foto hero<br>9:16 vertical</div>
+        <input type="file" id="upload-hero" accept="image/*" onchange="handleFoto(this,'slot-hero','prev-hero','fname-hero')">
+      </div>
+      <div style="font-size:11px;color:var(--t3);text-align:center;margin-top:.35rem" id="fname-hero"></div>
+    </div>
+
+    <!-- PERFIL + OG -->
+    <div class="foto-hero-wrap" style="margin-bottom:1.5rem">
+      <div>
+        <div class="section-eyebrow" style="margin-bottom:.5rem">Foto de perfil</div>
+        <div class="foto-info">📐 400×400px · Cuadrada · Aparece en avatar</div>
+        <div class="foto-perfil-slot foto-slot" id="slot-perfil" onclick="triggerUpload('upload-perfil')">
+          <div class="foto-slot-preview" id="prev-perfil"></div>
+          <div class="foto-slot-icon">🙂</div>
+          <div class="foto-slot-label">Perfil<br>1:1</div>
+          <input type="file" id="upload-perfil" accept="image/*" onchange="handleFoto(this,'slot-perfil','prev-perfil','fname-perfil')">
+        </div>
+        <div style="font-size:11px;color:var(--t3);text-align:center;margin-top:.35rem" id="fname-perfil"></div>
+      </div>
+      <div>
+        <div class="section-eyebrow" style="margin-bottom:.5rem">Imagen OG (preview WhatsApp)</div>
+        <div class="foto-info">📐 1200×630px · Esta imagen aparece cuando compartes tu pass por WhatsApp</div>
+        <div class="foto-og-slot foto-slot" id="slot-og" onclick="triggerUpload('upload-og')">
+          <div class="foto-slot-preview" id="prev-og"></div>
+          <div class="foto-slot-icon">📱</div>
+          <div class="foto-slot-label">Preview WhatsApp<br>1200×630</div>
+          <input type="file" id="upload-og" accept="image/*" onchange="handleFoto(this,'slot-og','prev-og','fname-og')">
+        </div>
+        <div style="font-size:11px;color:var(--t3);text-align:center;margin-top:.35rem" id="fname-og"></div>
+      </div>
+    </div>
+
+    <!-- GALERÍA 1-9 -->
+    <div style="margin-bottom:.5rem">
+      <div class="section-eyebrow" style="margin-bottom:.35rem">Galería (9 fotos)</div>
+      <div class="foto-info">📐 400×576px recomendado · 9:13 · Muestra tu mundo: trabajo, familia, mascotas, hobbies, viajes, lo que quieras.</div>
+    </div>
+
+    <div class="foto-grid" id="galeria-grid">
+      <!-- generadas por JS -->
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="prevSection(7)">← Atrás</button>
+      <button class="btn btn-primary" onclick="nextSection(7)">Continuar →</button>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════ -->
+  <!-- BLOQUE 9 — COMUNIDAD Y MERCH    -->
+  <!-- ════════════════════════════════ -->
+  <section class="section" id="sec-8">
+    <div class="section-head">
+      <div class="section-eyebrow">Bloque 9 de 9</div>
+      <h1 class="section-title">Comunidad y merch</h1>
+      <p class="section-sub">Últimos datos para conocerte mejor y preparar el kit de bienvenida de Soul Circle™.</p>
+    </div>
+
+    <div class="fields-grid">
+      <div class="field-group">
+        <label class="field-label" for="por_que_ns">¿Por qué entraste a Soul Circle™? <span class="tag-future field-tag">Futuro</span></label>
+        <textarea id="por_que_ns" placeholder="Cuéntanos qué te motivó a ser parte del círculo."></textarea>
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="meta_6m">Tu meta personal a 6 meses <span class="tag-future field-tag">Futuro</span></label>
+        <textarea id="meta_6m" placeholder="¿Qué quieres lograr en este ciclo fundador?"></textarea>
+      </div>
+    </div>
+
+    <div class="fields-grid cols-2">
+      <div class="field-group">
+        <label class="field-label" for="nichos_conexion">¿A quién puedes conectar? <span class="tag-future field-tag">Futuro</span></label>
+        <input type="text" id="nichos_conexion" placeholder="Ej: Restauranteros, brokers, hoteles…">
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="como_entero">¿Cómo te enteraste de Soul Circle™? <span class="tag-future field-tag">Futuro</span></label>
+        <select id="como_entero">
+          <option value="">Seleccionar…</option>
+          <option>Referido de alguien</option>
+          <option>Redes sociales</option>
+          <option>Evento presencial</option>
+          <option>Ed Zam directo</option>
+          <option>Val Mosquera directo</option>
+          <option>Otro</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="tiene_vehiculo">¿Tienes vehículo propio? <span class="tag-future field-tag">Futuro</span></label>
+        <select id="tiene_vehiculo">
+          <option value="">Seleccionar…</option>
+          <option>Sí</option>
+          <option>No</option>
+        </select>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- MERCH -->
+    <div style="margin-bottom:.65rem">
+      <div class="section-eyebrow">Kit de bienvenida · Tallas</div>
+    </div>
+    <div class="fields-grid cols-2">
+      <div class="field-group">
+        <label class="field-label" for="talla_playera">Talla de playera <span class="tag-future field-tag">Merch</span></label>
+        <select id="talla_playera">
+          <option value="">Seleccionar…</option>
+          <option>XS</option><option>S</option><option>M</option>
+          <option>L</option><option>XL</option><option>XXL</option><option>XXXL</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label class="field-label" for="talla_tenis">Talla de tenis <span class="tag-future field-tag">Merch</span></label>
+        <select id="talla_tenis">
+          <option value="">Seleccionar…</option>
+          <option>22</option><option>22.5</option><option>23</option><option>23.5</option>
+          <option>24</option><option>24.5</option><option>25</option><option>25.5</option>
+          <option>26</option><option>26.5</option><option>27</option><option>27.5</option>
+          <option>28</option><option>28.5</option><option>29</option><option>29.5</option>
+          <option>30</option><option>31</option><option>32</option>
+        </select>
+        <div class="field-hint">Talla MX en cm</div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="prevSection(8)">← Atrás</button>
+      <button class="btn btn-generate" onclick="generatePass()">
+        ✦ Generar mi Smart Pass
+      </button>
+    </div>
+  </section>
+
+  <!-- ══════════════════ -->
+  <!-- SUCCESS SCREEN    -->
+  <!-- ══════════════════ -->
+  <div class="success-screen" id="success-screen">
+    <div class="success-icon">✦</div>
+    <h2 class="success-title">¡Tu Smart Pass Soul Origen™ está listo!</h2>
+    <p class="success-sub">Descarga el HTML y el JSON. Sube la carpeta completa a <strong>soullensstudios.live/embajador/<span id="success-slug">—</span>/</strong> para que tu pass quede live.</p>
+    <div class="download-cards">
+      <div class="download-card" onclick="downloadHTML()">
+        <div class="download-card-icon">📄</div>
+        <div class="download-card-title">Smart Pass HTML</div>
+        <div class="download-card-sub">Página web completa · Subir a hosting</div>
+      </div>
+      <div class="download-card" onclick="downloadJSON()">
+        <div class="download-card-icon">📦</div>
+        <div class="download-card-title">Perfil JSON</div>
+        <div class="download-card-sub">Pegar en embajadores.json</div>
+      </div>
+      <div class="download-card" onclick="downloadInstructions()">
+        <div class="download-card-icon">📋</div>
+        <div class="download-card-title">Instrucciones de deploy</div>
+        <div class="download-card-sub">Pasos para subir al hosting</div>
+      </div>
+    </div>
+    <button class="btn btn-ghost" onclick="resetForm()">← Registrar otro embajador</button>
+  </div>
+
+</main>
+
+<!-- ══════════════════════════════════
+     PREVIEW PANEL — Live Smart Pass
+     ══════════════════════════════════ -->
+<aside class="preview-panel" id="preview-panel" aria-label="Vista previa de tu Smart Pass en tiempo real">
+  <div class="preview-header">
+    <div class="preview-title">
+      <span class="preview-live-dot"></span>
+      Vista previa en vivo
+    </div>
+    <span style="font-size:10px;color:#7A7570" id="pv-last-update"></span>
+  </div>
+
+  <div class="preview-device">
+    <div class="phone-frame">
+      <div class="phone-notch"></div>
+      <div class="phone-screen" id="phone-screen">
+
+        <!-- EMPTY STATE — mostrar hasta que haya nombre -->
+        <div class="pv-empty" id="pv-empty">
+          <div class="pv-empty-icon">✦</div>
+          <div class="pv-empty-text">Tu Smart Pass aparecerá aquí mientras llenas el formulario</div>
+        </div>
+
+        <!-- PASS CONTENT — oculto hasta que haya nombre -->
+        <div id="pv-content" style="display:none">
+
+          <!-- HERO -->
+          <div class="pv-hero" id="pv-hero">
+            <div class="pv-hero-bg" id="pv-hero-bg"></div>
+            <div class="pv-hero-overlay"></div>
+            <div class="pv-hero-content">
+              <div class="pv-eyebrow" id="pv-eyebrow">Soul Circle™ · Embajadora de Expansión</div>
+              <div class="pv-name" id="pv-name">
+                <span id="pv-nombre-first">—</span>
+                <span id="pv-nombre-last"></span>
+              </div>
+              <div class="pv-role" id="pv-role-hero">—</div>
+              <div class="pv-btn">
+                <svg width="8" height="8" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                Hablar con <span id="pv-btn-name">—</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ABOUT -->
+          <div class="pv-section" id="pv-about-section">
+            <div class="pv-section-label">Sobre <span id="pv-about-label">—</span></div>
+            <div class="pv-about-row">
+              <div class="pv-avatar" id="pv-avatar">
+                <span id="pv-initials">?</span>
+              </div>
+              <div>
+                <div class="pv-about-name" id="pv-about-name">—</div>
+                <div class="pv-about-role" id="pv-about-role">—</div>
+              </div>
+            </div>
+            <div class="pv-bio" id="pv-bio">Tu bio aparecerá aquí…</div>
+            <div class="pv-quote" id="pv-quote-block" style="display:none">
+              <span id="pv-quote-text"></span>
+            </div>
+            <div class="pv-pills" id="pv-mercados-wrap" style="display:none"></div>
+          </div>
+
+          <!-- HOBBIES -->
+          <div class="pv-section" id="pv-hobbies-section" style="display:none">
+            <div class="pv-section-label">Fuera del trabajo</div>
+            <div class="pv-hobbies" id="pv-hobbies-grid"></div>
+          </div>
+
+          <!-- CREDENCIAL -->
+          <div class="pv-section">
+            <div class="pv-section-label">Credencial oficial</div>
+            <div class="pv-credencial">
+              <div class="pv-cred-row">
+                <div class="pv-cred-av" id="pv-cred-av">
+                  <span id="pv-cred-initials">?</span>
+                </div>
+                <div>
+                  <div class="pv-cred-name" id="pv-cred-name">—</div>
+                  <div class="pv-cred-role" id="pv-cred-role">—</div>
+                  <div class="pv-cred-st" id="pv-cred-st">Soul Lens Studios</div>
+                </div>
+              </div>
+              <div class="pv-cred-band">
+                <div class="pv-band-inner" id="pv-band-label">Arquitecto/a Fundador/a</div>
+              </div>
+              <div class="pv-cred-footer">
+                <span class="pv-pass-id" id="pv-pass-id">PASS-SLS-2026-—</span>
+                <svg width="16" height="16" viewBox="0 0 28 28" fill="none" opacity=".4" aria-hidden="true"><rect x="1" y="1" width="6" height="6" rx="1" fill="#3a3830"/><rect x="3" y="3" width="2" height="2" fill="#fff"/><rect x="21" y="1" width="6" height="6" rx="1" fill="#3a3830"/><rect x="23" y="3" width="2" height="2" fill="#fff"/><rect x="1" y="21" width="6" height="6" rx="1" fill="#3a3830"/><rect x="3" y="23" width="2" height="2" fill="#fff"/><rect x="9" y="9" width="11" height="1" fill="#3a3830"/><rect x="9" y="11" width="1" height="6" fill="#3a3830"/><rect x="11" y="12" width="5" height="2" fill="#3a3830"/></svg>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /pv-content -->
+      </div><!-- /phone-screen -->
+    </div><!-- /phone-frame -->
+  </div><!-- /preview-device -->
+</aside>
+
+<!-- FAB mobile -->
+<button class="preview-fab" id="preview-fab" onclick="openPreviewSheet()" aria-label="Ver vista previa del Smart Pass">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+  Ver preview
+</button>
+
+<!-- Mobile sheet -->
+<div class="preview-sheet" id="preview-sheet" onclick="closePreviewSheet(event)">
+  <div class="preview-sheet-inner">
+    <div class="preview-sheet-handle"></div>
+    <div id="sheet-phone-wrap" style="display:flex;justify-content:center"></div>
+  </div>
+</div>
+
+
+</div>
+
+
+
+
+<!-- ══════════════════════════════════
+     PREVIEW PANEL — Live Smart Pass
+     ══════════════════════════════════ -->
+<aside class="preview-panel" id="preview-panel" aria-label="Vista previa de tu Smart Pass en tiempo real">
+  <div class="preview-header">
+    <div class="preview-title">
+      <span class="preview-live-dot"></span>
+      Vista previa en vivo
+    </div>
+    <span style="font-size:10px;color:#7A7570" id="pv-last-update"></span>
+  </div>
+
+  <div class="preview-device">
+    <div class="phone-frame">
+      <div class="phone-notch"></div>
+      <div class="phone-screen" id="phone-screen">
+
+        <!-- EMPTY STATE — mostrar hasta que haya nombre -->
+        <div class="pv-empty" id="pv-empty">
+          <div class="pv-empty-icon">✦</div>
+          <div class="pv-empty-text">Tu Smart Pass aparecerá aquí mientras llenas el formulario</div>
+        </div>
+
+        <!-- PASS CONTENT — oculto hasta que haya nombre -->
+        <div id="pv-content" style="display:none">
+
+          <!-- HERO -->
+          <div class="pv-hero" id="pv-hero">
+            <div class="pv-hero-bg" id="pv-hero-bg"></div>
+            <div class="pv-hero-overlay"></div>
+            <div class="pv-hero-content">
+              <div class="pv-eyebrow" id="pv-eyebrow">Soul Circle™ · Embajadora de Expansión</div>
+              <div class="pv-name" id="pv-name">
+                <span id="pv-nombre-first">—</span>
+                <span id="pv-nombre-last"></span>
+              </div>
+              <div class="pv-role" id="pv-role-hero">—</div>
+              <div class="pv-btn">
+                <svg width="8" height="8" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                Hablar con <span id="pv-btn-name">—</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ABOUT -->
+          <div class="pv-section" id="pv-about-section">
+            <div class="pv-section-label">Sobre <span id="pv-about-label">—</span></div>
+            <div class="pv-about-row">
+              <div class="pv-avatar" id="pv-avatar">
+                <span id="pv-initials">?</span>
+              </div>
+              <div>
+                <div class="pv-about-name" id="pv-about-name">—</div>
+                <div class="pv-about-role" id="pv-about-role">—</div>
+              </div>
+            </div>
+            <div class="pv-bio" id="pv-bio">Tu bio aparecerá aquí…</div>
+            <div class="pv-quote" id="pv-quote-block" style="display:none">
+              <span id="pv-quote-text"></span>
+            </div>
+            <div class="pv-pills" id="pv-mercados-wrap" style="display:none"></div>
+          </div>
+
+          <!-- HOBBIES -->
+          <div class="pv-section" id="pv-hobbies-section" style="display:none">
+            <div class="pv-section-label">Fuera del trabajo</div>
+            <div class="pv-hobbies" id="pv-hobbies-grid"></div>
+          </div>
+
+          <!-- CREDENCIAL -->
+          <div class="pv-section">
+            <div class="pv-section-label">Credencial oficial</div>
+            <div class="pv-credencial">
+              <div class="pv-cred-row">
+                <div class="pv-cred-av" id="pv-cred-av">
+                  <span id="pv-cred-initials">?</span>
+                </div>
+                <div>
+                  <div class="pv-cred-name" id="pv-cred-name">—</div>
+                  <div class="pv-cred-role" id="pv-cred-role">—</div>
+                  <div class="pv-cred-st" id="pv-cred-st">Soul Lens Studios</div>
+                </div>
+              </div>
+              <div class="pv-cred-band">
+                <div class="pv-band-inner" id="pv-band-label">Arquitecto/a Fundador/a</div>
+              </div>
+              <div class="pv-cred-footer">
+                <span class="pv-pass-id" id="pv-pass-id">PASS-SLS-2026-—</span>
+                <svg width="16" height="16" viewBox="0 0 28 28" fill="none" opacity=".4" aria-hidden="true"><rect x="1" y="1" width="6" height="6" rx="1" fill="#3a3830"/><rect x="3" y="3" width="2" height="2" fill="#fff"/><rect x="21" y="1" width="6" height="6" rx="1" fill="#3a3830"/><rect x="23" y="3" width="2" height="2" fill="#fff"/><rect x="1" y="21" width="6" height="6" rx="1" fill="#3a3830"/><rect x="3" y="23" width="2" height="2" fill="#fff"/><rect x="9" y="9" width="11" height="1" fill="#3a3830"/><rect x="9" y="11" width="1" height="6" fill="#3a3830"/><rect x="11" y="12" width="5" height="2" fill="#3a3830"/></svg>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /pv-content -->
+      </div><!-- /phone-screen -->
+    </div><!-- /phone-frame -->
+  </div><!-- /preview-device -->
+</aside>
+
+<!-- FAB mobile -->
+<button class="preview-fab" id="preview-fab" onclick="openPreviewSheet()" aria-label="Ver vista previa del Smart Pass">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+  Ver preview
+</button>
+
+<!-- Mobile sheet -->
+<div class="preview-sheet" id="preview-sheet" onclick="closePreviewSheet(event)">
+  <div class="preview-sheet-inner">
+    <div class="preview-sheet-handle"></div>
+    <div id="sheet-phone-wrap" style="display:flex;justify-content:center"></div>
+  </div>
+</div>
+
+
+
+
+<script>
+const PROG_LOCKED = 'NS';
+
+// ═══════════════════════════════
+// ESTADO
+// ═══════════════════════════════
+let currentSection = 0;
+const totalSections = 9;
+let programa = (typeof PROG_LOCKED !== 'undefined' && PROG_LOCKED === 'NS') ? 'int' : 'ext';
+let mercadosSeleccionados = [];
+let fotosData = {};
+let generatedHTML = '';
+let generatedJSON = {};
+
+const PROG_CONFIG = {
+  ext: {
+    display: 'Soul Circle™ · Arquitecto/a Fundador/a',
+    rol_credencial: 'Embajador/a de Expansión · AI Soul Lens Studios',
+    band_label: 'Arquitecto/a Fundador/a',
+    pass_prefix: 'PASS-SLS-2026',
+    schema_job: 'Arquitecto/a Soul Circle™ · Embajador/a de Expansión'
+  },
+  int: {
+    display: 'Núcleo Soul™ · Soul Origen™',
+    rol_credencial: 'Soul Origen™ · Núcleo Soul™',
+    band_label: 'Soul Origen™',
+    pass_prefix: 'PASS-NS-2026',
+    schema_job: 'Soul Origen™ · Núcleo Soul™'
+  }
+};
+
+const MERCADOS_BASE = [
+  'Real estate','Gastronomía','Wellness y salud','Turismo y hospedaje',
+  'Marcas personales','Servicios profesionales','Pymes en expansión',
+  'Constructoras y arquitectura','Educación','Clínicas y salud',
+  'Beach clubs y costa','Hoteles y hospedaje','Brokers inmobiliarios',
+  'Plazas y centros comerciales','E-commerce','Tecnología y SaaS'
+];
+
+// ═══════════════════════════════
+// INIT
+// ═══════════════════════════════
+
+
+// ═══════════════════════════════
+// PROGRAMA
+// ═══════════════════════════════
+function setPrograma(p) {
+  programa = p;
+  // Null-safe: el selector visual solo existe en el formulario combinado
+  const extEl = document.getElementById('prog-ext');
+  const intEl = document.getElementById('prog-int');
+  if (extEl) extEl.classList.toggle('active', p === 'ext');
+  if (intEl) intEl.classList.toggle('active', p === 'int');
+  const cfg = PROG_CONFIG[p];
+  const dispEl   = document.getElementById('prog-display');
+  const credEl   = document.getElementById('rol-cred-display');
+  const bandEl   = document.getElementById('band-display');
+  if (dispEl) dispEl.textContent = cfg.display;
+  if (credEl) credEl.textContent = cfg.rol_credencial;
+  if (bandEl) bandEl.textContent = cfg.band_label;
+}
+
+// ═══════════════════════════════
+// NAVEGACIÓN
+// ═══════════════════════════════
+function goTo(idx) {
+  document.querySelectorAll('.section').forEach((s,i) => s.classList.toggle('active', i === idx));
+  currentSection = idx;
+  updateNav();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function nextSection(current) {
+  if (current < totalSections - 1) goTo(current + 1);
+}
+
+function prevSection(current) {
+  if (current > 0) goTo(current - 1);
+}
+
+function updateNav() {
+  document.querySelectorAll('.step').forEach((s, i) => {
+    s.classList.toggle('active', i === currentSection);
+    s.classList.toggle('done', i < currentSection);
+    const num = s.querySelector('.step-num');
+    if (i < currentSection) num.innerHTML = '✓';
+    else num.textContent = i + 1;
+  });
+  const pct = Math.round(((currentSection + 1) / totalSections) * 100);
+  const pfEl = document.getElementById('progress-fill'); if (pfEl) pfEl.style.width = pct + '%';
+  document.getElementById('progress-label').textContent = 'Bloque ' + (currentSection + 1) + ' de ' + totalSections;
+  document.getElementById('progress-pct').textContent = pct + '%';
+}
+
+// ═══════════════════════════════
+// SLUG
+// ═══════════════════════════════
+function toSlug(str) {
+  return str.toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/[^a-z0-9\s-]/g,'')
+    .trim().replace(/\s+/g,'-');
+}
+
+function autoSlug() {
+  const nombre = document.getElementById('nombre_completo').value;
+  const slug = toSlug(nombre);
+  document.getElementById('slug-val').textContent = slug || '—';
+}
+
+function syncNombre() {
+  const full = document.getElementById('nombre_completo').value;
+  const parts = full.trim().split(' ');
+  if (parts.length >= 2) {
+    document.getElementById('nombre_first').value = parts[0];
+    document.getElementById('nombre_last').value = parts.slice(1).join(' ');
+  }
+}
+
+// ═══════════════════════════════
+// PHONE CLEAN
+// ═══════════════════════════════
+function cleanPhone(el) {
+  el.value = el.value.replace(/[^0-9]/g, '');
+}
+
+// ═══════════════════════════════
+// PRIVATE TOGGLE
+// ═══════════════════════════════
+function togglePrivate(id) {
+  const body = document.getElementById(id);
+  const toggle = document.getElementById(id + '-toggle');
+  const open = body.classList.toggle('open');
+  toggle.textContent = open ? 'Ocultar ▲' : 'Ver ▼';
+}
+
+// ═══════════════════════════════
+// CHAR COUNT
+// ═══════════════════════════════
+function charCount(el, counterId, max) {
+  const len = el.value.length;
+  const counter = document.getElementById(counterId);
+  counter.textContent = len + '/' + max;
+  counter.classList.toggle('warn', len > max * 0.85);
+  counter.classList.toggle('over', len >= max);
+}
+
+// ═══════════════════════════════
+// QUOTE PREVIEW
+// ═══════════════════════════════
+function updateQuotePreview(previewId, quote, autor, autorId) {
+  const el = document.getElementById(previewId);
+  if (!quote.trim()) { el.classList.remove('visible'); return; }
+  const autorVal = autorId ? document.getElementById(autorId)?.value : autor;
+  el.innerHTML = '"' + quote + '"' + (autorVal ? '<br><small style="font-size:11px;font-weight:600;color:var(--gold);font-style:normal">— ' + autorVal + '</small>' : '');
+  el.classList.add('visible');
+}
+
+// ═══════════════════════════════
+// MERCADOS PILLS
+// ═══════════════════════════════
+function buildMercadosPills() {
+  const container = document.getElementById('mercados-pills');
+  container.innerHTML = '';
+  MERCADOS_BASE.forEach(m => {
+    const pill = document.createElement('div');
+    pill.className = 'pill-opt';
+    pill.textContent = m;
+    pill.onclick = () => toggleMercado(m, pill);
+    container.appendChild(pill);
+  });
+}
+
+function toggleMercado(m, el) {
+  const idx = mercadosSeleccionados.indexOf(m);
+  if (idx === -1) {
+    if (mercadosSeleccionados.length >= 8) return;
+    mercadosSeleccionados.push(m);
+    el.classList.add('selected');
+  } else {
+    mercadosSeleccionados.splice(idx, 1);
+    el.classList.remove('selected');
+  }
+  const count = document.getElementById('mercados-count');
+  const n = mercadosSeleccionados.length;
+  count.textContent = n + ' seleccionado' + (n !== 1 ? 's' : '') + (n < 4 ? ' (mínimo 4)' : ' ✓');
+  count.style.color = n >= 4 ? 'var(--green)' : 'var(--t3)';
+}
+
+function addMercadoCustom() {
+  const input = document.getElementById('mercado-custom');
+  const val = input.value.trim();
+  if (!val || mercadosSeleccionados.includes(val) || MERCADOS_BASE.includes(val)) return;
+  MERCADOS_BASE.push(val);
+  const container = document.getElementById('mercados-pills');
+  const pill = document.createElement('div');
+  pill.className = 'pill-opt';
+  pill.textContent = val;
+  pill.onclick = () => toggleMercado(val, pill);
+  container.appendChild(pill);
+  toggleMercado(val, pill);
+  input.value = '';
+}
+
+// ═══════════════════════════════
+// HOBBIES ROWS
+// ═══════════════════════════════
+function buildHobbiesRows() {
+  const container = document.getElementById('hobbies-wrap');
+  const labels = ['Hobby 1', 'Hobby 2', 'Hobby 3', 'Hobby 4', 'Hobby 5'];
+  const hints = [
+    'Ej: Fotografía',
+    'Ej: Música latina',
+    'Ej: Libros y estrategia',
+    'Ej: Playa y mar',
+    'Ej: Networking y comunidades'
+  ];
+  const descs = [
+    'Ej: Ojo entrenado para capturar lo que otros no ven.',
+    'Ej: Venezuela en la sangre, Yucatán en el corazón.',
+    'Ej: Psicología, negocios y narrativa siempre en mano.',
+    'Ej: El Caribe me inspira. Mérida me da el escenario.',
+    'Ej: Conectar personas es mi superpoder.'
+  ];
+  labels.forEach((lbl, i) => {
+    const row = document.createElement('div');
+    row.className = 'hobby-row';
+    row.innerHTML = `
+      <div>
+        <div class="hobby-num">${lbl} <span class="tag-pass field-tag">Smart Pass</span></div>
+        <div class="field-group">
+          <label class="field-label" for="hbb_nombre_${i}" style="display:none">${lbl} nombre</label>
+          <input type="text" id="hbb_nombre_${i}" placeholder="${hints[i]}">
+        </div>
+      </div>
+      <div>
+        <div class="hobby-num" style="opacity:0">—</div>
+        <div class="field-group">
+          <label class="field-label" for="hbb_sub_${i}" style="display:none">${lbl} descripción</label>
+          <input type="text" id="hbb_sub_${i}" placeholder="${descs[i]}">
+        </div>
+      </div>
+    `;
+    container.appendChild(row);
+  });
+}
+
+// ═══════════════════════════════
+// GALERÍA GRID
+// ═══════════════════════════════
+const GAL_LABELS = [
+  'Estudio / trabajo','Hobby / deporte','Familia / mascota',
+  'Viaje / exterior','Momento especial','En acción',
+  'Lifestyle','Comunidad','Playa / naturaleza'
+];
+
+function buildGaleriaGrid() {
+  const grid = document.getElementById('galeria-grid');
+  grid.innerHTML = '';
+  for (let i = 0; i < 9; i++) {
+    const slot = document.createElement('div');
+    slot.className = 'foto-slot';
+    slot.id = 'slot-gal-' + i;
+    slot.setAttribute('onclick', `triggerUpload('upload-gal-${i}')`);
+    slot.innerHTML = `
+      <div class="foto-slot-preview" id="prev-gal-${i}"></div>
+      <div class="foto-slot-icon">📷</div>
+      <div class="foto-slot-label">${i+1}. ${GAL_LABELS[i]}</div>
+      <input type="file" id="upload-gal-${i}" accept="image/*" onchange="handleFoto(this,'slot-gal-${i}','prev-gal-${i}','fname-gal-${i}')">
+    `;
+    grid.appendChild(slot);
+  }
+}
+
+// ═══════════════════════════════
+// FOTOS HANDLER
+// ═══════════════════════════════
+function triggerUpload(inputId) {
+  document.getElementById(inputId).click();
+}
+
+function handleFoto(input, slotId, prevId, fnameId) {
+  const file = input.files[0];
+  if (!file) return;
+  const slot = document.getElementById(slotId);
+  const prev = document.getElementById(prevId);
+  const fname = document.getElementById(fnameId);
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    prev.style.backgroundImage = `url(${e.target.result})`;
+    slot.classList.add('filled');
+    fotosData[slotId] = { name: file.name, file };
+    if (fname) fname.textContent = '✓ ' + file.name;
+  };
+  reader.readAsDataURL(file);
+}
+
+// ═══════════════════════════════
+// PASS ID GENERATOR
+// ═══════════════════════════════
+function generatePassId(nombre_first, nombre_last) {
+  const n = (nombre_first || '').toUpperCase().replace(/[^A-Z]/g,'').slice(0,3).padEnd(3,'X');
+  const l = (nombre_last || '').toUpperCase().replace(/[^A-Z]/g,'').slice(0,1) || 'X';
+  return PROG_CONFIG[programa].pass_prefix + '-' + n + '-' + l;
+}
+
+// ═══════════════════════════════
+// VCF ENCODING
+// ═══════════════════════════════
+function vEncode(str) { return encodeURIComponent(str || ''); }
+
+// ═══════════════════════════════
+// GENERATE PASS
+// ═══════════════════════════════
+function generatePass() {
+  const cfg = PROG_CONFIG[programa];
+
+  // Recoger datos
+  const d = {
+    nombre_completo: v('nombre_completo'),
+    nombre_first:    v('nombre_first'),
+    nombre_last:     v('nombre_last'),
+    titulo_hero:     v('titulo_hero'),
+    rol_corto:       v('rol_corto'),
+    rol_credencial:  cfg.rol_credencial,
+    band_label:      cfg.band_label,
+    origen:          v('nacionalidad') + (v('ciudad_estado') ? ' · ' + v('ciudad_estado') : ''),
+    wa_number:       v('wa_number'),
+    bio_html:        v('bio_html'),
+    quote:           v('quote'),
+    meta_description:v('meta_description'),
+    instagram:       v('instagram'),
+    fecha_ingreso:   v('fecha_ingreso'),
+    programa:        PROG_LOCKED,
+    // privados
+    tipo_sangre:     v('tipo_sangre'),
+    curp:            v('curp'),
+    email_personal:  v('email_personal'),
+    emg_nombre:      v('emg_nombre'),
+    emg_relacion:    v('emg_relacion'),
+    emg_telefono:    v('emg_telefono'),
+    condicion_medica:v('condicion_medica'),
+    alergias:        v('alergias'),
+    // rol
+    fecha_nacimiento:v('fecha_nacimiento'),
+    genero:          v('genero'),
+    idiomas:         v('idiomas'),
+    pronombres:      v('pronombres'),
+    // bio+
+    frase_favorita:  v('frase_favorita'),
+    frase_autor:     v('frase_autor'),
+    mercados:        [...mercadosSeleccionados],
+    // hobbies
+    hobbies: Array.from({length:5},(_,i) => ({
+      nombre: v('hbb_nombre_'+i),
+      sub:    v('hbb_sub_'+i)
+    })),
+    // familia
+    estado_civil:    v('estado_civil'),
+    num_hijos:       v('num_hijos'),
+    mascota_nombre:  v('mascota_nombre'),
+    mascota_tipo:    v('mascota_tipo'),
+    frase_familia:   v('frase_familia'),
+    // redes
+    tiktok:          v('tiktok'),
+    linkedin:        v('linkedin'),
+    facebook:        v('facebook'),
+    youtube:         v('youtube'),
+    sitio_web:       v('sitio_web'),
+    // comunidad
+    por_que_ns:      v('por_que_ns'),
+    meta_6m:         v('meta_6m'),
+    nichos_conexion: v('nichos_conexion'),
+    como_entero:     v('como_entero'),
+    tiene_vehiculo:  v('tiene_vehiculo'),
+    // merch
+    talla_playera:   v('talla_playera'),
+    talla_tenis:     v('talla_tenis'),
+    deporte:         v('deporte'),
+    musica_favorita: v('musica_favorita'),
+    comida_favorita: v('comida_favorita'),
+  };
+
+  const slug = toSlug(d.nombre_completo);
+  const passId = generatePassId(d.nombre_first, d.nombre_last);
+  const fn = d.nombre_first;
+  const city = (v('ciudad_estado') || 'Mérida').split(',')[0].trim();
+  const region = (v('ciudad_estado') || '').split(',')[1]?.trim() || 'Yucatán';
+
+  // Mercados pills HTML
+  const mercadosHTML = d.mercados.map(m => `<span class="mpill">${m}</span>\n    `).join('');
+
+  // WA text encoded
+  const waHero   = encodeURIComponent('Hola, te contacto desde el Smart Pass de ' + d.nombre_completo + ' · Soul Lens Studios.');
+  const waBottom = encodeURIComponent('Hola, te contacto desde el Smart Pass de ' + d.nombre_completo + ' · Soul Lens Studios. Quisiera explorar cómo pueden ayudar a mi negocio.');
+
+  // VCF encoded
+  const vcfFN    = vEncode(d.nombre_completo + ' · Soul Lens Studios');
+  const vcfN     = vEncode(d.nombre_last + ';' + d.nombre_first + ';;;');
+  const vcfTitle = vEncode(d.titulo_hero);
+
+  // Schema
+  const schemaJobTitle = cfg.schema_job;
+
+  // CTA label
+  const ctaLabel = 'Hablar con ' + fn;
+  const ctaBottom = 'Escríbele a ' + fn + ' directo. Sin formularios, sin esperas. Una conversación honesta — y el equipo de Soul Lens Studios te dice exactamente qué necesita tu negocio para posicionarse.';
+
+  // Page title / meta
+  const pageTitle  = d.nombre_completo + ' · Smart Pass Soul Circle™ · Soul Lens Studios';
+  const metaDesc   = d.meta_description || ('¿Tu negocio necesita ser visto por quien importa? ' + d.nombre_completo + ' conecta marcas de ' + city + ' con el estudio audiovisual más completo de Yucatán. Soul Lens Studios · Soul Circle™.');
+  const metaSuffix = (d.titulo_hero || 'Soul Lens Studios') + ' — Si tu negocio necesita posicionarse, estás en el lugar correcto.';
+  const ogDesc     = metaDesc;
+  const twitterDesc= metaDesc;
+
+  // Foto filenames (based on first name lowercase)
+  const fnLow = fn.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  const fotoSlots = {
+    hero:   fnLow + '-hero.jpg',
+    perfil: fnLow + '-perfil.jpg',
+    og:     'og.jpg',
+    gal:    Array.from({length:9},(_,i) => fnLow + '-0' + (i+1) + '.jpg')
+  };
+
+  // Foto caption titles for gallery (from hobby names / generic)
+  const galTitles = GAL_LABELS;
+  const galSubs   = ['Producción SLS · ' + city, 'Networking · Yucatán', city + ' · Yucatán', 'Soul Circle™ 2026', 'Lifestyle', 'En acción', 'Lifestyle · Soul', 'Aprendizaje constante', 'Raíces'];
+
+  // Build gallery slot replacements
+  let template = getTemplate();
+  if (!template) { alert('Error: No se encontró el template. Contacta al administrador.'); return; }
+
+  // Replace all 38 template vars
+  const replacements = {
+    '{{PASS_ID}}':           passId,
+    '{{SLUG}}':              slug,
+    '{{WA_NUMBER}}':         d.wa_number,
+    '{{WA_TEXT_HERO}}':      waHero,
+    '{{WA_TEXT_BOTTOM}}':    waBottom,
+    '{{VCF_FN}}':            vcfFN,
+    '{{VCF_N}}':             vcfN,
+    '{{VCF_TITLE}}':         vcfTitle,
+    '{{SCHEMA_JOB_TITLE}}':  schemaJobTitle,
+    '{{SCHEMA_LOCALITY}}':   city,
+    '{{SCHEMA_REGION}}':     region,
+    '{{PAGE_TITLE}}':        pageTitle,
+    '{{META_TITLE_SUFFIX}}': metaSuffix,
+    '{{META_DESC}}':         metaDesc,
+    '{{OG_DESC}}':           ogDesc,
+    '{{TWITTER_DESC}}':      twitterDesc,
+    '{{NOMBRE_COMPLETO}}':   d.nombre_completo,
+    '{{NOMBRE_FIRST}}':      d.nombre_first,
+    '{{NOMBRE_LAST}}':       d.nombre_last,
+    '{{TITULO_HERO}}':       d.titulo_hero,
+    '{{ROL_CORTO}}':         d.rol_corto,
+    '{{ROL_CREDENCIAL}}':    d.rol_credencial,
+    '{{BAND_LABEL}}':        d.band_label,
+    '{{ORIGEN}}':            d.origen,
+    '{{BIO_HTML}}':          d.bio_html,
+    '{{QUOTE}}':             d.quote,
+    '{{CTA_WA_LABEL}}':      ctaLabel,
+    '{{CTA_BOTTOM_TEXT}}':   ctaBottom,
+    '{{MERCADOS_PILLS}}':    mercadosHTML,
+    '{{HBB_NOMBRE_0}}':      d.hobbies[0]?.nombre || '',
+    '{{HBB_NOMBRE_1}}':      d.hobbies[1]?.nombre || '',
+    '{{HBB_NOMBRE_2}}':      d.hobbies[2]?.nombre || '',
+    '{{HBB_NOMBRE_3}}':      d.hobbies[3]?.nombre || '',
+    '{{HBB_NOMBRE_4}}':      d.hobbies[4]?.nombre || '',
+    '{{HBB_SUB_0}}':         d.hobbies[0]?.sub || '',
+    '{{HBB_SUB_1}}':         d.hobbies[1]?.sub || '',
+    '{{HBB_SUB_2}}':         d.hobbies[2]?.sub || '',
+    '{{HBB_SUB_3}}':         d.hobbies[3]?.sub || '',
+    '{{HBB_SUB_4}}':         d.hobbies[4]?.sub || '',
+  };
+
+  Object.entries(replacements).forEach(([k, val]) => {
+    template = template.split(k).join(val || '');
+  });
+
+  // Replace gallery SLOT comments with proper img tags + captions
+  for (let i = 0; i < 9; i++) {
+    const slotNum = i + 1;
+    const fname = fotoSlots.gal[i];
+    const altTxt = d.nombre_first + ' — ' + galTitles[i];
+    template = template.replace(
+      new RegExp(`<!-- ▼ SLOT ${slotNum} — INSERTAR:.*?-->`, 'g'),
+      `<img src="${fname}" alt="${altTxt}" style="width:100%;height:100%;object-fit:cover" loading="lazy">`
+    );
+    // Update gcap-t and gcap-s for each slot
+  }
+
+  // Replace hero SVG placeholder comment
+  template = template.replace(
+    /<!-- FOTO HERO SIMULADA — reemplazar con: <img src="anais-hero\.jpg"> -->/g,
+    `<!-- FOTO HERO: <img src="${fotoSlots.hero}" style="width:100%;height:100%;object-fit:cover;object-position:top"> -->`
+  );
+
+  generatedHTML = template;
+
+  // Build JSON for embajadores.json
+  generatedJSON = {
+    slug,
+    nombre_completo: d.nombre_completo,
+    nombre_first:    d.nombre_first,
+    nombre_last:     d.nombre_last,
+    titulo_hero:     d.titulo_hero,
+    rol_corto:       d.rol_corto,
+    rol_credencial:  d.rol_credencial,
+    band_label:      d.band_label,
+    origen:          d.origen,
+    wa_number:       d.wa_number,
+    bio_html:        d.bio_html,
+    quote:           d.quote,
+    frase_favorita:  d.frase_favorita,
+    frase_autor:     d.frase_autor,
+    meta_description: metaDesc,
+    mercados:        d.mercados,
+    hobbies:         d.hobbies,
+    instagram:       d.instagram,
+    programa,
+    pass_id:         passId,
+    estado:          'activo',
+    fecha_ingreso:   d.fecha_ingreso,
+    // fotos esperadas
+    fotos: {
+      hero:   fotoSlots.hero,
+      perfil: fotoSlots.perfil,
+      og:     fotoSlots.og,
+      galeria: fotoSlots.gal
+    },
+    // datos privados (solo admin - en producción cifrar)
+    _privado: {
+      email:           d.email_personal,
+      tipo_sangre:     d.tipo_sangre,
+      curp:            d.curp,
+      emg_nombre:      d.emg_nombre,
+      emg_relacion:    d.emg_relacion,
+      emg_telefono:    d.emg_telefono,
+      condicion_medica:d.condicion_medica,
+      alergias:        d.alergias,
+    },
+    // perfil extendido
+    perfil: {
+      fecha_nacimiento: d.fecha_nacimiento,
+      genero:          d.genero,
+      idiomas:         d.idiomas,
+      pronombres:      d.pronombres,
+      estado_civil:    d.estado_civil,
+      num_hijos:       d.num_hijos,
+      mascota_nombre:  d.mascota_nombre,
+      mascota_tipo:    d.mascota_tipo,
+      frase_familia:   d.frase_familia,
+      deporte:         d.deporte,
+      musica_favorita: d.musica_favorita,
+      comida_favorita: d.comida_favorita,
+      tiktok:          d.tiktok,
+      linkedin:        d.linkedin,
+      facebook:        d.facebook,
+      youtube:         d.youtube,
+      sitio_web:       d.sitio_web,
+    },
+    comunidad: {
+      por_que_ns:      d.por_que_ns,
+      meta_6m:         d.meta_6m,
+      nichos_conexion: d.nichos_conexion,
+      como_entero:     d.como_entero,
+      tiene_vehiculo:  d.tiene_vehiculo,
+    },
+    merch: {
+      talla_playera:   d.talla_playera,
+      talla_tenis:     d.talla_tenis,
+    }
+  };
+
+  // Show success
+  document.getElementById('success-slug').textContent = slug;
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  const ssEl = document.getElementById('success-screen'); if (ssEl) ssEl.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ═══════════════════════════════
+// TEMPLATE (inline - to be replaced by loader)
+// ═══════════════════════════════
+function getTemplate() {
+  // In production: fetch('./MASTER_TEMPLATE.html')
+  // This placeholder triggers the admin to set up the template loader
+  return window._MASTER_TEMPLATE || null;
+}
+
+// ═══════════════════════════════
+// DOWNLOADS
+// ═══════════════════════════════
+function downloadHTML() {
+  if (!generatedHTML) return;
+  const slug = toSlug(v('nombre_completo'));
+  const passId = generatePassId(v('nombre_first'), v('nombre_last'));
+  const filename = 'Smart_Pass_' + slug + '_' + passId + '.html';
+  downloadFile(generatedHTML, filename, 'text/html');
+}
+
+function downloadJSON() {
+  if (!generatedJSON.slug) return;
+  const filename = 'embajador_' + generatedJSON.slug + '.json';
+  downloadFile(JSON.stringify(generatedJSON, null, 2), filename, 'application/json');
+}
+
+function downloadInstructions() {
+  const slug = toSlug(v('nombre_completo'));
+  const fn = v('nombre_first').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  const txt = `INSTRUCCIONES DE DEPLOY — Smart Pass Soul Circle™
+========================================================
+
+Embajador: ${v('nombre_completo')}
+URL final: https://soullensstudios.live/embajador/${slug}/
+
+PASO 1 — Renombrar el HTML
+  Smart_Pass_${slug}_*.html  →  index.html
+
+PASO 2 — Crear carpeta en el servidor
+  Ruta: soullensstudios.live/embajador/${slug}/
+
+PASO 3 — Subir estos archivos a esa carpeta:
+  ├── index.html               ← el HTML renombrado
+  ├── ${fn}-hero.jpg           ← foto hero (1080×1920px)
+  ├── ${fn}-perfil.jpg         ← foto perfil (400×400px)
+  ├── og.jpg                   ← preview WhatsApp (1200×630px)
+  ├── ${fn}-01.jpg             ← galería slot 1
+  ├── ${fn}-02.jpg             ← galería slot 2
+  ├── ${fn}-03.jpg             ← galería slot 3
+  ├── ${fn}-04.jpg             ← galería slot 4
+  ├── ${fn}-05.jpg             ← galería slot 5
+  ├── ${fn}-06.jpg             ← galería slot 6
+  ├── ${fn}-07.jpg             ← galería slot 7
+  ├── ${fn}-08.jpg             ← galería slot 8
+  └── ${fn}-09.jpg             ← galería slot 9
+
+PASO 4 — Verificar el pass en:
+  https://soullensstudios.live/embajador/${slug}/
+
+PASO 5 — Verificar Open Graph (preview WhatsApp):
+  https://developers.facebook.com/tools/debug/
+  URL a probar: https://soullensstudios.live/embajador/${slug}/
+
+¡Listo! El embajador puede compartir su URL.
+
+—
+Soul Circle™ · Smart Pass Generator v1.0
+Powered by Xplorers Startups · Ed Zam
+`;
+  downloadFile(txt, 'Deploy_' + slug + '.txt', 'text/plain');
+}
+
+function downloadFile(content, filename, type) {
+  const blob = new Blob([content], {type});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+// ═══════════════════════════════
+// RESET
+// ═══════════════════════════════
+function resetForm() {
+  const ss = document.getElementById('success-screen'); if (ss) ss.classList.remove('active');
+  generatedHTML = '';
+  generatedJSON = {};
+  mercadosSeleccionados = [];
+  fotosData = {};
+  goTo(0);
+}
+
+// ═══════════════════════════════
+// HELPER
+// ═══════════════════════════════
+function v(id) {
+  const el = document.getElementById(id);
+  return el ? el.value.trim() : '';
+}
+
+
+// ══ PREVIEW ENGINE ══
+
+// ══════════════════════════════════════════
+// PREVIEW ENGINE — Live Smart Pass Renderer
+// ══════════════════════════════════════════
+
+let pvDebounceTimer = null;
+let pvHeroDataUrl = null;
+let pvPerfilDataUrl = null;
+
+// Attach live listeners to all form fields
+function initPreview() {
+  const fields = [
+    'nombre_completo','nombre_first','nombre_last',
+    'titulo_hero','rol_corto',
+    'bio_html','quote',
+    'nacionalidad','ciudad_estado'
+  ];
+
+  fields.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', debouncePreview);
+  });
+
+  // Foto hero listener
+  const uploadHero = document.getElementById('upload-hero');
+  if (uploadHero) {
+    uploadHero.addEventListener('change', function() {
+      const file = this.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = e => {
+        pvHeroDataUrl = e.target.result;
+        updatePreview();
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  // Foto perfil listener
+  const uploadPerfil = document.getElementById('upload-perfil');
+  if (uploadPerfil) {
+    uploadPerfil.addEventListener('change', function() {
+      const file = this.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = e => {
+        pvPerfilDataUrl = e.target.result;
+        updatePreview();
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+}
+
+function debouncePreview() {
+  clearTimeout(pvDebounceTimer);
+  pvDebounceTimer = setTimeout(updatePreview, 220);
+}
+
+function updatePreview() {
+  const nombre = g('nombre_completo');
+  const nombreFirst = g('nombre_first') || nombre.split(' ')[0] || '';
+  const nombreLast = g('nombre_last') || nombre.split(' ').slice(1).join(' ') || '';
+  const tituloHero = g('titulo_hero');
+  const rolCorto = g('rol_corto');
+  const bio = g('bio_html');
+  const quote = g('quote');
+  const origen = [g('nacionalidad'), g('ciudad_estado')].filter(Boolean).join(' · ');
+
+  // Show/hide content
+  const hasName = nombre.length > 0;
+  document.getElementById('pv-empty').style.display = hasName ? 'none' : 'flex';
+  document.getElementById('pv-content').style.display = hasName ? 'block' : 'none';
+
+  if (!hasName) return;
+
+  // Hero
+  const cfg = PROG_CONFIG[programa];
+  pvSet('pv-nombre-first', nombreFirst);
+  pvSet('pv-nombre-last', nombreLast);
+  pvSet('pv-role-hero', tituloHero || rolCorto || '—');
+  pvSet('pv-btn-name', nombreFirst);
+  pvSet('pv-eyebrow', cfg.display.replace(' · ', ' · '));
+
+  // Hero background
+  const heroBg = document.getElementById('pv-hero-bg');
+  if (pvHeroDataUrl) {
+    heroBg.style.backgroundImage = `url(${pvHeroDataUrl})`;
+    heroBg.style.opacity = '.75';
+  } else {
+    heroBg.style.backgroundImage = '';
+    heroBg.style.opacity = '0';
+  }
+
+  // About
+  const initials = getInitials(nombre);
+  pvSet('pv-about-label', nombreFirst);
+  pvSet('pv-about-name', nombre);
+  pvSet('pv-about-role', rolCorto || '—');
+  pvSet('pv-initials', initials);
+  pvSet('pv-bio', bio || 'Tu bio aparecerá aquí…');
+
+  // Avatar photo
+  const pvAvEl = document.getElementById('pv-avatar');
+  if (pvPerfilDataUrl) {
+    pvAvEl.innerHTML = `<img src="${pvPerfilDataUrl}" alt="${nombre}">`;
+  } else {
+    pvAvEl.innerHTML = `<span id="pv-initials">${initials}</span>`;
+  }
+
+  // Quote
+  const quoteBlock = document.getElementById('pv-quote-block');
+  if (quote) {
+    document.getElementById('pv-quote-text').textContent = '"' + quote + '"';
+    quoteBlock.style.display = 'block';
+  } else {
+    quoteBlock.style.display = 'none';
+  }
+
+  // Mercados
+  const mercadosWrap = document.getElementById('pv-mercados-wrap');
+  if (mercadosSeleccionados.length > 0) {
+    mercadosWrap.style.display = 'flex';
+    mercadosWrap.innerHTML = mercadosSeleccionados
+      .slice(0, 4)
+      .map(m => `<span class="pv-pill">${m}</span>`)
+      .join('');
+    if (mercadosSeleccionados.length > 4) {
+      mercadosWrap.innerHTML += `<span class="pv-pill">+${mercadosSeleccionados.length - 4}</span>`;
+    }
+  } else {
+    mercadosWrap.style.display = 'none';
+  }
+
+  // Hobbies
+  const hobbiesData = Array.from({length:5}, (_,i) => ({
+    nombre: g('hbb_nombre_'+i),
+    sub:    g('hbb_sub_'+i)
+  })).filter(h => h.nombre);
+
+  const hobbiesSection = document.getElementById('pv-hobbies-section');
+  const hobbiesGrid = document.getElementById('pv-hobbies-grid');
+  if (hobbiesData.length > 0) {
+    hobbiesSection.style.display = 'block';
+    hobbiesGrid.innerHTML = hobbiesData.slice(0,4).map(h => `
+      <div class="pv-hbb">
+        <div class="pv-hbb-name">${h.nombre}</div>
+        <div class="pv-hbb-sub">${h.sub || ''}</div>
+      </div>
+    `).join('');
+  } else {
+    hobbiesSection.style.display = 'none';
+  }
+
+  // Credencial
+  const passId = generatePassId(nombreFirst, nombreLast);
+  pvSet('pv-cred-name', nombre);
+  pvSet('pv-cred-role', rolCorto || '—');
+  pvSet('pv-cred-st', cfg.rol_credencial);
+  pvSet('pv-band-label', cfg.band_label);
+  pvSet('pv-pass-id', passId + ' · v1.0');
+
+  // Cred avatar
+  const credAvEl = document.getElementById('pv-cred-av');
+  if (pvPerfilDataUrl) {
+    credAvEl.innerHTML = `<img src="${pvPerfilDataUrl}" alt="${nombre}">`;
+  } else {
+    credAvEl.innerHTML = `<span id="pv-cred-initials">${initials}</span>`;
+  }
+
+  // Timestamp
+  const now = new Date();
+  document.getElementById('pv-last-update').textContent =
+    now.getHours().toString().padStart(2,'0') + ':' +
+    now.getMinutes().toString().padStart(2,'0') + ':' +
+    now.getSeconds().toString().padStart(2,'0');
+
+  // Flash animation on phone
+  const ps = document.getElementById('phone-screen'); if (ps) ps.classList.remove('pv-field-updated');
+  void document.getElementById('phone-screen').offsetWidth;
+  if (ps) ps.classList.add('pv-field-updated');
+}
+
+// Helpers
+function pvSet(id, val) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = val;
+}
+
+function g(id) {
+  const el = document.getElementById(id);
+  return el ? el.value.trim() : '';
+}
+
+function getInitials(name) {
+  return name.split(' ').slice(0,2).map(w => w[0]?.toUpperCase() || '').join('') || '?';
+}
+
+// Mobile sheet
+function openPreviewSheet() {
+  const sheet = document.getElementById('preview-sheet');
+  sheet.classList.add('open');
+  // Clone phone content into sheet
+  const wrap = document.getElementById('sheet-phone-wrap');
+  const phoneSrc = document.getElementById('phone-screen');
+  wrap.innerHTML = '';
+  const clone = document.createElement('div');
+  clone.style.cssText = 'width:200px;height:400px;background:#111318;border-radius:20px;border:2px solid rgba(255,255,255,.1);overflow:hidden;';
+  clone.innerHTML = phoneSrc.innerHTML;
+  wrap.appendChild(clone);
+}
+
+function closePreviewSheet(e) {
+  if (e.target === document.getElementById('preview-sheet')) {
+    document.getElementById('preview-sheet').classList.remove('open');
+  }
+}
+
+// Re-render preview when programa changes
+const _origSetPrograma = setPrograma;
+setPrograma = function(p) {
+  _origSetPrograma(p);
+  debouncePreview();
+};
+
+// Re-render when mercados change
+const _origToggleMercado = toggleMercado;
+toggleMercado = function(m, el) {
+  _origToggleMercado(m, el);
+  debouncePreview();
+};
+
+// Init on DOM ready
+
+
+
+
+<!-- TEMPLATE LOADER — En producción, reemplazar este bloque -->
+<!-- El MASTER_TEMPLATE.html debe vivir en el mismo directorio -->
+<!-- y cargarse así: -->
+
+// ════════════════════════════════════════════════════════
+// EXPERIENCE ENGINE — Pantallas previas al formulario
+// Soul Circle™ + Núcleo Soul™ · Soul Lens Studios 2026
+// ════════════════════════════════════════════════════════
+'use strict';
+
+// Estado global de la experiencia
+const EXP = {
+  screen: 'welcome',    // welcome → cal → carta (SC only) → form → final
+  prog:   PROG_LOCKED,  // 'SC' o 'NS' — fijo desde el archivo
+  cal:    {},           // respuestas de calibración
+  carta:  '',           // carta de intención (solo SC)
+};
+
+// Mapeo de screens
+const SCREENS = {
+  SC: ['welcome','cal','carta','form'],
+  NS: ['welcome','cal','form'],
+};
+
+function goScreen(name) {
+  EXP.screen = name;
+  document.querySelectorAll('.screen').forEach(s => {
+    s.classList.toggle('active', s.dataset.screen === name);
+  });
+  window.scrollTo({ top: 0, behavior: 'instant' });
+
+  // Si entramos al form, inicializar el preview y el resto del sistema
+  if (name === 'form') {
+    document.body.classList.add('screen-active');
+    if (typeof buildMercadosPills === 'function') buildMercadosPills();
+    if (typeof buildHobbiesRows  === 'function') buildHobbiesRows();
+    if (typeof buildGaleriaGrid  === 'function') buildGaleriaGrid();
+    if (typeof initPreview       === 'function') initPreview();
+  }
+}
+
+// ── PANTALLA 0: BIENVENIDA ──────────────────────────────
+function welcomeContinue() {
+  goScreen('cal');
+  initCal();
+}
+
+function welcomeSkip() {
+  // Saltar toda la experiencia e ir directo al formulario
+  goScreen('form');
+}
+
+// ── PANTALLA 1: CALIBRACIÓN ────────────────────────────
+let calAnswered = 0;
+const CAL_TOTAL = 5;
+
+function initCal() {
+  calAnswered = 0;
+  updateCalProgress();
+}
+
+function onCalInput(idx, el) {
+  const card = el.closest('.cal-q-card');
+  const hasText = el.value.trim().length > 0;
+  card.classList.toggle('has-text', hasText);
+  EXP.cal['q' + idx] = el.value.trim();
+
+  // Contar preguntas respondidas
+  calAnswered = Object.values(EXP.cal).filter(v => v.length > 0).length;
+  updateCalProgress();
+}
+
+function updateCalProgress() {
+  const pill = document.getElementById('cal-progress-pill');
+  if (pill) {
+    pill.textContent = calAnswered + ' / ' + CAL_TOTAL + ' respondidas';
+    if (calAnswered === CAL_TOTAL) {
+      pill.style.color = 'var(--green)';
+      pill.style.borderColor = 'rgba(143,240,181,.3)';
+    }
+  }
+}
+
+function calContinue() {
+  // Guardar respuestas en estado
+  const next = EXP.prog === 'SC' ? 'carta' : 'form';
+  goScreen(next);
+  if (next === 'carta') initCarta();
+}
+
+// ── PANTALLA 2: CARTA DE INTENCIÓN (solo SC) ───────────
+function initCarta() {
+  updateCartaCount();
+}
+
+function onCartaInput(el) {
+  EXP.carta = el.value.trim();
+  updateCartaCount();
+}
+
+function updateCartaCount() {
+  const min = 150;
+  const len = EXP.carta.length;
+  const countEl = document.getElementById('carta-count');
+  const ctaEl = document.getElementById('carta-cta-btn');
+  if (countEl) {
+    countEl.textContent = len + ' / ' + min + ' mín.';
+    countEl.className = 'carta-count ' + (len >= min ? 'ok' : 'low');
+  }
+  if (ctaEl) ctaEl.disabled = len < min;
+}
+
+function cartaContinue() {
+  goScreen('form');
+}
+
+// ── PANTALLA FINAL ─────────────────────────────────────
+// Se activa desde el generatePass existente
+// Inyectar los datos de calibración en el JSON de salida
+const _origGeneratePass = typeof generatePass === 'function' ? generatePass : null;
+
+function generatePassWithExp() {
+  // Inyectar datos de experiencia antes de generar
+  if (typeof EXP !== 'undefined') {
+    // Los datos de calibración y carta se añaden al JSON
+    window._EXP_DATA = {
+      calibracion: EXP.cal,
+      carta_intencion: EXP.carta || null,
+      programa: EXP.prog,
+    };
+  }
+  if (_origGeneratePass) _origGeneratePass();
+  else if (typeof generatePass === 'function') generatePass();
+
+  // Ir a la pantalla final
+  setTimeout(() => {
+    goScreen('final');
+    animateFinal();
+  }, 300);
+}
+
+function animateFinal() {
+  const items = document.querySelectorAll('.final-item');
+  items.forEach((item, i) => {
+    item.style.opacity = '0';
+    item.style.transform = 'translateX(-8px)';
+    item.style.transition = `opacity .4s ease ${.3 + i * .12}s, transform .4s ease ${.3 + i * .12}s`;
+    requestAnimationFrame(() => {
+      item.style.opacity = '1';
+      item.style.transform = 'none';
+    });
+  });
+}
+
+// ── INIT ────────────────────────────────────────────────
+
+
+
+
+
+function downloadFinalHTML() {
+  const btn = document.getElementById('final-btn-html');
+  if (btn) { btn.textContent = '… Generando…'; btn.disabled = true; }
+  setTimeout(() => {
+    if (typeof generatePass === 'function') generatePass();
+    if (btn) btn.textContent = '⬇ Smart Pass descargado ✓';
+  }, 400);
+}
+function downloadFinalJSON() {
+  const nombre = document.getElementById('nombre_completo')?.value || 'embajador';
+  const sl = nombre.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]/g,'-');
+  const data = {};
+  ['nombre_completo','nombre_first','nombre_last','titulo_hero','rol_corto',
+   'wa_number','email_personal','instagram','ciudad_estado','bio_html','quote',
+   'talla_playera','talla_tenis'].forEach(id => {
+    const el = document.getElementById(id); if (el) data[id] = el.value;
+  });
+  data._calibracion = window._EXP_DATA?.calibracion || {};
+  if (typeof PROG_LOCKED !== 'undefined') data._programa = PROG_LOCKED;
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));
+  a.download = 'embajador_'+sl+'.json'; a.click();
+}
+function downloadFinalDeploy() {
+  if (typeof downloadInstructions === 'function') downloadInstructions();
+}
+
+
+
+/* ════════════════════════════════════════════
+   INIT — único punto de inicialización
+   ════════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', () => {
+  // 1. Activar pantalla de bienvenida
+  goScreen('welcome');
+  // 2. Colores de orbs según programa
+  const orbColor = (typeof PROG_LOCKED !== 'undefined' && PROG_LOCKED === 'NS') ? '#0E8060' : '#0653FF';
+  document.querySelectorAll('.orb').forEach(orb => {
+    orb.style.background = `radial-gradient(circle, ${orbColor}55, transparent 70%)`;
+  });
+  // 3. Inicializar preview engine (se activa cuando el form es visible)
+  if (typeof initPreview === 'function') initPreview();
+});
+
+</script>
+<script>
+(async function loadTemplate() {
+  try {
+    const r = await fetch('./Smart_Pass_MASTER_TEMPLATE.html');
+    if (r.ok) {
+      window._MASTER_TEMPLATE = await r.text();
+    } else {
+      // Template no disponible en entorno local — funcionará en producción
+    }
+  } catch(e) {
+    // Template no disponible localmente — funcionará en producción
+  }
+})();
+
+</script>
+
+</body>
+</html>

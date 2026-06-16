@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
+<title>Soul Circle™ · Schema de Datos v2.0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#040507;
+  --bg2:#0b0d14;
+  --bg3:#111520;
+  --bg4:#171c2a;
+  --line:rgba(255,255,255,.07);
+  --line2:rgba(255,255,255,.13);
+  --t1:#F5F0E8;
+  --t2:#B8B3AC;
+  --t3:#6A6560;
+  --blue:#0653FF;
+  --blue2:#3A7BFF;
+  --blue-glow:rgba(6,83,255,.18);
+  --gold:#C9A84C;
+  --gold2:#E8C96A;
+  --gold-glow:rgba(201,168,76,.15);
+  --green:#1D9E75;
+  --green2:#8FF0B5;
+  --green-glow:rgba(143,240,181,.12);
+  --purple:#534AB7;
+  --purple2:#9B8FFF;
+  --coral:#FF5252;
+  --coral2:#FF8A8A;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:var(--bg);
+  color:var(--t1);
+  max-width:430px;
+  margin:0 auto;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+  min-height:100vh;
+}
+
+/* ── AMBIENT ORBS ── */
+.orb{
+  position:fixed;
+  border-radius:50%;
+  pointer-events:none;
+  filter:blur(60px);
+  z-index:0;
+}
+.orb-1{
+  width:300px;height:300px;
+  top:-60px;right:-80px;
+  background:radial-gradient(circle,rgba(6,83,255,.22),transparent 70%);
+}
+.orb-2{
+  width:280px;height:280px;
+  top:30%;left:-100px;
+  background:radial-gradient(circle,rgba(201,168,76,.14),transparent 70%);
+}
+.orb-3{
+  width:240px;height:240px;
+  bottom:15%;right:-60px;
+  background:radial-gradient(circle,rgba(143,240,181,.1),transparent 70%);
+}
+
+/* ── SCAN LINE ── */
+.scan{
+  position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--blue),transparent);
+  opacity:0;
+  animation:scanDown 1.2s ease-out forwards;
+}
+@keyframes scanDown{
+  0%{top:0;opacity:0}
+  30%{opacity:.8}
+  70%{opacity:.4}
+  100%{top:100%;opacity:0}
+}
+
+/* ── COVER ── */
+.cover{
+  position:relative;
+  min-height:100svh;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  padding:0 0 2.5rem;
+  overflow:hidden;
+  z-index:1;
+}
+.cover-noise{
+  position:absolute;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+  opacity:.6;
+  pointer-events:none;
+}
+.cover-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+  background-size:40px 40px;
+  mask-image:linear-gradient(to bottom,transparent,rgba(0,0,0,.5) 30%,rgba(0,0,0,.5) 70%,transparent);
+  pointer-events:none;
+}
+.cover-inner{position:relative;z-index:2;padding:0 1.5rem}
+.cover-eyebrow{
+  font-size:10px;font-weight:700;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--blue2);
+  margin-bottom:1.25rem;
+  display:flex;align-items:center;gap:8px;
+}
+.cover-eyebrow::before{
+  content:'';display:block;width:24px;height:1px;
+  background:var(--blue);
+}
+.cover-title{
+  font-size:52px;font-weight:900;
+  line-height:.92;letter-spacing:-.04em;
+  color:var(--t1);margin-bottom:.25rem;
+}
+.cover-title em{
+  font-style:normal;
+  background:linear-gradient(135deg,var(--gold2),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.cover-subtitle{
+  font-size:16px;font-weight:500;
+  color:var(--t2);letter-spacing:-.01em;
+  margin-bottom:2rem;line-height:1.4;
+}
+.cover-meta{
+  display:grid;grid-template-columns:1fr 1fr;gap:8px;
+  margin-bottom:1.75rem;
+}
+.cover-meta-item{
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:.6rem .85rem;
+}
+.cover-meta-val{
+  font-size:28px;font-weight:900;
+  letter-spacing:-.04em;line-height:1;
+  margin-bottom:3px;
+}
+.cover-meta-lbl{
+  font-size:10px;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;
+  color:var(--t3);
+}
+.cover-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:2rem}
+.cover-tag{
+  font-size:10px;font-weight:700;
+  padding:4px 10px;border-radius:99px;
+  letter-spacing:.08em;text-transform:uppercase;
+}
+.tag-blue{background:rgba(6,83,255,.18);color:#7BABFF;border:1px solid rgba(6,83,255,.3)}
+.tag-gold{background:rgba(201,168,76,.14);color:var(--gold2);border:1px solid rgba(201,168,76,.25)}
+.tag-green{background:rgba(143,240,181,.1);color:var(--green2);border:1px solid rgba(143,240,181,.2)}
+.tag-coral{background:rgba(255,82,82,.12);color:var(--coral2);border:1px solid rgba(255,82,82,.22)}
+.tag-purple{background:rgba(83,74,183,.2);color:var(--purple2);border:1px solid rgba(83,74,183,.3)}
+.cover-divider{
+  width:100%;height:1px;
+  background:linear-gradient(90deg,transparent,var(--line2),transparent);
+  margin-bottom:1.5rem;
+}
+.cover-version{
+  display:flex;align-items:center;justify-content:space-between;
+}
+.cover-version-left{font-size:11px;color:var(--t3);letter-spacing:.06em}
+.cover-version-badge{
+  font-size:10px;font-weight:800;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:var(--blue2);
+  background:rgba(6,83,255,.1);
+  border:1px solid rgba(6,83,255,.25);
+  padding:4px 10px;border-radius:99px;
+}
+
+/* ── LEGEND ── */
+.legend-section{
+  position:relative;z-index:1;
+  padding:2.5rem 1.5rem;
+  border-top:1px solid var(--line);
+}
+.section-kicker{
+  font-size:10px;font-weight:700;
+  letter-spacing:.16em;text-transform:uppercase;
+  color:var(--t3);margin-bottom:.75rem;
+  display:flex;align-items:center;gap:8px;
+}
+.section-kicker::before{
+  content:'';width:16px;height:1px;background:var(--t3);
+}
+.section-title{
+  font-size:28px;font-weight:900;
+  letter-spacing:-.035em;line-height:1;
+  margin-bottom:.5rem;color:var(--t1);
+}
+.section-sub{
+  font-size:13px;color:var(--t2);
+  line-height:1.6;margin-bottom:1.5rem;
+}
+.legend-grid{display:flex;flex-direction:column;gap:8px}
+.legend-item{
+  display:flex;align-items:center;gap:12px;
+  background:var(--bg2);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:.75rem 1rem;
+}
+.legend-dot{
+  width:8px;height:8px;border-radius:50%;flex-shrink:0;
+}
+.legend-name{font-size:13px;font-weight:700;color:var(--t1);margin-bottom:2px}
+.legend-desc{font-size:11px;color:var(--t3);line-height:1.4}
+
+/* ── BLOCK SECTION ── */
+.block-section{
+  position:relative;z-index:1;
+  padding:2rem 1.5rem;
+  border-top:1px solid var(--line);
+}
+.block-header{
+  display:flex;align-items:flex-start;
+  justify-content:space-between;gap:.75rem;
+  margin-bottom:1.25rem;
+}
+.block-num{
+  font-size:10px;font-weight:800;
+  letter-spacing:.14em;text-transform:uppercase;
+  margin-bottom:.3rem;
+}
+.block-title{
+  font-size:22px;font-weight:900;
+  letter-spacing:-.03em;line-height:1;
+  color:var(--t1);
+}
+.block-count{
+  flex-shrink:0;
+  font-size:28px;font-weight:900;
+  letter-spacing:-.04em;
+  line-height:1;
+}
+.block-desc{
+  font-size:12px;color:var(--t2);
+  line-height:1.55;margin-bottom:1.25rem;
+  padding-left:.85rem;
+  border-left:2px solid var(--line2);
+}
+
+/* ── FIELD CARD ── */
+.fields-list{display:flex;flex-direction:column;gap:6px}
+.field-card{
+  background:var(--bg2);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:.65rem .85rem;
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:4px 8px;
+  align-items:start;
+  transition:border-color .15s;
+}
+.field-card:hover{border-color:var(--line2)}
+.field-card.priv{
+  background:rgba(255,82,82,.04);
+  border-color:rgba(255,82,82,.15);
+}
+.field-name{
+  font-size:13px;font-weight:700;
+  color:var(--t1);line-height:1.3;
+}
+.field-card.priv .field-name{color:var(--coral2)}
+.field-type{
+  font-size:11px;color:var(--t3);
+  margin-top:2px;
+}
+.field-hint{
+  font-size:11px;color:var(--t2);
+  line-height:1.45;
+  grid-column:1/-1;
+  margin-top:3px;
+  padding-top:5px;
+  border-top:1px solid rgba(255,255,255,.05);
+}
+.field-badge{
+  flex-shrink:0;
+  font-size:9px;font-weight:800;
+  letter-spacing:.08em;text-transform:uppercase;
+  padding:3px 8px;border-radius:99px;
+  align-self:center;white-space:nowrap;
+}
+
+/* ── FOTO SPECS ── */
+.foto-section{
+  position:relative;z-index:1;
+  padding:2rem 1.5rem;
+  border-top:1px solid var(--line);
+}
+.foto-slot-list{display:flex;flex-direction:column;gap:8px}
+.foto-slot-item{
+  background:var(--bg2);border:1px solid var(--line);
+  border-radius:12px;padding:.85rem 1rem;
+  display:grid;grid-template-columns:auto 1fr;gap:.65rem;
+  align-items:center;
+}
+.foto-slot-badge{
+  width:36px;height:36px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:900;
+  flex-shrink:0;
+}
+.foto-slot-name{font-size:13px;font-weight:700;color:var(--t1);margin-bottom:2px}
+.foto-slot-dims{font-size:11px;color:var(--t3);font-family:'Courier New',monospace}
+.foto-slot-note{
+  font-size:11px;color:var(--t2);
+  grid-column:1/-1;margin-top:4px;
+  padding-top:6px;border-top:1px solid rgba(255,255,255,.05);
+  line-height:1.4;
+}
+
+/* ── VARIABLES ── */
+.vars-section{
+  position:relative;z-index:1;
+  padding:2rem 1.5rem;
+  border-top:1px solid var(--line);
+}
+.var-list{display:flex;flex-direction:column;gap:6px}
+.var-item{
+  background:var(--bg2);border:1px solid var(--line);
+  border-radius:10px;padding:.6rem .85rem;
+  display:grid;grid-template-columns:1fr;gap:3px;
+}
+.var-name{
+  font-size:12px;font-weight:700;
+  color:var(--purple2);font-family:'Courier New',monospace;
+}
+.var-desc{font-size:11px;color:var(--t2);line-height:1.4}
+.var-val{font-size:10px;color:var(--t3);font-family:'Courier New',monospace;margin-top:1px}
+
+/* ── SECURITY ── */
+.security-section{
+  position:relative;z-index:1;
+  padding:2rem 1.5rem 3rem;
+  border-top:1px solid var(--line);
+}
+.security-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1.25rem}
+.security-card{
+  background:var(--bg2);border:1px solid var(--line);
+  border-radius:12px;padding:1rem;
+  text-align:center;
+}
+.security-val{
+  font-size:26px;font-weight:900;
+  letter-spacing:-.04em;line-height:1;
+  margin-bottom:4px;
+}
+.security-lbl{font-size:10px;color:var(--t3);letter-spacing:.06em;text-transform:uppercase}
+.alert-box{
+  border-radius:12px;padding:1rem;
+  display:flex;gap:.75rem;align-items:flex-start;
+  margin-bottom:.75rem;
+}
+.alert-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+.alert-text{font-size:12px;line-height:1.55}
+
+/* ── CONVENTIONS ── */
+.convention-section{
+  position:relative;z-index:1;
+  padding:2rem 1.5rem;
+  border-top:1px solid var(--line);
+}
+.pass-id-display{
+  background:var(--bg3);
+  border:1px solid rgba(201,168,76,.2);
+  border-radius:12px;
+  padding:1.25rem;
+  margin-bottom:1rem;
+  text-align:center;
+}
+.pass-id-code{
+  font-size:18px;font-weight:900;
+  font-family:'Courier New',monospace;
+  color:var(--gold2);
+  letter-spacing:.04em;
+  margin-bottom:.75rem;
+}
+.pass-id-parts{
+  display:flex;justify-content:center;
+  gap:4px;flex-wrap:wrap;
+}
+.pass-part{
+  font-size:9px;font-weight:700;
+  padding:3px 8px;border-radius:99px;
+  letter-spacing:.06em;text-transform:uppercase;
+}
+.examples-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.example-item{
+  background:var(--bg2);border:1px solid var(--line);
+  border-radius:10px;padding:.75rem;
+}
+.example-name{font-size:12px;font-weight:700;color:var(--t1);margin-bottom:3px}
+.example-id{font-size:11px;color:var(--blue2);font-family:'Courier New',monospace}
+
+/* ── PROGRAM TABLE ── */
+.program-table{
+  background:var(--bg2);border:1px solid var(--line);
+  border-radius:12px;overflow:hidden;
+  margin-bottom:1.25rem;
+}
+.program-row{
+  display:grid;grid-template-columns:1fr 1fr;
+  border-bottom:1px solid var(--line);
+}
+.program-row:last-child{border-bottom:none}
+.program-header .program-cell{
+  font-size:10px;font-weight:800;
+  letter-spacing:.1em;text-transform:uppercase;
+  color:var(--t3);
+}
+.program-cell{
+  padding:.7rem .9rem;
+  font-size:12px;color:var(--t2);
+  border-right:1px solid var(--line);
+  line-height:1.4;
+}
+.program-cell:last-child{border-right:none}
+.program-cell strong{color:var(--t1);font-weight:700}
+
+/* ── FOOTER ── */
+.doc-footer{
+  position:relative;z-index:1;
+  padding:1.5rem;
+  border-top:1px solid var(--line);
+  text-align:center;
+}
+.footer-brand{
+  font-size:11px;font-weight:700;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:var(--blue2);margin-bottom:.35rem;
+}
+.footer-meta{font-size:10px;color:var(--t3);line-height:1.6}
+
+/* ── REVEAL ANIMATION ── */
+.reveal{
+  opacity:0;transform:translateY(16px);
+  transition:opacity .5s ease,transform .5s ease;
+}
+.reveal.visible{opacity:1;transform:none}
+
+/* ── SECTION ACCENT LINE ── */
+.accent-line{
+  position:absolute;top:0;left:1.5rem;right:1.5rem;height:1px;
+}
+</style>
+</head>
+<body>
+
+<!-- Ambient orbs -->
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<!-- ══════════════════════════════════
+     COVER
+══════════════════════════════════ -->
+<section class="cover">
+  <div class="cover-noise"></div>
+  <div class="cover-grid"></div>
+  <div class="scan"></div>
+  <div class="cover-inner">
+    <div class="cover-eyebrow">Soul Circle™ · Soul Lens Studios</div>
+    <div class="cover-title">Schema<br>de <em>Datos</em></div>
+    <div class="cover-subtitle">Sistema de Perfil de Embajadores<br>circle.soullensstudios.live</div>
+
+    <div class="cover-meta">
+      <div class="cover-meta-item">
+        <div class="cover-meta-val" style="color:var(--blue2)">60</div>
+        <div class="cover-meta-lbl">Campos totales</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="cover-meta-val" style="color:var(--gold2)">9</div>
+        <div class="cover-meta-lbl">Bloques temáticos</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="cover-meta-val" style="color:var(--green2)">23</div>
+        <div class="cover-meta-lbl">Smart Pass activos</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="cover-meta-val" style="color:var(--purple2)">37</div>
+        <div class="cover-meta-lbl">Plataforma futura</div>
+      </div>
+    </div>
+
+    <div class="cover-tags">
+      <span class="cover-tag tag-blue">Smart Pass</span>
+      <span class="cover-tag tag-green">Ambos usos</span>
+      <span class="cover-tag tag-purple">Plataforma futura</span>
+      <span class="cover-tag tag-coral">Solo admin</span>
+    </div>
+
+    <div class="cover-divider"></div>
+    <div class="cover-version">
+      <div class="cover-version-left">
+        Arquitecto: Ed Zam · Xplorers Startups<br>
+        Mérida, Yucatán · Junio 2026
+      </div>
+      <div class="cover-version-badge">v 2.0</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     LEGEND
+══════════════════════════════════ -->
+<section class="legend-section reveal">
+  <div class="section-kicker">Sistema de clasificación</div>
+  <div class="section-title">Leyenda</div>
+  <div class="section-sub">Cada campo está clasificado según su uso actual y destino futuro dentro del ecosistema.</div>
+  <div class="legend-grid">
+    <div class="legend-item">
+      <div class="legend-dot" style="background:var(--blue2)"></div>
+      <div>
+        <div class="legend-name" style="color:#7BABFF">Smart Pass</div>
+        <div class="legend-desc">Aparece en la página pública del embajador en soullensstudios.live</div>
+      </div>
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot" style="background:var(--green2)"></div>
+      <div>
+        <div class="legend-name" style="color:var(--green2)">Ambos usos</div>
+        <div class="legend-desc">Smart Pass público + directorio y CRM interno de Soul Circle™</div>
+      </div>
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot" style="background:var(--purple2)"></div>
+      <div>
+        <div class="legend-name" style="color:var(--purple2)">Plataforma futura</div>
+        <div class="legend-desc">Se captura hoy — se activa en la siguiente versión de la plataforma</div>
+      </div>
+    </div>
+    <div class="legend-item" style="border-color:rgba(255,82,82,.2);background:rgba(255,82,82,.04)">
+      <div class="legend-dot" style="background:var(--coral2)"></div>
+      <div>
+        <div class="legend-name" style="color:var(--coral2)">Solo admin 🔐</div>
+        <div class="legend-desc">Cifrado SSL 256-bit · Invisible para embajadores · Solo Ed Zam y Val</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     BLOQUES
+══════════════════════════════════ -->
+
+<!-- B01 -->
+<section class="block-section reveal" id="b01">
+  <div class="block-header">
+    <div>
+      <div class="block-num" style="color:var(--blue2)">Bloque 01</div>
+      <div class="block-title">Identidad<br>personal</div>
+    </div>
+    <div class="block-count" style="color:var(--blue2)">11</div>
+  </div>
+  <div class="block-desc">La base de todo perfil. Identifica al embajador dentro del sistema y en su Smart Pass público.</div>
+  <div class="fields-list">
+    <div class="field-card"><div class="field-name">Nombre completo</div><span class="field-badge tag-blue">Pass</span><div class="field-type">texto</div><div class="field-hint">Genera el slug de URL · Ej: Anais Hidalgo</div></div>
+    <div class="field-card"><div class="field-name">Primer nombre</div><span class="field-badge tag-blue">Pass</span><div class="field-type">texto</div><div class="field-hint">Para CTAs: "Hablar con Ana"</div></div>
+    <div class="field-card"><div class="field-name">Apellido</div><span class="field-badge tag-blue">Pass</span><div class="field-type">texto</div><div class="field-hint">Combinado con nombre genera el Pass ID</div></div>
+    <div class="field-card"><div class="field-name">Fecha de nacimiento</div><span class="field-badge tag-green">Ambos</span><div class="field-type">fecha</div><div class="field-hint">Cumpleaños internos, numerología, edad</div></div>
+    <div class="field-card"><div class="field-name">Género</div><span class="field-badge tag-green">Ambos</span><div class="field-type">selección</div><div class="field-hint">Mujer · Hombre · No binario · Prefiero no decir</div></div>
+    <div class="field-card"><div class="field-name">Nacionalidad</div><span class="field-badge tag-blue">Pass</span><div class="field-type">texto</div><div class="field-hint">Ej: Mexicana · Venezolana · Colombiana</div></div>
+    <div class="field-card"><div class="field-name">Ciudad y estado</div><span class="field-badge tag-blue">Pass</span><div class="field-type">texto</div><div class="field-hint">Genera el campo "Origen" del Smart Pass</div></div>
+    <div class="field-card"><div class="field-name">Idiomas</div><span class="field-badge tag-purple">Futuro</span><div class="field-type">texto</div><div class="field-hint">Para asignación de leads internacionales</div></div>
+    <div class="field-card"><div class="field-name">Pronombres</div><span class="field-badge tag-purple">Futuro</span><div class="field-type">selección</div><div class="field-hint">Ella / Él / Elle / Prefiero no decir</div></div>
+    <div class="field-card priv"><div class="field-name">Tipo de sangre 🔐</div><span class="field-badge tag-coral">Admin</span><div class="field-type">selección</div><div class="field-hint">A+/A-/B+/B-/O+/O-/AB+/AB- · Para emergencias en eventos</div></div>
+    <div class="field-card priv"><div class="field-name">CURP / ID nacional 🔐</div><span class="field-badge tag-coral">Admin</span><div class="field-type">texto</div><div class="field-hint">Para contratos formales · Cifrado</div></div>
+  </div>
+</section>
+
+<!-- B02 -->
+<section class="block-section reveal" id="b02">
+  <div class="block-header">
+    <div>
+      <div class="block-num" style="color:var(--green2)">Bloque 02</div>
+      <div class="block-title">Contacto y<br>emergencias</div>
+    </div>
+    <div class="block-count" style="color:var(--green2)">7</div>
+  </div>
+  <div class="block-desc">El WhatsApp es el canal principal de conversión del Smart Pass. Los datos de emergencia son privados para el equipo admin.</div>
+  <div class="fields-list">
+    <div class="field-card"><div class="field-name">WhatsApp</div><span class="field-badge tag-blue">Pass</span><div class="field-type">teléfono</div><div class="field-hint">Sin + ni espacios · CTA principal del pass · Ej: 5219991234567</div></div>
+    <div class="field-card"><div class="field-name">Email personal</div><span class="field-badge tag-green">Ambos</span><div class="field-type">email</div><div class="field-hint">Para comunicaciones del programa y CRM</div></div>
+    <div class="field-card priv"><div class="field-name">Emergencia — nombre 🔐</div><span class="field-badge tag-coral">Admin</span><div class="field-type">texto</div></div>
+    <div class="field-card priv"><div class="field-name">Emergencia — relación 🔐</div><span class="field-badge tag-coral">Admin</span><div class="field-type">texto</div><div class="field-hint">Mamá / Papá / Pareja / Amigo/a</div></div>
+    <div class="field-card priv"><div class="field-name">Emergencia — teléfono 🔐</div><span class="field-badge tag-coral">Admin</span><div class="field-type">teléfono</div><div class="field-hint">Para situaciones de urgencia en eventos SLS</div></div>
+    <div class="field-card priv"><div class="field-name">Condición médica 🔐</div><span class="field-badge tag-coral">Admin</span><div class="field-type">texto</div><div class="field-hint">Diabetes, epilepsia, etc. · Opcional</div></div>
+    <div class="field-card priv"><div class="field-name">Alergias 🔐</div><span class="field-badge tag-coral">Admin</span><div class="field-type">texto</div><div class="field-hint">Penicilina, nueces, látex, etc. · Opcional</div></div>
+  </div>
+</section>
+
+<!-- B03 -->
+<section class="block-section reveal" id="b03">
+  <div class="block-header">
+    <div>
+      <div class="block-num" style="color:var(--blue2)">Bloque 03</div>
+      <div class="block-title">Rol en el<br>ecosistema</div>
+    </div>
+    <div class="block-count" style="color:var(--blue2)">6</div>
+  </div>
+  <div class="block-desc">Define la identidad pública del embajador. La mayoría de campos se auto-generan según el programa seleccionado.</div>
+  <div class="fields-list">
+    <div class="field-card"><div class="field-name">Programa</div><span class="field-badge tag-blue">Pass</span><div class="field-type">auto-detectado</div><div class="field-hint">Soul Circle™ (Arquitectos) · Núcleo Soul™ (Soul Origen™)</div></div>
+    <div class="field-card"><div class="field-name">Título hero</div><span class="field-badge tag-blue">Pass</span><div class="field-type">texto</div><div class="field-hint">Bajo el nombre en el hero · Ej: Coach · Embajadora de Expansión</div></div>
+    <div class="field-card"><div class="field-name">Rol corto</div><span class="field-badge tag-blue">Pass</span><div class="field-type">texto</div><div class="field-hint">Sin contexto SLS · Aparece en avatar y credencial</div></div>
+    <div class="field-card"><div class="field-name">Rol credencial</div><span class="field-badge tag-blue">Pass</span><div class="field-type">automático</div><div class="field-hint">Embajador/a de Expansión · AI SLS  ·  Soul Origen™ · NS™</div></div>
+    <div class="field-card"><div class="field-name">Band label</div><span class="field-badge tag-blue">Pass</span><div class="field-type">automático</div><div class="field-hint">Badge de la credencial · Auto según programa</div></div>
+    <div class="field-card"><div class="field-name">Fecha de ingreso</div><span class="field-badge tag-green">Ambos</span><div class="field-type">fecha</div><div class="field-hint">Para antigüedad y reconocimientos del sistema</div></div>
+  </div>
+</section>
+
+<!-- B04 -->
+<section class="block-section reveal" id="b04">
+  <div class="block-header">
+    <div>
+      <div class="block-num" style="color:var(--purple2)">Bloque 04</div>
+      <div class="block-title">Bio, quote<br>y mercados</div>
+    </div>
+    <div class="block-count" style="color:var(--purple2)">6</div>
+  </div>
+  <div class="block-desc">La narrativa del embajador. El corazón del Smart Pass — lo que el cliente lee antes de decidir escribirle.</div>
+  <div class="fields-list">
+    <div class="field-card"><div class="field-name">Bio personal</div><span class="field-badge tag-blue">Pass</span><div class="field-type">textarea · máx 400 chars</div><div class="field-hint">1ª persona · 2-4 oraciones · HTML básico permitido</div></div>
+    <div class="field-card"><div class="field-name">Quote personal</div><span class="field-badge tag-blue">Pass</span><div class="field-type">texto</div><div class="field-hint">Su voz, su filosofía · Sin comillas externas</div></div>
+    <div class="field-card"><div class="field-name">Frase favorita</div><span class="field-badge tag-blue">Pass</span><div class="field-type">texto + atribución</div><div class="field-hint">De otro autor que los inspira · Con campo de autor separado</div></div>
+    <div class="field-card"><div class="field-name">Mercados que atiende</div><span class="field-badge tag-blue">Pass</span><div class="field-type">multi-select</div><div class="field-hint">Mín 4 · Máx 8 · Aparecen como pills en el pass</div></div>
+    <div class="field-card"><div class="field-name">Meta description</div><span class="field-badge tag-blue">Pass</span><div class="field-type">textarea · 155 chars</div><div class="field-hint">Para Google y preview al compartir por WhatsApp</div></div>
+  </div>
+</section>
+
+<!-- B05 -->
+<section class="block-section reveal" id="b05">
+  <div class="block-header">
+    <div>
+      <div class="block-num" style="color:var(--gold2)">Bloque 05</div>
+      <div class="block-title">Hobbies y<br>personalidad</div>
+    </div>
+    <div class="block-count" style="color:var(--gold2)">13</div>
+  </div>
+  <div class="block-desc">Lo que humaniza al embajador. Los 5 hobbies aparecen con iconografía ilustrada en la sección "Fuera del trabajo".</div>
+  <div class="fields-list">
+    <div class="field-card"><div class="field-name">Hobbies 1 a 5 — nombre</div><span class="field-badge tag-blue">Pass</span><div class="field-type">texto ×5</div><div class="field-hint">Ej: Fotografía · Playa y mar · Libros y estrategia</div></div>
+    <div class="field-card"><div class="field-name">Hobbies 1 a 5 — descripción</div><span class="field-badge tag-blue">Pass</span><div class="field-type">texto ×5</div><div class="field-hint">Una línea por hobby · Ej: "Ojo entrenado para capturar lo que otros no ven."</div></div>
+    <div class="field-card"><div class="field-name">Deporte que practica</div><span class="field-badge tag-purple">Futuro</span><div class="field-type">texto</div><div class="field-hint">CrossFit, natación, futbol, etc.</div></div>
+    <div class="field-card"><div class="field-name">Música favorita</div><span class="field-badge tag-purple">Futuro</span><div class="field-type">texto</div></div>
+    <div class="field-card"><div class="field-name">Comida favorita</div><span class="field-badge tag-purple">Futuro</span><div class="field-type">texto</div><div class="field-hint">Para eventos y merch personalizado</div></div>
+  </div>
+</section>
+
+<!-- B06 -->
+<section class="block-section reveal" id="b06">
+  <div class="block-header">
+    <div>
+      <div class="block-num" style="color:var(--green2)">Bloque 06</div>
+      <div class="block-title">Familia y<br>mascotas</div>
+    </div>
+    <div class="block-count" style="color:var(--green2)">6</div>
+  </div>
+  <div class="block-desc">Para el directorio interno y personalizar la experiencia del embajador en eventos presenciales de Soul Circle™.</div>
+  <div class="fields-list">
+    <div class="field-card"><div class="field-name">Estado civil</div><span class="field-badge tag-purple">Futuro</span><div class="field-type">selección</div><div class="field-hint">Soltero/a · En pareja · Casado/a · Divorciado/a</div></div>
+    <div class="field-card"><div class="field-name">Número de hijos</div><span class="field-badge tag-purple">Futuro</span><div class="field-type">número</div></div>
+    <div class="field-card"><div class="field-name">Mascota — nombre y tipo</div><span class="field-badge tag-purple">Futuro</span><div class="field-type">texto ×2</div><div class="field-hint">Perro / gato / conejo · Para conexión emocional en la comunidad</div></div>
+    <div class="field-card"><div class="field-name">Frase sobre su familia</div><span class="field-badge tag-purple">Futuro</span><div class="field-type">texto</div><div class="field-hint">Ej: "Mi familia es mi motor."</div></div>
+  </div>
+</section>
+
+<!-- B07 -->
+<section class="block-section reveal" id="b07">
+  <div class="block-header">
+    <div>
+      <div class="block-num" style="color:var(--blue2)">Bloque 07</div>
+      <div class="block-title">Redes<br>sociales</div>
+    </div>
+    <div class="block-count" style="color:var(--blue2)">6</div>
+  </div>
+  <div class="block-desc">Instagram se integra en el Smart Pass. Las demás redes alimentan el directorio y CRM interno del ecosistema.</div>
+  <div class="fields-list">
+    <div class="field-card"><div class="field-name">Instagram</div><span class="field-badge tag-green">Ambos</span><div class="field-type">@usuario</div><div class="field-hint">Aparece en el Smart Pass con link directo</div></div>
+    <div class="field-card"><div class="field-name">TikTok</div><span class="field-badge tag-purple">Futuro</span><div class="field-type">@usuario</div></div>
+    <div class="field-card"><div class="field-name">LinkedIn</div><span class="field-badge tag-purple">Futuro</span><div class="field-type">URL</div><div class="field-hint">Para B2B y leads corporativos</div></div>
+    <div class="field-card"><div class="field-name">Facebook</div><span class="field-badge tag-purple">Futuro</span><div class="field-type">texto · opcional</div></div>
+    <div class="field-card"><div class="field-name">YouTube</div><span class="field-badge tag-purple">Futuro</span><div class="field-type">URL · opcional</div></div>
+    <div class="field-card"><div class="field-name">Sitio web personal</div><span class="field-badge tag-purple">Futuro</span><div class="field-type">URL · opcional</div></div>
+  </div>
+</section>
+
+<!-- B08 -->
+<section class="block-section reveal" id="b08">
+  <div class="block-header">
+    <div>
+      <div class="block-num" style="color:var(--purple2)">Bloque 08</div>
+      <div class="block-title">Fotografías</div>
+    </div>
+    <div class="block-count" style="color:var(--purple2)">11</div>
+  </div>
+  <div class="block-desc">Las fotos son el activo más poderoso del Smart Pass. Un embajador con fotos profesionales convierte hasta 3× más.</div>
+  <div class="foto-slot-list">
+    <div class="foto-slot-item">
+      <div class="foto-slot-badge" style="background:rgba(83,74,183,.2);color:var(--purple2)">H</div>
+      <div><div class="foto-slot-name">Hero — fondo del pass</div><div class="foto-slot-dims">1080 × 1920px · JPG/WebP</div></div>
+      <div class="foto-slot-note">Retrato vertical. La cara en el tercio superior. Esta foto define todo el impacto del pass.</div>
+    </div>
+    <div class="foto-slot-item">
+      <div class="foto-slot-badge" style="background:rgba(83,74,183,.2);color:var(--purple2)">P</div>
+      <div><div class="foto-slot-name">Perfil — avatar</div><div class="foto-slot-dims">400 × 400px · Cuadrada</div></div>
+    </div>
+    <div class="foto-slot-item">
+      <div class="foto-slot-badge" style="background:rgba(6,83,255,.2);color:var(--blue2)">OG</div>
+      <div><div class="foto-slot-name">Preview WhatsApp</div><div class="foto-slot-dims">1200 × 630px · JPG</div></div>
+      <div class="foto-slot-note">Aparece al compartir el link del pass por WhatsApp y redes.</div>
+    </div>
+    <div class="foto-slot-item">
+      <div class="foto-slot-badge" style="background:rgba(29,158,117,.15);color:var(--green2)">1-9</div>
+      <div><div class="foto-slot-name">Galería — 9 fotos</div><div class="foto-slot-dims">400 × 576px · 9:13 c/u</div></div>
+      <div class="foto-slot-note">Estudio · Hobby · Familia · Mascota · Viaje · Lifestyle · Comunidad · Libre. Lo que te hace humano.</div>
+    </div>
+    <div class="foto-slot-item">
+      <div class="foto-slot-badge" style="background:rgba(201,168,76,.15);color:var(--gold2)">CAP</div>
+      <div><div class="foto-slot-name">Captions de galería</div><div class="foto-slot-dims">Texto · título + subtítulo ×9</div></div>
+      <div class="foto-slot-note">Ej: "En el estudio / Producción SLS · Mérida"</div>
+    </div>
+  </div>
+</section>
+
+<!-- B09 -->
+<section class="block-section reveal" id="b09">
+  <div class="block-header">
+    <div>
+      <div class="block-num" style="color:var(--gold2)">Bloque 09</div>
+      <div class="block-title">Comunidad<br>y merch</div>
+    </div>
+    <div class="block-count" style="color:var(--gold2)">8</div>
+  </div>
+  <div class="block-desc">Para personalizar la experiencia del programa, preparar el kit de bienvenida y activar la cultura de Soul Circle™.</div>
+  <div class="fields-list">
+    <div class="field-card"><div class="field-name">¿Por qué entró a Soul Circle?</div><span class="field-badge tag-purple">Futuro</span><div class="field-type">textarea</div></div>
+    <div class="field-card"><div class="field-name">Meta personal a 6 meses</div><span class="field-badge tag-purple">Futuro</span><div class="field-type">textarea</div></div>
+    <div class="field-card"><div class="field-name">Nichos que puede conectar</div><span class="field-badge tag-purple">Futuro</span><div class="field-type">texto</div><div class="field-hint">Restauranteros, brokers, hoteles · Para asignación de leads</div></div>
+    <div class="field-card"><div class="field-name">¿Cómo se enteró?</div><span class="field-badge tag-purple">Futuro</span><div class="field-type">selección</div><div class="field-hint">Referido · Redes · Evento · Ed Zam · Val Mosquera</div></div>
+    <div class="field-card"><div class="field-name">¿Tiene vehículo?</div><span class="field-badge tag-purple">Futuro</span><div class="field-type">booleano</div><div class="field-hint">Para logística de eventos y activaciones presenciales</div></div>
+    <div class="field-card" style="border-color:rgba(201,168,76,.2);background:rgba(201,168,76,.04)">
+      <div class="field-name" style="color:var(--gold2)">Talla de playera</div>
+      <span class="field-badge tag-gold">Merch</span>
+      <div class="field-type">selección · XS / S / M / L / XL / XXL / XXXL</div>
+    </div>
+    <div class="field-card" style="border-color:rgba(201,168,76,.2);background:rgba(201,168,76,.04)">
+      <div class="field-name" style="color:var(--gold2)">Talla de tenis</div>
+      <span class="field-badge tag-gold">Merch</span>
+      <div class="field-type">selección · 22 a 32 MX</div>
+      <div class="field-hint">Talla MX en cm · Kit de bienvenida Soul Circle™</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     PROGRAMAS
+══════════════════════════════════ -->
+<section class="convention-section reveal">
+  <div class="section-kicker">Arquitectura del ecosistema</div>
+  <div class="section-title">Programas</div>
+  <div class="section-sub" style="margin-bottom:1.25rem">Dos programas. Campos automáticos distintos. Mismo formulario, experiencia diferenciada.</div>
+  <div class="program-table">
+    <div class="program-row program-header">
+      <div class="program-cell">Campo auto</div>
+      <div class="program-cell">Soul Circle™</div>
+    </div>
+    <div class="program-row">
+      <div class="program-cell"><strong>Band label</strong></div>
+      <div class="program-cell">Arquitecto/a Fundador/a</div>
+    </div>
+    <div class="program-row">
+      <div class="program-cell"><strong>Rol credencial</strong></div>
+      <div class="program-cell">Embajador/a de Expansión · AI SLS</div>
+    </div>
+    <div class="program-row">
+      <div class="program-cell"><strong>Pass ID prefix</strong></div>
+      <div class="program-cell" style="font-family:monospace;font-size:11px;color:var(--blue2)">PASS-SLS-2026</div>
+    </div>
+    <div class="program-row">
+      <div class="program-cell"><strong>Schema job</strong></div>
+      <div class="program-cell">Arquitecto/a SC™ · Embajador/a</div>
+    </div>
+  </div>
+  <div class="program-table">
+    <div class="program-row program-header">
+      <div class="program-cell">Campo auto</div>
+      <div class="program-cell">Núcleo Soul™</div>
+    </div>
+    <div class="program-row">
+      <div class="program-cell"><strong>Band label</strong></div>
+      <div class="program-cell" style="color:var(--green2)">Soul Origen™</div>
+    </div>
+    <div class="program-row">
+      <div class="program-cell"><strong>Rol credencial</strong></div>
+      <div class="program-cell">Soul Origen™ · Núcleo Soul™</div>
+    </div>
+    <div class="program-row">
+      <div class="program-cell"><strong>Pass ID prefix</strong></div>
+      <div class="program-cell" style="font-family:monospace;font-size:11px;color:var(--green2)">PASS-NS-2026</div>
+    </div>
+    <div class="program-row">
+      <div class="program-cell"><strong>Generación</strong></div>
+      <div class="program-cell">Soul Origen™ → Soul Node™</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     PASS ID CONVENTION
+══════════════════════════════════ -->
+<section class="convention-section reveal">
+  <div class="section-kicker">Convención de identificadores</div>
+  <div class="section-title">Pass ID</div>
+  <div class="section-sub" style="margin-bottom:1.25rem">Cada embajador tiene un ID único e irrepetible dentro del sistema.</div>
+  <div class="pass-id-display">
+    <div class="pass-id-code">PASS-SLS-2026-ANA-H</div>
+    <div class="pass-id-parts">
+      <span class="pass-part" style="background:rgba(6,83,255,.18);color:#7BABFF">PASS</span>
+      <span style="color:var(--t3);font-size:12px;align-self:center">·</span>
+      <span class="pass-part" style="background:rgba(29,158,117,.15);color:var(--green2)">SLS / NS</span>
+      <span style="color:var(--t3);font-size:12px;align-self:center">·</span>
+      <span class="pass-part" style="background:rgba(201,168,76,.14);color:var(--gold2)">2026</span>
+      <span style="color:var(--t3);font-size:12px;align-self:center">·</span>
+      <span class="pass-part" style="background:rgba(83,74,183,.2);color:var(--purple2)">ANA</span>
+      <span style="color:var(--t3);font-size:12px;align-self:center">·</span>
+      <span class="pass-part" style="background:rgba(255,82,82,.12);color:var(--coral2)">H</span>
+    </div>
+  </div>
+  <div class="examples-grid">
+    <div class="example-item"><div class="example-name">Anais Hidalgo</div><div class="example-id">PASS-SLS-2026-ANA-H</div></div>
+    <div class="example-item"><div class="example-name">Carlos Méndez</div><div class="example-id">PASS-SLS-2026-CAR-M</div></div>
+    <div class="example-item"><div class="example-name">Valentina Flores</div><div class="example-id">PASS-SLS-2026-VAL-F</div></div>
+    <div class="example-item"><div class="example-name">Marco Morales</div><div class="example-id">PASS-SLS-2026-MAR-M</div></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     VARIABLES
+══════════════════════════════════ -->
+<section class="vars-section reveal">
+  <div class="section-kicker">Template engine</div>
+  <div class="section-title">Variables del<br>MASTER_TEMPLATE</div>
+  <div class="section-sub" style="margin-bottom:1.25rem">38 variables que el generador reemplaza para producir el Smart Pass. Nunca editar el template directamente.</div>
+  <div class="var-list">
+    <div class="var-item"><div class="var-name">{{PASS_ID}}</div><div class="var-desc">ID único del pass — generado automáticamente</div></div>
+    <div class="var-item"><div class="var-name">{{SLUG}}</div><div class="var-desc">URL slug — nombre-apellido en minúsculas</div><div class="var-val">ej: anais-hidalgo</div></div>
+    <div class="var-item"><div class="var-name">{{WA_NUMBER}}</div><div class="var-desc">WhatsApp para link wa.me/ — sin + ni espacios</div></div>
+    <div class="var-item"><div class="var-name">{{WA_TEXT_HERO}}</div><div class="var-desc">Mensaje pre-cargado en el botón hero</div></div>
+    <div class="var-item"><div class="var-name">{{WA_TEXT_BOTTOM}}</div><div class="var-desc">Mensaje pre-cargado en el CTA inferior</div></div>
+    <div class="var-item"><div class="var-name">{{VCF_FN}} · {{VCF_N}} · {{VCF_TITLE}}</div><div class="var-desc">Datos del contacto VCard descargable</div></div>
+    <div class="var-item"><div class="var-name">{{SCHEMA_JOB_TITLE}}</div><div class="var-desc">jobTitle para JSON-LD Schema.org / SEO</div></div>
+    <div class="var-item"><div class="var-name">{{SCHEMA_LOCALITY}} · {{SCHEMA_REGION}}</div><div class="var-desc">Ciudad y estado para Schema.org</div></div>
+    <div class="var-item"><div class="var-name">{{PAGE_TITLE}} · {{META_DESC}}</div><div class="var-desc">SEO: título y meta description de la página</div></div>
+    <div class="var-item"><div class="var-name">{{OG_DESC}} · {{TWITTER_DESC}}</div><div class="var-desc">Open Graph para WhatsApp y redes sociales</div></div>
+    <div class="var-item"><div class="var-name">{{NOMBRE_COMPLETO}} · {{NOMBRE_FIRST}} · {{NOMBRE_LAST}}</div><div class="var-desc">Nombre en sus 3 formas de uso</div></div>
+    <div class="var-item"><div class="var-name">{{TITULO_HERO}} · {{ROL_CORTO}} · {{ROL_CREDENCIAL}}</div><div class="var-desc">Textos de presentación del embajador</div></div>
+    <div class="var-item"><div class="var-name">{{BAND_LABEL}}</div><div class="var-desc">Badge de la credencial — auto según programa</div></div>
+    <div class="var-item"><div class="var-name">{{ORIGEN}}</div><div class="var-desc">Nacionalidad · Ciudad, Estado</div></div>
+    <div class="var-item"><div class="var-name">{{BIO_HTML}}</div><div class="var-desc">Bio personal — acepta &lt;strong&gt; para énfasis</div></div>
+    <div class="var-item"><div class="var-name">{{QUOTE}}</div><div class="var-desc">Quote personal sin comillas externas</div></div>
+    <div class="var-item"><div class="var-name">{{MERCADOS_PILLS}}</div><div class="var-desc">Pills de mercados — generado como HTML</div></div>
+    <div class="var-item"><div class="var-name">{{HBB_NOMBRE_0–4}} · {{HBB_SUB_0–4}}</div><div class="var-desc">10 variables — nombre y sub de los 5 hobbies</div></div>
+    <div class="var-item"><div class="var-name">{{CTA_WA_LABEL}} · {{CTA_BOTTOM_TEXT}}</div><div class="var-desc">Labels de los CTAs de WhatsApp</div></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     SECURITY
+══════════════════════════════════ -->
+<section class="security-section reveal">
+  <div class="section-kicker">Arquitectura de protección</div>
+  <div class="section-title">Seguridad<br>y privacidad</div>
+  <div class="section-sub" style="margin-bottom:1.25rem">Estándares bancarios para proteger los datos sensibles de los embajadores.</div>
+
+  <div class="security-grid">
+    <div class="security-card">
+      <div class="security-val" style="color:var(--coral2)">256</div>
+      <div class="security-lbl">Bits SSL</div>
+    </div>
+    <div class="security-card">
+      <div class="security-val" style="color:var(--green2)">0</div>
+      <div class="security-lbl">Terceros con acceso</div>
+    </div>
+    <div class="security-card">
+      <div class="security-val" style="color:var(--blue2)">2</div>
+      <div class="security-lbl">Admins autorizados</div>
+    </div>
+    <div class="security-card">
+      <div class="security-val" style="color:var(--gold2)">100%</div>
+      <div class="security-lbl">Datos cifrados</div>
+    </div>
+  </div>
+
+  <div class="alert-box" style="background:rgba(255,82,82,.06);border:1px solid rgba(255,82,82,.18);border-radius:12px">
+    <div class="alert-icon">🔐</div>
+    <div class="alert-text" style="color:var(--t2)">
+      <strong style="color:var(--coral2)">Campos solo admin cifrados:</strong><br>
+      Tipo de sangre · CURP / ID · Contacto de emergencia (nombre, relación, teléfono) · Condición médica · Alergias<br><br>
+      Estos campos <strong>nunca aparecen</strong> en el Smart Pass público ni en ninguna exportación.
+    </div>
+  </div>
+
+  <div style="margin-top:.75rem" class="alert-box" style="background:rgba(6,83,255,.06);border:1px solid rgba(6,83,255,.18);border-radius:12px">
+    <div class="alert-box" style="background:rgba(6,83,255,.06);border:1px solid rgba(6,83,255,.18);border-radius:12px;padding:1rem">
+      <div style="display:flex;gap:.75rem;align-items:flex-start">
+        <div style="font-size:18px">🔒</div>
+        <div style="font-size:12px;color:var(--t2);line-height:1.55">
+          <strong style="color:#7BABFF">Acceso por roles:</strong> Solo Ed Zam y Val Mosquera pueden ver datos privados. Los embajadores solo ven su perfil público. Sin Facebook Pixel ni analytics de terceros en el panel admin.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     FOOTER
+══════════════════════════════════ -->
+<footer class="doc-footer">
+  <div class="footer-brand">Soul Lens Studios · Xplorers Startups</div>
+  <div class="footer-meta">
+    Schema de Datos v2.0 · Ciclo Fundador 2026<br>
+    circle.soullensstudios.live<br>
+    Mérida, Yucatán · México
+  </div>
+</footer>
+
+<script>
+// Reveal on scroll
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Stagger field cards within each revealed section
+document.querySelectorAll('.block-section, .legend-section, .foto-section, .vars-section, .security-section, .convention-section').forEach(section => {
+  section.querySelectorAll('.field-card, .legend-item, .foto-slot-item, .var-item, .security-card, .example-item').forEach((card, i) => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(10px)';
+    card.style.transition = `opacity .35s ease ${i * 55}ms, transform .35s ease ${i * 55}ms`;
+  });
+});
+
+const staggerObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      e.target.querySelectorAll('.field-card, .legend-item, .foto-slot-item, .var-item, .security-card, .example-item').forEach(card => {
+        card.style.opacity = '1';
+        card.style.transform = 'none';
+      });
+      staggerObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.05 });
+
+document.querySelectorAll('.block-section, .legend-section, .foto-section, .vars-section, .security-section, .convention-section').forEach(el => staggerObserver.observe(el));
+</script>
+
+</body>
+</html>
