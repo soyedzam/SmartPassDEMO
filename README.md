@@ -1,7 +1,7 @@
 # SoulCircle Smart Pass · v2.0
 
 Ecosistema de embajadores de **Soul Lens Studios** — Soul Circle™ + Núcleo Soul™.
-Sistema 100% estático, listo para Cloudflare Pages.
+Sistema 100% estático, listo para Cloudflare Pages. 
 
 ## Estructura (2 dominios)
 
